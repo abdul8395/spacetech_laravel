@@ -25,19 +25,16 @@ class AdminController extends Controller
             'file' => 'required',
             'des' => 'required',
             'usage' => 'required',
-            'privacy' => 'required',
-            'type' => 'required',
-            'privacy' => 'required',
-            'type' => 'required',
-            'privacy' => 'required',
-            'type' => 'required'
+            'crs' => 'required',
+            'yeardata' => 'required',
+            'pagemap' => 'required',
         ]);
 
-        $task = new Task();
-        $task->title = $request->title;
-        $task->description = $request->description;
-        $task->status = $request->status;
-        $task->save();
+        $adddata = new Add_Data();
+        $adddata->title = $request->title;
+        $adddata->description = $request->description;
+        $adddata->status = $request->status;
+        $adddata->save();
         // return redirect()->route('index');
     } 
     public  function approval_logs(){

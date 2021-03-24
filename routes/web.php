@@ -24,7 +24,7 @@ use App\Http\Controllers\UserController;
 //Route::get('/abc', [test::class, 'index']);
 
 // Route::get('/', function () {
-//     return view('welcome');
+//     return view('welcome_old');
 // });
 
 

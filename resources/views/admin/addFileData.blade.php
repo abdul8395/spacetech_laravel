@@ -74,8 +74,14 @@
                 @csrf
             <div class="col-md-12" style="margin-top:5px;">
                 <strong>Privacy Level</strong>
-                <input type="text" id="txtDataName" name="privacy" class="form-control" style="margin-top: 10px;" placeholder="Enter Level Here" />
-        
+                <select class="form-control" name="privacy_level">
+                <option selected disabled>--Select Privacy Level--</option>
+                    <option value="public">Public</option>
+                    <option value="protected">Protected</option>
+                    <option value="private">Private</option>
+                </select>
+                <!-- <input type="text" id="txtDataName" name="privacy" class="form-control" style="margin-top: 10px;" placeholder="Enter Level Here" />
+         -->
                 <!-- @Html.DropDownList("ddlPrivacy", new List<SelectListItem>
                 {
                 new SelectListItem{ Text="Public", Value = "Public" },
@@ -89,8 +95,14 @@
 
             <div class="col-md-12" style="margin-top:5px;">
                 <strong>Type</strong>
-                <input type="text" id="txtDataName" name="type" class="form-control" style="margin-top: 10px;" placeholder="Enter Type Here" />
-        
+                <select class="form-control" name="privacy_level">
+                <option selected disabled>--Select Type of Data--</option>
+                    <option value="pdf">PDF</option>
+                    <option value="shape">Shape</option>
+                    <option value="image">Image</option>
+                    <option value="text">Text</option>
+                </select>
+                <!-- <input type="text" id="txtDataName" name="type" class="form-control" style="margin-top: 10px;" placeholder="Enter Type Here" /> -->
                 <!-- @Html.DropDownList("ddlType", (IEnumerable<SelectListItem>)ViewBag.Extension, "-- Select Type Of Data --", new { @Id = "ddlType", @class = "form-control ", @style = "width:100%;margin-top: 10px;", @onchange = "FindAccept()" }) -->
             </div>
             <div class="clearfix"></div>
@@ -141,7 +153,7 @@
             </div>
             <div id="rowResolution" class="col-md-6" style="margin-top:5px;">
                 <strong>Resolution</strong>
-                <input type="text" class="form-control" style="margin-top: 10px;" placeholder="Enter Resolution Here..." id="txtResolution" />
+                <input type="text" name="reso" class="form-control" style="margin-top: 10px;" placeholder="Enter Resolution Here..." id="txtResolution" />
             </div>
             <div class="clearfix"></div>
             <div class="col-md-12" id="rowImage" style="margin-top:15px;">
