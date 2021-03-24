@@ -127,6 +127,27 @@
             });
 
         }
+
+        function viewDescription(id)
+        {
+            $.ajax({
+                type: "GET",
+                url: "/Admin/ViewDescription",
+                data: {
+                    id: id
+                },
+                success: function (res) {
+                    if (res != "false") {
+                        $("#modalDescription").modal("show");
+                        $('#txtDescription').val(res);
+                     }
+                },
+                error: function (err) {
+                    autoLoader(err.statusText, "error", "Error !");
+                }
+            });
+          
+        }
           var $table;
         function getGrid() {
             var InsertionDate = $('#txtSearchInsertionDate').val();
@@ -216,26 +237,7 @@
                 }
             });
         }
-        function viewDescription(id)
-        {
-            $.ajax({
-                type: "GET",
-                url: "/Admin/ViewDescription",
-                data: {
-                    id: id
-                },
-                success: function (res) {
-                    if (res != "false") {
-                        $("#modalDescription").modal("show");
-                        $('#txtDescription').val(res);
-                     }
-                },
-                error: function (err) {
-                    autoLoader(err.statusText, "error", "Error !");
-                }
-            });
-          
-        }
+       
     </script>
 
 @endsection

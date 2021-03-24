@@ -176,6 +176,7 @@
 
 
     <script>
+    
         $(document).on('click', '.panel-heading span.clickable', function (e) {
             var $this = $(this);
             //alert($this);
@@ -193,23 +194,7 @@
             }
         })
 
-        function chkAllDivisions()
-        {
-            var chkAllDivisions = $('#chkAllDivisions').is(":checked");
-            if (chkAllDivisions == true)
-            {
-                $.each($("input[name='Divisions']"), function () {
-                    $(this).prop("checked", true);
-                });
-            }
-            else
-            {
-                $.each($("input[name='Divisions']"), function () {
-                    $(this).prop("checked", false);
-                });
-            }
-            getDistricts();
-        }
+       
         function SelectAllDepts()
         {
             var chkAllDepts = $('#chkAllDepts').is(":checked");
@@ -226,6 +211,23 @@
                 });
             }
 
+        }
+        function chkAllDivisions()
+        {
+            var chkAllDivisions = $('#chkAllDivisions').is(":checked");
+            if (chkAllDivisions == true)
+            {
+                $.each($("input[name='Divisions']"), function () {
+                    $(this).prop("checked", true);
+                });
+            }
+            else
+            {
+                $.each($("input[name='Divisions']"), function () {
+                    $(this).prop("checked", false);
+                });
+            }
+            getDistricts();
         }
         function chkAllDistricts() {
             var chkAllDistricts = $('#chkAllDistricts').is(":checked");
@@ -255,48 +257,7 @@
             }
 
         }
-        function FindAccept() {
-            var id = $('#ddlType').val();
-            if (id == '') {
-                return false;
-            }
-            $('#txtrowImage').val(null);
-            var type = $("#ddlType").find("option:selected").text();
-            var divChkBox = document.getElementById('divRadioButtons');
-            var divPDF = document.getElementById('divPDF');
-            var rowImage = document.getElementById('rowImage');
-            if (type == "Image") {
-                divChkBox.style.visibility = "visible";
-                rowImage.style.display = "table-row";
-            }
-            else {
-                divChkBox.style.visibility = "hidden";
-                rowImage.style.display = "none";
-            }
-            if (type == "PDF") {
-                divPDF.style.display = "inline";
-            }
-            else {
-                divPDF.style.display = "none";
-            }
-            $.ajax({
-                type: "GET",
-                url: "/Admin/GetFilesType",
-                data: {
-                    id: id
-                },
-                success: function (res) {
-                    if (res != 'false') {
-                        document.getElementById("Data_Atachment").accept = res;
-                    }
-                },
-                error: function (err) {
-                    autoLoader(err.statusText, "error", "Error !");
-                }
-            });
-
-
-        }
+        
         function ChngChkBox() {
             if (document.getElementById("rdBtnXY").checked == true) {
                 document.getElementById('lblrowImage').innerHTML = 'XY-Des.';
@@ -343,6 +304,49 @@
             $('#divAttachment').html(html);
             //$('#hidDataId').val(id);
             //$("#addFileModal").modal("show");
+
+        }
+
+        function FindAccept() {
+            var id = $('#ddlType').val();
+            if (id == '') {
+                return false;
+            }
+            $('#txtrowImage').val(null);
+            var type = $("#ddlType").find("option:selected").text();
+            var divChkBox = document.getElementById('divRadioButtons');
+            var divPDF = document.getElementById('divPDF');
+            var rowImage = document.getElementById('rowImage');
+            if (type == "Image") {
+                divChkBox.style.visibility = "visible";
+                rowImage.style.display = "table-row";
+            }
+            else {
+                divChkBox.style.visibility = "hidden";
+                rowImage.style.display = "none";
+            }
+            if (type == "PDF") {
+                divPDF.style.display = "inline";
+            }
+            else {
+                divPDF.style.display = "none";
+            }
+            $.ajax({
+                type: "GET",
+                url: "/Admin/GetFilesType",
+                data: {
+                    id: id
+                },
+                success: function (res) {
+                    if (res != 'false') {
+                        document.getElementById("Data_Atachment").accept = res;
+                    }
+                },
+                error: function (err) {
+                    autoLoader(err.statusText, "error", "Error !");
+                }
+            });
+
 
         }
         function validate() {

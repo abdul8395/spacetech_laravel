@@ -43,6 +43,7 @@ Route::match(['get','post'], '/superadmin/approval', [SuperAdminController::clas
 Route::match(['get','post'], '/superadmin/req_log', [SuperAdminController::class, 'req_log'])->name('superadmin')->middleware('superadmin');
 Route::match(['get','post'], '/superadmin/add_users', [SuperAdminController::class, 'add_users'])->name('superadmin')->middleware('superadmin');
 Route::match(['get','post'], '/superadmin/change_pass', [SuperAdminController::class, 'change_pass'])->name('superadmin')->middleware('superadmin');
+Route::match(['get','post'], '/superadmin/storeadmin', [SuperAdminController::class, 'storeadmin'])->name('superadmin')->middleware('superadmin');
 //................Admin________Routes..................
 Route::match(['get','post'], '/admin', [AdminController::class, 'index'])->name('admin')->middleware('admin');
 Route::match(['get','post'], '/add_data', [AdminController::class, 'add_data']);

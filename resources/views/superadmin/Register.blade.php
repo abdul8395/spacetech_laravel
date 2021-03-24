@@ -5,66 +5,44 @@
     <h2><center style="color: #02d8b6;">Add Admin</center></h2>
     <hr />
     <div class="col-md-offset-2 col-md-8">
-        <div class="form-group col-md-6">
+    <form action="{{url('/superadmin/storeadmin')}}" method="POST">
+                @csrf
+            <div class="col-md-12" style="margin-top:5px;">
+                <strong>Name</strong>
+                <input type="text" id="name" class="form-control" name="name"  autocomplete="name" autofocus style="margin-top: 10px;" placeholder="Enter Name Here" />
+               
+            </div>
+            <div class="col-md-12" style="margin-top:5px;">
+                <strong>Mobile No.</strong>
+                <input id="mno" type="number" id="txtDataName"  class="form-control" name="mno"  style="margin-top: 10px;" placeholder="Enter Mobile Number Here" />
 
-            <div class="col-md-12">
-                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @placeholder = "Enter First Name" })
-                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
             </div>
-        </div>
-        <div class="form-group col-md-6">
+            <div class="col-md-12" style="margin-top:5px;">
+                <strong>Email Address</strong>
+                <input autocomplete="off" type="email" id="email" class="form-control " name="email"  style="margin-top: 10px;" placeholder="Enter Email Address Here" />
+   
 
-            <div class="col-md-12">
-                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @placeholder = "Enter Last Name" })
-                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
             </div>
-        </div>
-        <div class="form-group col-md-6">
+            
 
-            <div class="col-md-12">
-                @Html.TextBoxFor(m => m.MobileNo, new { @class = "form-control", @placeholder = "Enter Mobile No" })
-                @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
+           
+            <div class="clearfix"></div>
+            <div class="col-md-6" style="margin-top:20px;">
+                <strong>Password</strong>
+                <input autocomplete="off" id="password" type="password" class="form-control " name="password" placeholder="Password"  style="margin-top: 10px;">
+                   
             </div>
-        </div>
-     
-        <div class="form-group col-md-6">
+            <div id="rowResolution" class="col-md-6" style="margin-top:20px;">
+                <strong>Confirm Password</strong>
+                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password" style="margin-top: 10px;" >
+            </div>
 
-            <div class="col-md-12">
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Enter Email Address" })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            <div class="col-md-6 pull-right" style="margin-top:15px;">
+                <div>
+                    <button class=" btn btn-success pull-right btn-submit"  id="btnSave" style="color:white; margin-bottom: 10px;">Save</button>
+                </div>
             </div>
-        </div>
-        <div class="form-group col-md-6">
-            <div class="col-md-12">
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Enter Password" })
-                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group col-md-6">
-            <div class="col-md-12">
-                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Re-Enter Password" })
-                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group col-md-6">
-            <div class="col-md-12">
-                @Html.DropDownListFor(m => m.Role, ViewBag.UserRoles as IEnumerable<SelectListItem>, "-Select Role-", new { @class = "form-control select2" })
-                @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        
-        <div class="form-group col-md-6 pull-left">
-            <div class="col-md-12">
-                @Html.DropDownListFor(m => m.Dept_Id, ViewBag.Departments as IEnumerable<SelectListItem>, "-Select Department-", new { @class = "form-control select2" })
-                @Html.ValidationMessageFor(model => model.Dept_Id, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group col-md-12 ">
-            <div class="col-md-11">
-                <input type="submit" class="btn btn-submit pull-right" style="        background-color: #02d8b6;
-        border-radius: 10px;" value="Register" />
-            </div>
-        </div>
+        </form>
     </div>
 
 

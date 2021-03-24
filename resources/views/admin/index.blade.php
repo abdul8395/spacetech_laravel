@@ -210,6 +210,23 @@
                 // LoadDataPage();
 
             });
+            function getDistricts(elem) {
+                var id = $(elem).val();
+                var formData = new FormData();
+                formData.append("Divisions", id);
+                //alert(id);
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/bind_combo_Districts",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) { bind_combo_Districts(data); },
+                    error: function () {
+                        autoLoader(res, "error");
+                    }
+                });
+            }
             // function LoadDataPage(page) {
             //     var loaderId = showLoader("Loading Data..", "warning");
             //     var Departments = $('#ddlDptSearch').val();
@@ -236,33 +253,7 @@
             //         }
             //     });
             // }
-            function getDistricts(elem) {
-                var id = $(elem).val();
-                var formData = new FormData();
-                formData.append("Divisions", id);
-                //alert(id);
-                $.ajax({
-                    type: "POST",
-                    url: "/Admin/bind_combo_Districts",
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function (data) { bind_combo_Districts(data); },
-                    error: function () {
-                        autoLoader(res, "error");
-                    }
-                });
-            }
-            function bind_combo_Districts(data) {
-                $("#ddlDistrictsSearch option:selected").prop("selected", false);
-                $("#ddlDistrictsSearch option").remove();
-                var markup = null;
-                for (var x = 0; x < data.length; x++) {
-                    markup += "<option value=" + data[x].district_id + ">" + data[x].district_name + "</option>";
-                }
-                $("#ddlDistrictsSearch").html(markup);
-                $('#ddlDistrictsSearch').multiselect('rebuild');
-            }
+            
             function getTehsils(elem) {
                 var id = $(elem).val();
                 var formData = new FormData();
@@ -280,6 +271,17 @@
                     }
                 });
             }
+            function bind_combo_Districts(data) {
+                $("#ddlDistrictsSearch option:selected").prop("selected", false);
+                $("#ddlDistrictsSearch option").remove();
+                var markup = null;
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<option value=" + data[x].district_id + ">" + data[x].district_name + "</option>";
+                }
+                $("#ddlDistrictsSearch").html(markup);
+                $('#ddlDistrictsSearch').multiselect('rebuild');
+            }
+            
             function bind_combo_Tehsil(data) {
                 $("#ddlTehsil option:selected").prop("selected", false);
                 $("#ddlTehsil option").remove();
