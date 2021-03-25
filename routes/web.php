@@ -32,6 +32,9 @@ use App\Http\Controllers\UserController;
 //................Home________Route..................
 Route::get('/', [AdminController::class, 'home']);
 
+Route::match(['get','post'], '/testform', [AdminController::class, 'testform']);
+Route::match(['get','post'], '/storetestform', [AdminController::class, 'storetestform']);
+
 //................Auth/Login________Route..................
 Auth::routes();
 

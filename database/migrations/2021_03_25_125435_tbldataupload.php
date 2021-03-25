@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAddDatasTable extends Migration
+class Tbldataupload extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateAddDatasTable extends Migration
      */
     public function up()
     {
-        Schema::create('add_datas', function (Blueprint $table) {
+        Schema::create('Tbldataupload', function (Blueprint $table) {
             $table->id('data_id');
             $table->integer('datatype_id');
             $table->integer('user_id');
@@ -47,6 +47,6 @@ class CreateAddDatasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('add_datas');
+        //
     }
 }

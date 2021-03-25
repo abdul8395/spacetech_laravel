@@ -23,33 +23,33 @@ var App = function () {
             //_.templateSettings = {
             //    interpolate: /\{\{(.+?)\}\}/g
             //};
-            $(".select2").each(function (i, o) {
-                var placeholder = $(o).data("placeholder");
-                var onunselect = $(o).data("onunselect");
-                $(o).select2({
-                    placeholder: placeholder,
-                    allowClear: true
-                }).on("select2:unselect", function (e) {
-                    if (onunselect !== undefined && onunselect !== null && onunselect !== "") {
-                        var fn = window[onunselect];
-                        fn(e);
-                    }
-                });
+            // $(".select2").each(function (i, o) {
+            //     var placeholder = $(o).data("placeholder");
+            //     var onunselect = $(o).data("onunselect");
+            //     $(o).select2({
+            //         placeholder: placeholder,
+            //         allowClear: true
+            //     }).on("select2:unselect", function (e) {
+            //         if (onunselect !== undefined && onunselect !== null && onunselect !== "") {
+            //             var fn = window[onunselect];
+            //             fn(e);
+            //         }
+            //     });
                 //$(o).val(null).trigger("change");
                 //$(o).select2("val", null).trigger("change");
             });
 
             //$('[data-mask]').inputmask();
 
-            $('.datepicker').datepicker({
-                autoclose: true
-            });
-            $(".datepicker-year").datepicker({
-                format: "yyyy",
-                viewMode: "years",
-                minViewMode: "years",
-                autoclose: true
-            });
+            // $('.datepicker').datepicker({
+            //     autoclose: true
+            // });
+            // $(".datepicker-year").datepicker({
+            //     format: "yyyy",
+            //     viewMode: "years",
+            //     minViewMode: "years",
+            //     autoclose: true
+            // });
 
             //$('.timepicker').each(function (i, e) {
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Tbladmin extends Migration
+class MobileNoToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,8 @@ class Tbladmin extends Migration
      */
     public function up()
     {
-        Schema::create('add_datas', function (Blueprint $table) {
-            $table->id('userid');
-            $table->string('name');
-            $table->string('email');
-            $table->string('phone_no');
-            $table->string('Password');
-            
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            //
         });
     }
 
@@ -31,6 +25,8 @@ class Tbladmin extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('users', function (Blueprint $table) {
+            //
+        });
     }
 }

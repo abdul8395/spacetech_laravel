@@ -25,9 +25,12 @@
                             <span class="pull-right panel-collapsed clickable"><i class="glyphicon glyphicon-chevron-down"></i></span>
                         </div>
                         <div class="panel-body collapse">
-
-                        <select class="form-control" id="sel" onchange="fetch_select(this.value);" name="call_sign"><option value="0"></option><option value="1"> BUD0</option><option value="2">118RS</option><option value="3">23A01</option><option value="4">606RC</option><option value="5">A2B01</option><option value="6">AA001</option><option value="7">AA002</option><option value="8">AA003</option>
-                        </select>
+                            <select id="departments" name="months[]" multiple="multiple" style="width:500px;">
+                                <option value="JAN">HCM</option>
+                                <option value="FEB">Admin</option>
+                                <option value="MAR">IT</option>
+                                <option value="APR">Accounts</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -40,8 +43,12 @@
                             <span class="pull-right panel-collapsed clickable"><i class="glyphicon glyphicon-chevron-down"></i></span>
                         </div>
                         <div class="panel-body collapse">
-                            @Html.DropDownList("ddlDivisionSearch", (IEnumerable<SelectListItem>)ViewBag.DivisionTiles, null, new { @Id = "ddlDivisionSearch", @class = "select2", @multiple = "multiple", @style = "width:100%;", onchange = "getDistricts(this)" })
-
+                            <select id="example" name="months[]" multiple="multiple" style="width:500px;">
+                                <option value="JAN">January</option>
+                                <option value="FEB">February</option>
+                                <option value="MAR">March</option>
+                                <option value="APR">April</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -129,6 +136,18 @@
 
 
         <script>
+         
+         $(document).ready(function () {
+                // LoadDataPage();
+                // $('.jqselect2').select2();
+                $('#example').select2({
+                    placeholder: 'Select Divisions'
+                });
+                $('#departments').select2({
+                    // placeholder: 'Select Departments'
+                });
+
+        });
         function fetch_select(v){}
             function showUpdateAccessModal(id, pp) {
                 $('#ddlPrivacyUpdate').val(pp);
@@ -206,10 +225,7 @@
                     }
                 });
             }
-            $(document).ready(function () {
-                // LoadDataPage();
-
-            });
+           
             function getDistricts(elem) {
                 var id = $(elem).val();
                 var formData = new FormData();

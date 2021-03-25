@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 
 class SuperAdminController extends Controller
@@ -26,20 +27,23 @@ class SuperAdminController extends Controller
         return view('superadmin.Register');
     } 
     public  function storeadmin(Request $request){
-        dd($request);
-        // $request->validate([
-        //     'name' => 'required',
-        //     'mno' => 'required',
-        //     'email' => 'required'
-        // ]);
+        $request->validate([
+            'name' => ['required','string'],
+            'mobileno' => ['required','max:14'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:3', 'confirmed']
+        ]);
+        // return $request->all();
+        
 
-        // $utb = new User();
-        // $utb->name = $request->name;
-        // $utb->mobile_no = $request->mno;
-        // $utb->email = $request->email;
-        // $utb->password = $request->password;
-        // $utb->role = 2;
-        // $utb->save();
+        $utb = new User();
+        $utb->name = $request->name;
+        $utb->mobile_no = $request->mobileno;
+        $utb->email = $request->email;
+        $utb->password =Hash::make($request->password);
+        $utb->role = 2;
+        $utb->save();
+        return back()->with('success', 'Admin has been Created.');
         // return redirect()->route('/');
     } 
 }

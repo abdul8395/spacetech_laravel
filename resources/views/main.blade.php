@@ -14,10 +14,11 @@
     <link rel="shortcut icon" href="{{URL::asset('/images/logo.png')}}" type="image/x-icon">
     <!-- include the site stylesheet -->
     
+    
     <link href="{{URL::asset('/NewLayout/css/bootstrap.min.css')}}" rel="stylesheet" />
     <link href="{{URL::asset('/NewLayout/css/all.css')}}" rel="stylesheet" />
     <link href="{{URL::asset('/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" />
-    <link href="{{URL::asset('/assets/admin/bower_components/select2/dist/css/select2.min.css')}}" rel="stylesheet" />
+    <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> -->
     <link href="{{URL::asset('/assets/admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}" rel="stylesheet" />
     <link href="{{URL::asset('/assets/bootstrap-select/dist/css/bootstrap-select.min.css')}}" rel="stylesheet" />
     <link href="{{URL::asset('/assets/toastr/toastr.min.css')}}" rel="stylesheet" />
@@ -25,6 +26,13 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
     <!-- <link href="../../Content/newdashboard-custom.css" rel="stylesheet" /> -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+	
+
+    
+
+   
 
     <!-- <link href="../../Content/newdashboard-custom.css" rel="stylesheet" />  -->
     <script src="{{URL::asset('/Scripts/jquery-1.11.2.js')}}"></script>
@@ -156,6 +164,8 @@
                     <ul class="navigation list-unstyled list-inline" style="width:100%;">
 
                         <li><a href="{{ url('/') }}">Home</a></li>
+
+                        <!-- <li><a href="{{ url('/testform') }}">testform</a></li> -->
                         @if(Auth::check())
                             @if(Auth::user()->role==1)
                            
@@ -204,7 +214,9 @@
     
     <script src="{{URL::asset('/NewLayout/js/bootstrap.min.js')}}"></script>
     <script src="{{URL::asset('/NewLayout/js/jquery.main.js')}}"></script>
-    <script src="{{URL::asset('/assets/admin/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
+     <!-- jquery multi select -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
     <script src="{{URL::asset('/assets/admin/bower_components/moment/min/moment.min.js')}}"></script>
     <script src="{{URL::asset('/assets/admin/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{URL::asset('/assets/admin/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
@@ -221,6 +233,7 @@
 </html>
 
 <script>
+       
     document.onreadystatechange = function () {
        
         var state = document.readyState
@@ -288,7 +301,7 @@
         }
     }
     $(function () {
-        $('.datepicker').datepicker({ dateFormat: 'dd-MMM-YYYY' });
+        // $('.datepicker').datepicker({ dateFormat: 'dd-MMM-YYYY' });
         // PendingRequestCount();
         // UnApprovedCount();
     });

@@ -21,7 +21,7 @@
         </div>
         @endif
 
-        <form action="" method="post" action="{{ action('FormValidtionController@createUserForm') }}">
+        <form method="post" action="{{ url('/storetestform') }}">
 
             @csrf
 
@@ -38,6 +38,15 @@
 
             <input type="submit" name="send" value="Submit" class="btn btn-dark btn-block">
         </form>
+        @if ($errors->any())
+      <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+      </div><br />
+    @endif
     </div>
 </body>
 

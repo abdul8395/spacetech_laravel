@@ -70,7 +70,23 @@
 
     </div>
     <div class="col-md-9">
-        <form action="{{url('/add_data_store')}}" method="POST">
+     <!-- Success message -->
+     @if(Session::has('success'))
+        <div class="alert alert-success">
+            {{Session::get('success')}}
+        </div>
+        @endif
+
+        @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div><br />
+            @endif
+        <form action="{{url('/add_data_store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
             <div class="col-md-12" style="margin-top:5px;">
                 <strong>Privacy Level</strong>
@@ -94,13 +110,13 @@
             <div class="clearfix"></div>
 
             <div class="col-md-12" style="margin-top:5px;">
-                <strong>Type</strong>
-                <select class="form-control" name="privacy_level">
+                <strong>Data Type</strong>
+                <select class="form-control" name="dtype">
                 <option selected disabled>--Select Type of Data--</option>
-                    <option value="pdf">PDF</option>
-                    <option value="shape">Shape</option>
-                    <option value="image">Image</option>
-                    <option value="text">Text</option>
+                    <option value="6">PDF</option>
+                    <option value="5">Shape</option>
+                    <option value="4">Image</option>
+                    <option value="1">Text</option>
                 </select>
                 <!-- <input type="text" id="txtDataName" name="type" class="form-control" style="margin-top: 10px;" placeholder="Enter Type Here" /> -->
                 <!-- @Html.DropDownList("ddlType", (IEnumerable<SelectListItem>)ViewBag.Extension, "-- Select Type Of Data --", new { @Id = "ddlType", @class = "form-control ", @style = "width:100%;margin-top: 10px;", @onchange = "FindAccept()" }) -->
@@ -118,7 +134,7 @@
             <div class="clearfix"></div>
             <div class="col-md-12" style="margin-top:5px;">
                 <strong>Description</strong>
-                <textarea class="form-control" name="des" id="txtDescription" style="margin-top: 10px;" placeholder="Enter Description Here"></textarea>
+                <textarea class="form-control" name="description" id="txtDescription" style="margin-top: 10px;" placeholder="Enter Description Here"></textarea>
             </div>
             <div class="col-md-12" style="margin-top:5px;">
                 <strong>Usage</strong>
@@ -132,7 +148,7 @@
             <div class="col-md-12" style="margin-top:25px;">
                 <strong class="col-md-2">Year of Data</strong>
                 <div class="col-md-3">
-                    <input type="text" name="yeardata" class="datepicker form-control" value="09-08-2020" id="txtCreationDate">
+                    <input type="text" name="datayear" class="datepicker form-control" value="09-08-2020" id="txtCreationDate">
                 </div>
                 <div class="col-md-7" id="divPDF">
                     <strong class="col-md-3">Page No Of Map</strong>
@@ -167,6 +183,7 @@
                 </div>
             </div>
         </form>
+           
     </div>
 </div>
 <div class="clearfix"></div>
