@@ -9,7 +9,7 @@
 
                     <small style="color: #888888;"><b>IsVector: </b><input type="checkbox" checked /></small>
 
-                    <!-- <small style="color: #888888;"><b>IsVector: </b><input type="checkbox" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Resolution:</b> xy</small> -->
+                    <!-- <small style="color: #888887;"><b>IsVector: </b><input type="checkbox" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Resolution:</b> xy</small> -->
 
 
                 <br />

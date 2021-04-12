@@ -48,7 +48,7 @@ class AdminController extends Controller
         $tbl_dataupload->data_usage_purpose = $request->usage;
         $tbl_dataupload->data_crs = $request->crs;
         $tbl_dataupload->save();
-        return back()->with('success', 'Data has been Submitted successfully.');
+        return back()->with('success', 'Data has been Submitted successfuly.');
         // // return redirect()->route('index');
     } 
     

@@ -43,7 +43,7 @@ class SuperAdminController extends Controller
         $utb->password =Hash::make($request->password);
         $utb->role = 2;
         $utb->save();
-        return back()->with('success', 'Admin has been Created succesfully.');
+        return back()->with('success', 'Admin has been Created succesfuly.');
         // return redirect()->route('/');
     } 
 }

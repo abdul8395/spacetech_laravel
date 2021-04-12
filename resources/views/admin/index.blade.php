@@ -186,7 +186,7 @@
                     },
                     success: function (res) {
                         if (res == "true") {
-                            autoLoader("Your Request is Sent so Please Wait For Approval", "success", "Request Sent!");
+                            autoLoader("Your Request is Sent  and Please Wait For Approval", "success", "Request Sent!");
                             LoadDataPage();
                             $('#hidDataId').val(null);
                         }

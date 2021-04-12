@@ -72,7 +72,7 @@
     <div class="col-md-9">
      <!-- Success message -->
      @if(Session::has('success'))
-        <div class="alert alert-successs">
+        <div class="alert alert-succes">
             {{Session::get('success')}}
         </div>
         @endif
