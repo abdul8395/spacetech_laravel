@@ -14,8 +14,8 @@ use App\Models\tbl_divi;
 // use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use ZanySoft\Zip\Zip;
-use ZipArchive;
+// use ZanySoft\Zip\Zip;
+// use ZipArchive;
 
 
 header('Content-Type: application/json');
@@ -43,7 +43,7 @@ class AdminController extends Controller
     } 
     public function Load_DataPage(){
         // $dt=DataUpload::all();
-        $dt=DB::select("SELECT data_id, data_name, data_storage_date, data_creation_date, data_description, data_crs, data_usage_purpose, data_isvector
+        $dt=DB::select("SELECT data_id, data_name, data_storage_date, data_creation_date, data_description, data_crs, data_usage_purpose, data_isvector,isapproved
                 FROM space_tech.tbl_data_upload
                 INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  space_tech.tbl_data_upload.datatype_id
                 where space_tech.tbl_data_upload.isapproved=true;");
@@ -51,7 +51,7 @@ class AdminController extends Controller
     } 
     public function detailbtn($data){
         $d_id=$data;
-        $dtup = DB::select("SELECT data_id, dt.datatype_name, data_name, data_storage_date, data_creation_date, data_description, data_crs, data_usage_purpose, data_isvector
+        $dtup = DB::select("SELECT data_id, dt.datatype_name, data_name, data_storage_date, data_creation_date, data_description, data_crs, data_usage_purpose, data_isvector, privacy_level
         FROM space_tech.tbl_data_upload
         INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  space_tech.tbl_data_upload.datatype_id
         where space_tech.tbl_data_upload.data_id=$d_id;");

@@ -57,19 +57,23 @@
                             <small class="badge badge-success" style="background-color:#dfb100;margin:0;font-size:12px;">{{$p->department_name}}</small>
                         @endforeach
                             <br />
-                            <div class="pull-right" style="margin:5px;">
+                            @foreach($dtup as $p)
+                            @if($p->privacy_level == "Public")
+                            <div onclick="downloadbtn({{$p->data_id}})" class="pull-right" style="margin:5px;">
                                 <a  class="btn btn-warning btn-sm " style="color: white;
                                     height: 25px;
                                     font-size: 13px;
                                     ">Download</a>
-
-                                    </div>
-
-                                    <span class="btn btn-primary btn-sm pull-right" onclick="RequestData(@item.data_id)" style="color: white;
-                    height: 25px;
-                    font-size: 13px;
-            ">Request</span>
-
+                            </div>
+                            @endif
+                            @if($p->privacy_level == "Protected")
+                            <span class="btn btn-primary btn-sm pull-right" onclick="Requestbtn({{$p->data_id}})" style="color: white;
+                                    height: 25px;
+                                    font-size: 13px;
+                            ">Request</span>
+                            @endif
+                            @endforeach
+                            
                 <div class="pull-right" style="margin:5px;">
                     <span class="btn btn-success btn-sm" onclick="LoadDataPage()" style="height:25px; font-size:13px;"><span>Back</span></span>
                 </div>
