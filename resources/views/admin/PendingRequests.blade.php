@@ -38,7 +38,12 @@
             <label>Type</label>
         </div>
         <div class="col-md-8">
-            @Html.DropDownList("ddlTypeSearch", (IEnumerable<SelectListItem>)ViewBag.Extension, "-- Select Type Of Data --", new { @Id = "ddlTypeSearch", @class = "form-control select2", @style = "width:100%;" })
+         <select id="ddlTypeSearch" name="months[]" class = "form-control select2" style = "width:100%;">
+            <option value="">-- Select Type Of Data --</option>
+                @foreach($dtype as $p)
+                    <option value="{{$p->datatype_id}}">{{$p->datatype_name}}</option>
+                @endforeach
+            </select>
         </div>
     </div>
     <div class="form-group col-md-5">
@@ -46,14 +51,20 @@
             <label>Source</label>
         </div>
         <div class="col-md-8">
-            @Html.DropDownList("ddlDptSearch", (IEnumerable<SelectListItem>)ViewBag.Department, "-- Select Source --", new { @Id = "ddlDptSearch", @class = "form-control select2", @style = "width:100%;" })
+        <select id="ddlsrcSearch" name="months[]" class = "form-control select2" style = "width:100%;">
+                <option value="">-- Select Source --</option>
+                @foreach($dsrc as $p)
+                    <option value="{{$p->source_id}}">{{$p->source_name}}</option>
+                @endforeach
+            </select>
+            
         </div>
     </div>
 
-        <div class="form-group col-md-2 ">
+        <!-- <div class="form-group col-md-2 ">
                 <input type="hidden" id="hidDataId" />
                 <input type="button" class="btn btn-success" value="Add New File" onclick="showAddFileModal(0)" />
-            </div>
+            </div> -->
     
 
 </div>

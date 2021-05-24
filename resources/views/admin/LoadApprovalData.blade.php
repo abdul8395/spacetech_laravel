@@ -1,4 +1,4 @@
-@model IEnumerable<SpaceTechPG.Models.tbl_approval_log>
+
 <style>
     .btn-info, .btn-warning, .btn-danger {
         border-radius: 0px;
@@ -9,19 +9,7 @@
         color: #fff;
     }
 </style>
-@{
-    string Role = string.Empty;
-    string Email = string.Empty;
-    int UserId = 0;
-    if (Session["Role"] != null)
-    {
-        Role = Session["Role"].ToString();
-    }
-    if (Session["UserId"] != null)
-    {
-        UserId = int.Parse(Session["UserId"].ToString());
-    }
-}
+
 <table class="table table-striped" id="tbl_Data" style="width:100%;">
     <thead>
         <tr>

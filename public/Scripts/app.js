@@ -1,98 +1,123 @@
 ﻿
 
-$(function () {
+// $(function () {
 
-    App.init();
-
-
-    //$('#example2').DataTable({
-    //    'paging': true,
-    //    'lengthChange': false,
-    //    'searching': false,
-    //    'ordering': true,
-    //    'info': true,
-    //    'autoWidth': false
-    //});
-
-});
+//     App.init();
 
 
-var App = function () {
-    return {
-        init: function () {
-            //_.templateSettings = {
-            //    interpolate: /\{\{(.+?)\}\}/g
-            //};
-            // $(".select2").each(function (i, o) {
-            //     var placeholder = $(o).data("placeholder");
-            //     var onunselect = $(o).data("onunselect");
-            //     $(o).select2({
-            //         placeholder: placeholder,
-            //         allowClear: true
-            //     }).on("select2:unselect", function (e) {
-            //         if (onunselect !== undefined && onunselect !== null && onunselect !== "") {
-            //             var fn = window[onunselect];
-            //             fn(e);
-            //         }
-            //     });
-                //$(o).val(null).trigger("change");
-                //$(o).select2("val", null).trigger("change");
-            });
+//     //$('#example2').DataTable({
+//     //    'paging': true,
+//     //    'lengthChange': false,
+//     //    'searching': false,
+//     //    'ordering': true,
+//     //    'info': true,
+//     //    'autoWidth': false
+//     //});
 
-            //$('[data-mask]').inputmask();
+// });
 
-            // $('.datepicker').datepicker({
-            //     autoclose: true
-            // });
-            // $(".datepicker-year").datepicker({
-            //     format: "yyyy",
-            //     viewMode: "years",
-            //     minViewMode: "years",
-            //     autoclose: true
-            // });
 
-            //$('.timepicker').each(function (i, e) {
+// var App = function () {
+//     return {
+//         init: function () {
+//             //_.templateSettings = {
+//             //    interpolate: /\{\{(.+?)\}\}/g
+//             //};
+//             // $(".select2").each(function (i, o) {
+//             //     var placeholder = $(o).data("placeholder");
+//             //     var onunselect = $(o).data("onunselect");
+//             //     $(o).select2({
+//             //         placeholder: placeholder,
+//             //         allowClear: true
+//             //     }).on("select2:unselect", function (e) {
+//             //         if (onunselect !== undefined && onunselect !== null && onunselect !== "") {
+//             //             var fn = window[onunselect];
+//             //             fn(e);
+//             //         }
+//             //     });
+//                 //$(o).val(null).trigger("change");
+//                 //$(o).select2("val", null).trigger("change");
+//             }
 
-            //    $(e).timepicker({
-            //        showInputs: false,
-            //        defaultTime: false
-            //    });
-            //});
-            //$('.timepicker').timepicker({
-            //    showInputs: false,
-            //    defaultTime: false
-            //});
+//             //$('[data-mask]').inputmask();
 
-            //Date range picker
-            //$('.dateRangePicker').daterangepicker();
+//             // $('.datepicker').datepicker({
+//             //     autoclose: true
+//             // });
+//             // $(".datepicker-year").datepicker({
+//             //     format: "yyyy",
+//             //     viewMode: "years",
+//             //     minViewMode: "years",
+//             //     autoclose: true
+//             // });
 
-            //$('.editor').wysihtml5()
-        },
-        Make_Select2: function (className) {
-            $("." + className).each(function (i, o) {
-                var placeholder = $(o).data("placeholder");
-                var onunselect = $(o).data("onunselect");
-                $(o).select2({
-                    placeholder: placeholder,
-                    allowClear: true
-                }).on("select2:unselect", function (e) {
-                    if (onunselect !== undefined && onunselect !== null && onunselect !== "") {
-                        var fn = window[onunselect];
-                        fn(e);
-                    }
-                });
-                //$(o).val(null).trigger("change");
-                //$(o).select2("val", null).trigger("change");
-            });
-        },
-        Make_TimePicker: function () {
-            $('.timepicker').timepicker({
-                showInputs: false,
-                defaultTime: false
-            });
-        }
-    }
-}();
+//             //$('.timepicker').each(function (i, e) {
+
+//             //    $(e).timepicker({
+//             //        showInputs: false,
+//             //        defaultTime: false
+//             //    });
+//             //});
+//             //$('.timepicker').timepicker({
+//             //    showInputs: false,
+//             //    defaultTime: false
+//             //});
+
+//             //Date range picker
+//             //$('.dateRangePicker').daterangepicker();
+
+//             //$('.editor').wysihtml5()
+//         }
+//     //     Make_Select2: function (className) {
+//     //         $("." + className).each(function (i, o) {
+//     //             var placeholder = $(o).data("placeholder");
+//     //             var onunselect = $(o).data("onunselect");
+//     //             $(o).select2({
+//     //                 placeholder: placeholder,
+//     //                 allowClear: true
+//     //             }).on("select2:unselect", function (e) {
+//     //                 if (onunselect !== undefined && onunselect !== null && onunselect !== "") {
+//     //                     var fn = window[onunselect];
+//     //                     fn(e);
+//     //                 }
+//     //             });
+//     //             //$(o).val(null).trigger("change");
+//     //             //$(o).select2("val", null).trigger("change");
+//     //         });
+//     //     }
+//     //     Make_TimePicker: function () {
+//     //         $('.timepicker').timepicker({
+//     //             showInputs: false,
+//     //             defaultTime: false
+//     //         });
+//     //     }
+//     // }
+// }
+
+        // Make_Select2: function (className) {
+        //     $("." + className).each(function (i, o) {
+        //         var placeholder = $(o).data("placeholder");
+        //         var onunselect = $(o).data("onunselect");
+        //         $(o).select2({
+        //             placeholder: placeholder,
+        //             allowClear: true
+        //         }).on("select2:unselect", function (e) {
+        //             if (onunselect !== undefined && onunselect !== null && onunselect !== "") {
+        //                 var fn = window[onunselect];
+        //                 fn(e);
+        //             }
+        //         });
+        //         //$(o).val(null).trigger("change");
+        //         //$(o).select2("val", null).trigger("change");
+        //     });
+        // }
+        // Make_TimePicker: function () {
+        //     $('.timepicker').timepicker({
+        //         showInputs: false,
+        //         defaultTime: false
+        //     });
+        // }
+    
 
 var Maps = function () {
     return {

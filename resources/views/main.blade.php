@@ -6,7 +6,7 @@
     <meta charset="utf-8">
 
       <!-- CSRF Token -->
-      <meta name="csrf-token" content="{{ csrf_token() }}">
+      <!-- <meta name="csrf-token" content="{{ csrf_token() }}"> -->
       
     <!-- set the viewport width and initial-scale on mobile devices -->
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0 "> -->
@@ -28,14 +28,12 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
-	
-
-    
 
    
 
     <!-- <link href="../../Content/newdashboard-custom.css" rel="stylesheet" />  -->
     <script src="{{URL::asset('/Scripts/jquery-1.11.2.js')}}"></script>
+
     <style>
         .shadowboxTable {
             width: 15em;
@@ -94,7 +92,8 @@
     </style>
 </head>
 <body>
- 
+
+  
     <div id="load"></div>
     <!-- <div id="contents"> -->
 
@@ -114,8 +113,8 @@
 
                 <div class="login-holder">
                     <ul class="login-list list-unstyled list-inline">
-                        <li class="pull-left" style="margin-left:200px">
-                            <a href="#"><strong style="font-size:30px;">Centralized Dashboard</strong></a>
+                        <li class="pull-left" style="margin-left:100px">
+                            <a href="#"><strong style="font-size:30px;">Centralized Dashboard For Data Sharing</strong></a>
                         </li>
 
                             <!-- <li id="login_li">
@@ -138,7 +137,7 @@
                             </li>
                                 @if(Auth::user()->role==1)
                                 <li id="login_li">
-                                    <a href="{{ url('/superadmin/add_users') }}">Add Users</a>
+                                    <a href="{{ url('/superadmin/admins') }}">Add Users</a>
                                 </li>
                                 @endif
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -191,7 +190,7 @@
                                 <li><a href="{{ url('/superadmin/change_pass') }}">Change Password</a></li>
                             @endif
                             @if(Auth::user()->role==2)
-                                <li><a href="#">Change Password</a></li>
+                                <li><a href="{{ url('/change_pass') }}">Change Password</a></li>
                             @endif
                         @endif
 
@@ -208,7 +207,7 @@
 
     <footer id="footer">
         <div class="container">
-            <span>Space Technology Application in Socio-Economic Development Progress &copy; @System.DateTime.Now.Year <a href="#"></a></span>
+            <span>Space Technology Application in Socio-Economic Development Progress &copy; <?php echo date("Y");?> <a href="#"></a></span>
         </div>
     </footer>
     
@@ -234,16 +233,19 @@
 
 <script>
        
+
+       
+
     document.onreadystatechange = function () {
        
         var state = document.readyState
         if (state == 'interactive') {
-            document.getElementById('contents').style.visibility = "hidden";
+            // document.getElementById('contents').style.visibility = "hidden";
         } else if (state == 'complete') {
             setTimeout(function () {
                 document.getElementById('interactive');
                 document.getElementById('load').style.visibility = "hidden";
-                document.getElementById('contents').style.visibility = "visible";
+                // document.getElementById('contents').style.visibility = "visible";
             }, 1000);
         }
     }

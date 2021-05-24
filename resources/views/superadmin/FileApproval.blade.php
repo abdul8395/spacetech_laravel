@@ -12,9 +12,7 @@
 </h2>
 <div class="tab-content jumbotron col-md-10 col-md-offset-1">
    
-    <div class="form-group pull-right">
-        <span class="btn btn-danger" style="border-radius:10px;" onclick="LoadData()">Search</span>
-    </div><hr />
+    
     <div class="form-group col-md-3">
         <div class="col-md-4">
             <label>Storage Date</label>
@@ -31,7 +29,8 @@
             <input type="text" class="datepicker form-control" value="" id="txtSearchCreationDate">
         </div>
     </div>
-    @*<div class="form-group col-md-4">
+    
+    <!-- @*<div class="form-group col-md-4">
              <div class="col-md-4">
                  <label>Status</label>
              </div>
@@ -43,24 +42,38 @@
         }, "-- Select Status --", new { @class = "form-control" })
              </div>
 
-         </div>*@
+         </div>*@ -->
 
-    <div class="form-group col-md-3">
-        <div class="col-md-4">
-            <label>Type</label>
+        <div class="form-group col-md-3">
+            <div class="col-md-4">
+                <label>Type</label>
+            </div>
+            <div class="col-md-8">
+            <select id="ddlTypeSearch" name="months[]" class = "form-control select2" style = "width:100%;">
+                <option value="">-- Select Type Of Data --</option>
+                    @foreach($dtype as $p)
+                        <option value="{{$p->datatype_id}}">{{$p->datatype_name}}</option>
+                    @endforeach
+                </select>
+            </div>
+        
         </div>
-        <div class="col-md-8">
-            @Html.DropDownList("ddlTypeSearch", (IEnumerable<SelectListItem>)ViewBag.ExtensionSearch, "-- Select Type --", new { @Id = "ddlTypeSearch", @class = "form-control select2", @style = "width:100%;" })
+        <div class="form-group col-md-3">
+            <div class="col-md-4">
+                <label>Source</label>
+            </div>
+            <div class="col-md-8">
+                <select id="ddlsrcSearch" name="months[]" class = "form-control select2" style = "width:100%;">
+                    <option value="">-- Select Source --</option>
+                    @foreach($dsrc as $p)
+                        <option value="{{$p->source_id}}">{{$p->source_name}}</option>
+                    @endforeach
+                </select>
+            </div>  
         </div>
-    </div>
-    <div class="form-group col-md-3">
-        <div class="col-md-4">
-            <label>Source</label>
-        </div>
-        <div class="col-md-8">
-            @Html.DropDownList("ddlDptSearch", (IEnumerable<SelectListItem>)ViewBag.DepartmentSearch, "-- Select Source --", new { @Id = "ddlDptSearch", @class = "form-control select2", @style = "width:100%;" })
-        </div>
-    </div>
+        <div class="form-group pull-right">
+        <span class="btn btn-danger" style="border-radius:10px;" onclick="LoadData()">Search</span>
+    </div><hr />
     <div id="rejectionModel" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog" style="width:60%;">
 
@@ -135,9 +148,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class=" btn btn-success" onclick="AddURL()" id="btnSaveURL" style="color:white;">Add</button>
-                    @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
-            </div>
+            </div>  
         </div>
     </div>
 
@@ -264,23 +277,19 @@
 
         });
         function LoadData() {
-            var InsertionDate = $('#txtSearchInsertionDate').val();
-            var CreationDate = $('#txtSearchCreationDate').val();
-            var Type = $('#ddlTypeSearch').val();
-            var Dpt = $('#ddlDptSearch').val();
+            var reqdata={
+                StorageDate: $('#txtSearchInsertionDate').val(),
+                CreationDate: $('#txtSearchCreationDate').val(),
+                Type: $('#ddlTypeSearch').val(),
+                Srcdpt: $('#ddlsrcSearch').val(),
+                };
+
             var Approved = true;
            // var Approved = $('#ddlIsApproved').val();
             var loaderId = showLoader("Loading Data..", "warning");
             $.ajax({
                 type: "GET",
-                url: "/SuperAdmin/Load_ApprovalData",
-                data: {
-                    InsertionDate: InsertionDate,
-                    CreationDate: CreationDate,
-                    Type: Type,
-                    Dpt: Dpt,
-                    Approved: Approved
-                },
+                url: "load_approval/" +JSON.stringify(reqdata),
                 success: function (res) {
                     $("#DataApprove_Grid").html(res);
                     $("#tbl_ApproveData").DataTable();

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class DataUpload extends Model
 {
-    protected $table = 'Tbldataupload';
+    protected $table = 'tbl_data_upload';
     public $timestamps = false;
 
 }

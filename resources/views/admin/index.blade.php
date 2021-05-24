@@ -2,6 +2,7 @@
 @extends('main')
 
 @section('content')
+
         <style>
 
             h3 {
@@ -25,11 +26,12 @@
                             <span class="pull-right panel-collapsed clickable"><i class="glyphicon glyphicon-chevron-down"></i></span>
                         </div>
                         <div class="panel-body collapse">
-                            <select id="departments" name="months[]" multiple="multiple" style="width:500px;">
-                                <option value="JAN">HCM</option>
-                                <option value="FEB">Admin</option>
-                                <option value="MAR">IT</option>
-                                <option value="APR">Accounts</option>
+                            <select id="deps" class="select2" name="dep" multiple="multiple" style="width:500px;">
+                            
+                                @foreach($deps as $id => $n)
+                                    <option value="{{$id}}">{{$n}}</option>
+                                @endforeach
+
                             </select>
                         </div>
                     </div>
@@ -43,11 +45,10 @@
                             <span class="pull-right panel-collapsed clickable"><i class="glyphicon glyphicon-chevron-down"></i></span>
                         </div>
                         <div class="panel-body collapse">
-                            <select id="example" name="months[]" multiple="multiple" style="width:500px;">
-                                <option value="JAN">January</option>
-                                <option value="FEB">February</option>
-                                <option value="MAR">March</option>
-                                <option value="APR">April</option>
+                            <select id="divis" class="select2" name="divi" multiple="multiple" style="width:500px;">
+                                @foreach($divs as $id => $n)
+                                    <option value="{{$id}}">{{$n}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -61,7 +62,9 @@
                             <span class="pull-right panel-collapsed clickable"><i class="glyphicon glyphicon-chevron-down"></i></span>
                         </div>
                         <div class="panel-body collapse">
-                            @Html.DropDownList("ddlDistrictsSearch", (IEnumerable<SelectListItem>)ViewBag.DistrictTiles, null, new { @Id = "ddlDistrictsSearch", @class = "select2", @multiple = "multiple", @style = "width:100%;", onchange = "getTehsils(this)" })
+                            <select id="dists" class="select2" name="dist" multiple="multiple" style="width:500px;">
+                             
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -74,20 +77,21 @@
                             <span class="pull-right panel-collapsed clickable"><i class="glyphicon glyphicon-chevron-down"></i></span>
                         </div>
                         <div class="panel-body collapse">
-                            @Html.DropDownList("ddlTehsil", (IEnumerable<SelectListItem>)ViewBag.TehsilTiles, null, new { @Id = "ddlTehsil", @class = "select2", @multiple = "multiple", @style = "width:100%;" })
-
+                            <select id="tehs" class="select2" name="teh" multiple="multiple" style="width:500px;">
+                               
+                            </select>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-12">
-                <span class="btn btn-primary btn-block" onclick="LoadDataPage(null);">Search</span>
+                <span id="srchbtn" class="btn btn-primary btn-block" >Search</span>
                 <br />
                 <span class="btn btn-block" style="background-color:black;color:white;" onclick="Reset();">Reset Filters</span>
             </div>
         </div>
         <div class="col-md-9">
-            @include('Admin.loadData')
+        <div id="tblData"></div>
         </div>
     </div>
     <div class="tab-content col-md-10 col-md-offset-1">
@@ -136,34 +140,143 @@
 
 
         <script>
-         
+          
          $(document).ready(function () {
-                // LoadDataPage();
-                // $('.jqselect2').select2();
-                $('#example').select2({
-                    placeholder: 'Select Divisions'
+            // $.ajaxSetup({
+            //     headers: {
+            //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //     }
+            // });       
+            LoadDataPage();
+            // $('.jqselect2').select2();
+            $('.select2').select2({
+
+            });
+            // $('#departments').select2({
+            //     // placeholder: 'Select Departments'
+            // });
+
+            $('select[name="divi"]').on('change',function(e){
+                e.preventDefault();
+                var divids= $(this).val();
+                console.log(divids);
+                if(divids)
+                {
+                    $.ajax({
+                        url : 'district/' +JSON.stringify(divids),
+                        type : "GET",
+                        dataType : "json",
+                        success:function(data){
+                            // console.log(data);
+                            $('select[name="dist"]').empty();
+                            for(var i=0;i<data.length;i++){
+                                $('select[name="dist"]').append('<option value="'+ data[i].district_id +'">'+ data[i].district_name +'</option>');
+                            }
+                        }
+                    });
+                }
+                else
+                {
+                    $('select[name="dist"]').empty();
+                }
+            });
+            $('select[name="dist"]').on('change',function(e){
+                e.preventDefault();
+                var distds= $(this).val();
+                // console.log(divids);
+                if(distds)
+                {
+                    $.ajax({
+                        url : 'tehsil/' +JSON.stringify(distds),
+                        type : "GET",
+                        dataType : "json",
+                        success:function(data){
+                            // console.log(data);
+                            $('select[name="distds"]').empty();
+                            for(var i=0;i<data.length;i++){
+                                $('select[name="teh"]').append('<option value="'+ data[i].tehsil_id +'">'+ data[i].tehsil_name +'</option>');
+                            }
+                        }
+                    });
+                }
+                else
+                {
+                    $('select[name="teh"]').empty();
+                }
+            });
+
+            $('#srchbtn').on('click',function(){
+                
+                // e.preventDefault();
+                var loaderId = showLoader("Loading Data..", "warning");
+                var alldata={
+                        // page: page,
+                        Departments: $('#deps').val(),
+                        Divisions: $('#divis').val(),
+                        Districts: $('#dists').val(),
+                        Tehsils: $('#tehs').val(),
+                        };
+                $.ajax({
+                    url : 'searchdata/' +JSON.stringify(alldata),
+                    type : "GET",
+                    success:function(data){
+                        // console.log(data);
+                        $("#tblData").empty();
+                        hideLoader(loaderId);
+                        $("#tblData").html(data);
+                    }
                 });
-                $('#departments').select2({
-                    // placeholder: 'Select Departments'
-                });
+            });
+
 
         });
+
+       
+           function LoadDataPage() {
+                var loaderId = showLoader("Loading Data..", "warning");
+                $.ajax({
+                    type : "GET", 
+                    url : 'loaddata/',
+                    success:function(data){
+                        // console.log(data);
+                        hideLoader(loaderId);
+                        $("#tblData").html(data);
+                        
+                    }
+                });
+            }
+            function detailbtn(data){
+                var loaderId = showLoader("Loading Data..", "warning");
+                $.ajax({
+                    type : "GET", 
+                    url : 'deatilbtn/'+data,
+                    success:function(data){
+                        // console.log(data);
+                        hideLoader(loaderId);
+                        $("#tblData").html(data);
+                        
+                    }
+                });
+            }
+
+            function Reset() {
+                $('#deps').val(null);
+                $('#deps').trigger('change');
+                $('#divis').val(null);
+                $('#divis').trigger('change');
+                $('#dists').val(null);
+                $('#dists').trigger('change');
+                $('#tehs').val(null);
+                $('#tehs').trigger('change');
+            }
+
         function fetch_select(v){}
             function showUpdateAccessModal(id, pp) {
                 $('#ddlPrivacyUpdate').val(pp);
                 $('#hidDataId').val(id);
                 $("#UpdateAccessModal").modal("show");
             }
-            function Reset() {
-                $('#ddlDptSearch').val(null);
-                $('#ddlDptSearch').trigger('change');
-                $('#ddlDivisionSearch').val(null);
-                $('#ddlDivisionSearch').trigger('change');
-                $('#ddlDistrictsSearch').val(null);
-                $('#ddlDistrictsSearch').trigger('change');
-                $('#ddlTehsil').val(null);
-                $('#ddlTehsil').trigger('change');
-            }
+           
             $(document).on('click', '.panel-heading span.clickable', function (e) {
                 var $this = $(this);
                 if (!$this.hasClass('panel-collapsed')) {
@@ -187,7 +300,7 @@
                     success: function (res) {
                         if (res == "true") {
                             autoLoader("Your Request is Sent  and Please Wait For Approval", "success", "Request Sent!");
-                            LoadDataPage();
+                            // LoadDataPage();
                             $('#hidDataId').val(null);
                         }
                         else {
@@ -212,7 +325,7 @@
                     success: function (res) {
                         if (res == "true") {
                             autoLoader("Record Updated", "success", "Update !");
-                            LoadDataPage();
+                            // LoadDataPage();
                             $('#hidDataId').val(null);
                             $('#UpdateAccessModal').modal('hide');
                         }
@@ -245,10 +358,10 @@
             }
             // function LoadDataPage(page) {
             //     var loaderId = showLoader("Loading Data..", "warning");
-            //     var Departments = $('#ddlDptSearch').val();
-            //     var Divisions = $('#ddlDivisionSearch').val();
-            //     var Districts = $('#ddlDistrictsSearch').val();
-            //     var Tehsils = $('#ddlTehsil').val();
+            //     var Departments = $('#deps').val();
+            //     var Divisions = $('#divis').val();
+            //     var Districts = $('#dists').val();
+            //     var Tehsils = $('#tehs').val();
             //     $.ajax({
             //         type: "POST",
             //         url: "/Admin/Load_DataPage",
@@ -262,7 +375,6 @@
             //         success: function (res) {
             //             $("#tblData").html(res);
             //             hideLoader(loaderId);
-
             //         },
             //         error: function (err) {
             //             autoLoader(err.statusText, "error", "Error !");

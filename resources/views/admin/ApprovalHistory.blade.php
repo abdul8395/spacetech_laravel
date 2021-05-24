@@ -37,7 +37,12 @@
             <label>Type</label>
         </div>
         <div class="col-md-8">
-            @Html.DropDownList("ddlTypeSearch", (IEnumerable<SelectListItem>)ViewBag.ExtensionSearch, "-- Select Type Of Data --", new { @Id = "ddlTypeSearch", @class = "form-control select2", @style = "width:100%;" })
+         <select id="ddlTypeSearch" name="months[]" class = "form-control select2" style = "width:100%;">
+            <option value="">-- Select Type Of Data --</option>
+                @foreach($dtype as $p)
+                    <option value="{{$p->datatype_id}}">{{$p->datatype_name}}</option>
+                @endforeach
+            </select>
         </div>
     </div>
     <div class="form-group col-md-5">
@@ -45,20 +50,26 @@
             <label>Source</label>
         </div>
         <div class="col-md-8">
-            @Html.DropDownList("ddlDptSearch", (IEnumerable<SelectListItem>)ViewBag.DepartmentSearch, "-- Select Source --", new { @Id = "ddlDptSearch", @class = "form-control select2", @style = "width:100%;" })
+        <select id="ddlsrcSearch" name="months[]" class = "form-control select2" style = "width:100%;">
+                <option value="">-- Select Source --</option>
+                @foreach($dsrc as $p)
+                    <option value="{{$p->source_id}}">{{$p->source_name}}</option>
+                @endforeach
+            </select>
+            
         </div>
     </div>
 
-        <div class="form-group col-md-2 ">
+        <!-- <div class="form-group col-md-2 ">
             <input type="hidden" id="hidDataId" />
             <input type="button" class="btn btn-success" value="Add New File" onclick="showAddFileModal(0)" />
-        </div>
+        </div> -->
 
 
 </div>
 <div class="tab-content col-md-10 col-md-offset-1">
     <div class="clearfix"></div><br /><br />
-        <div id="Data_Grid"></div>
+        <!-- <div id="Data_Grid"></div> -->
     <table class="table table-responsive" data-vertable="ver2" id="tblGrid"></table>
 </div>
 
@@ -93,67 +104,25 @@
 
     <script>
         $(document).ready(function () {
-            $("#tbl_Data").DataTable();
-            $('#txtSearchInsertionDate').val(null);
-            $('#txtSearchCreationDate').val(null);
+            // $("#tbl_Data").DataTable();
+            // $('#txtSearchInsertionDate').val(null);
+            // $('#txtSearchCreationDate').val(null);
            // LoadData();
             getGrid();
-
         });
-        function LoadData() {
-            var InsertionDate = $('#txtSearchInsertionDate').val();
-            var CreationDate = $('#txtSearchCreationDate').val();
-            var Type = $('#ddlTypeSearch').val();
-            var Dpt = $('#ddlDptSearch').val();
-            var loaderId = showLoader("Loading Data..", "warning");
-            $.ajax({
-                type: "GET",
-                url: "/Admin/Load_ApprovalData",
-                data: {
-                    InsertionDate: InsertionDate,
-                    CreationDate: CreationDate,
-                    Type: Type,
-                    Dpt: Dpt
-                },
-                success: function (res) {
-                    $("#Data_Grid").html(res);
-                    $("#tbl_Data").DataTable();
-                    hideLoader(loaderId);
 
-                },
-                error: function (err) {
-                    autoLoader(err.statusText, "error", "Error !");
-                }
-            });
-
-        }
-
-        function viewDescription(id)
-        {
-            $.ajax({
-                type: "GET",
-                url: "/Admin/ViewDescription",
-                data: {
-                    id: id
-                },
-                success: function (res) {
-                    if (res != "false") {
-                        $("#modalDescription").modal("show");
-                        $('#txtDescription').val(res);
-                     }
-                },
-                error: function (err) {
-                    autoLoader(err.statusText, "error", "Error !");
-                }
-            });
-          
-        }
-          var $table;
+        var $table;
         function getGrid() {
-            var InsertionDate = $('#txtSearchInsertionDate').val();
-            var CreationDate = $('#txtSearchCreationDate').val();
-            var Type = $('#ddlTypeSearch').val();
-            var Dpt = $('#ddlDptSearch').val();
+            var reqdata={
+                StorageDate: $('#txtSearchInsertionDate').val(),
+                CreationDate: $('#txtSearchCreationDate').val(),
+                Type: $('#ddlTypeSearch').val(),
+                Srcdpt: $('#ddlsrcSearch').val(),
+                };
+            // var InsertionDate = $('#txtSearchInsertionDate').val();
+            // var CreationDate = $('#txtSearchCreationDate').val();
+            // var Type = $('#ddlTypeSearch').val();
+            // var Dpt = $('#ddlDptSearch').val();
           //  var tmpl = _.template($('#tmpl_Grid').html());
 
             $table = $('#tblGrid').DataTable({
@@ -164,17 +133,20 @@
                 "ordering": true,
                 "search": true,
                 "processing": true,
-                "serverSide": true,
+                // "serverSide": true,
                 "destroy": true,
                 "ajax": {
-                    "url": "/Admin/Load_ApprovalDataTable",
-                    "type": "POST",
-                    "data": function myfunction(d) {
-                        d.InsertionDate = InsertionDate;
-                        d.CreationDate = CreationDate;
-                        d.Type = Type;
-                        d.Dpt = Dpt;
-                    },
+                    "url": "approval_loaddata/"+JSON.stringify(reqdata),
+                    "type": "GET",
+                    "dataSrc": "",
+                    // "headers": {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    // "data": function myfunction(d) {
+                    //     d._token : $('meta[name="csrf-token"]').attr('content'),
+                    //     d.InsertionDate = InsertionDate;
+                    //     d.CreationDate = CreationDate;
+                    //     d.Type = Type;
+                    //     d.Dpt = Dpt;
+                    // },
                 },
                 createdRow: function (row, data, dataIndex, cells) {
                     $(row).addClass('row100');
@@ -184,10 +156,10 @@
 
                 },
                 "columns": [
-                    { "data": "type", "title": "Type", "className": "column100 column1", "orderable": false, "searchable": false, "width": "20px", "data-column": "column1" },
-                    { "data": "name", "title": "Name", "className": "column100 column2", "orderable": false, "searchable": false, "width": "30px", "data-column": "column2" },
+                    { "data": "datatype_name", "title": "Type", "className": "column100 column1", "orderable": true, "searchable": false, "width": "20px", "data-column": "column1" },
+                    { "data": "data_name", "title": "Name", "className": "column100 column2", "orderable": true, "searchable": false, "width": "30px", "data-column": "column2" },
                     { "data": "data_storage_date", "title": "Storage Date", "className": "column100 column3", "orderable": false, "searchable": false, "width": "30px", "data-column": "column3" },
-                    { "data": "sourcename", "title": "Source", "className": "column100 column4", "orderable": false, "searchable": false, "width": "70px", "data-column": "column4" },
+                    { "data": "first_name", "title": "Source", "className": "column100 column4", "orderable": false, "searchable": false, "width": "70px", "data-column": "column4" },
                     { "data": "data_creation_date", "title": "Creation Date", "className": "column100 column5", "orderable": false, "searchable": false, "width": "190px", "data-column": "column5" },
                     { "data": "data_description", "title": "Desp.", "className": "column100 column6", "orderable": false, "searchable": false, "width": "30px", "data-column": "column6" },
                     { "data": "data_crs", "title": "CRS", "className": "column100 column7", "orderable": false, "searchable": false, "width": "75px", "data-column": "column7" },
@@ -199,11 +171,11 @@
                 ],
                 "order": [[0, "asc"]],
                 "rowCallback": function (row, data) {
-                    //console.log(data);
-                    var r = '<td>' + data.type + '</td>'
-                        + '<td>' + data.name + '</td>'
+                    // console.log(data);
+                    var r = '<td>' + data.datatype_name + '</td>'
+                        + '<td>' + data.data_name + '</td>'
                         + '<td>' + data.data_storage_date + '</td>'
-                        + '<td>' + data.sourcename + '</td>'
+                        + '<td>' + data.first_name + '</td>'
                         + '<td>' + data.data_creation_date + '</td>'
                         + '<td>' + data.data_description + '</td>'
                         + '<td>' + data.data_crs + '</td>'
@@ -227,17 +199,64 @@
                     }
                     if (data.isapproved == true)  {
                         r = r + '<td><span class="badge badge-success" style="background-color:green;">Approved</span></td>';
-
                     }
                      if (data.isapproved == false) {
                          r = r + '<td><span class="badge badge-danger" style="background-color:red;">Rejected</span>';
-                         r = r + '<span class="badge badge-danger" style="background-color:grey;" onclick="viewDescription('+data.id+')">View Desc.</span></td>';
+                         r = r + '<span class="badge badge-danger" style="background-color:grey;" onclick="viewDescription('+data.data_id+')">View Desc.</span></td>';
                      }
                     $(row).html(r);
                 }
             });
         }
        
+
+        function viewDescription(id)
+        {
+            $.ajax({
+                type: "GET",
+                url: "viewdes/"+JSON.stringify(id),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (res) {
+                    // console.log(res[0]["description"]) 
+                    if (res != "false") {
+                        $("#modalDescription").modal("show");
+                        $('#txtDescription').val(res[0]["description"]);
+                     }
+                },
+                error: function (err) {
+                    autoLoader(err.statusText, "error", "Error !");
+                }
+            });
+        }
+
+          // function LoadData() {
+        //     var InsertionDate = $('#txtSearchInsertionDate').val();
+        //     var CreationDate = $('#txtSearchCreationDate').val();
+        //     var Type = $('#ddlTypeSearch').val();
+        //     var Dpt = $('#ddlsrcSearch').val();
+        //     var loaderId = showLoader("Loading Data..", "warning");
+        //     $.ajax({
+        //         type: "GET",
+        //         url: "/Admin/Load_ApprovalData",
+        //         data: {
+        //             InsertionDate: InsertionDate,
+        //             CreationDate: CreationDate,
+        //             Type: Type,
+        //             Dpt: Dpt
+        //         },
+        //         success: function (res) {
+        //             $("#Data_Grid").html(res);
+        //             $("#tbl_Data").DataTable();
+        //             hideLoader(loaderId);
+
+        //         },
+        //         error: function (err) {
+        //             autoLoader(err.statusText, "error", "Error !");
+        //         }
+        //     });
+
+        // }
     </script>
 
 @endsection
