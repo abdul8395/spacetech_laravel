@@ -86,13 +86,14 @@
             getGrid();
 
         });
-        var $table;
+        // var $table;
         function getGrid() {
-            var InsertionDate = $('#txtSearchInsertionDate').val();
-            var CreationDate = $('#txtSearchCreationDate').val();
-            var Type = $('#ddlTypeSearch').val();
-            var Dpt = $('#ddlDptSearch').val();
-            //  var tmpl = _.template($('#tmpl_Grid').html());
+            var reqdata={
+                StorageDate: $('#txtSearchInsertionDate').val(),
+                CreationDate: $('#txtSearchCreationDate').val(),
+                Type: $('#ddlTypeSearch').val(),
+                Srcdpt: $('#ddlsrcSearch').val(),
+                };
 
             $table = $('#tblGrid').DataTable({
                 "dom": "<'row'<'col-sm-6'l><'col-sm-6 text-right'i>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-5'><'col-sm-7'p>>", //'<"top"rl>it<"bottom"p><"clear">',
@@ -102,17 +103,12 @@
                 "ordering": true,
                 "search": true,
                 "processing": true,
-                "serverSide": true,
+                // "serverSide": true,
                 "destroy": true,
                 "ajax": {
-                    "url": "/SuperAdmin/Load_PendingRequestsDataTable",
-                    "type": "POST",
-                    "data": function myfunction(d) {
-                        d.InsertionDate = InsertionDate;
-                        d.CreationDate = CreationDate;
-                        d.Type = Type;
-                        d.Dpt = Dpt;
-                    },
+                    "url": "sload_pending_req/"+JSON.stringify(reqdata),
+                    "type": "GET",
+                    "dataSrc": "",
                 },
                 createdRow: function (row, data, dataIndex, cells) {
                     $(row).addClass('row100');
@@ -122,11 +118,11 @@
 
                 },
                 "columns": [
-                    { "data": "username", "title": "User", "className": "column100 column1", "orderable": false, "searchable": false, "width": "20px", "data-column": "column1" },
-                    { "data": "type", "title": "Type", "className": "column100 column1", "orderable": false, "searchable": false, "width": "20px", "data-column": "column1" },
+                    { "data": "first_name", "title": "User", "className": "column100 column1", "orderable": false, "searchable": false, "width": "20px", "data-column": "column1" },
+                    { "data": "datatype_name", "title": "Type", "className": "column100 column1", "orderable": false, "searchable": false, "width": "20px", "data-column": "column1" },
                     { "data": "name", "title": "Name", "className": "column100 column2", "orderable": false, "searchable": false, "width": "30px", "data-column": "column2" },
                     { "data": "data_storage_date", "title": "Storage Date", "className": "column100 column3", "orderable": false, "searchable": false, "width": "30px", "data-column": "column3" },
-                    { "data": "sourcename", "title": "Source", "className": "column100 column4", "orderable": false, "searchable": false, "width": "70px", "data-column": "column4" },
+                    { "data": "first_name", "title": "Source", "className": "column100 column4", "orderable": false, "searchable": false, "width": "70px", "data-column": "column4" },
                     { "data": "data_creation_date", "title": "Creation Date", "className": "column100 column5", "orderable": false, "searchable": false, "width": "190px", "data-column": "column5" },
                     { "data": "data_description", "title": "Desp.", "className": "column100 column6", "orderable": false, "searchable": false, "width": "30px", "data-column": "column6" },
                     { "data": "data_crs", "title": "CRS", "className": "column100 column7", "orderable": false, "searchable": false, "width": "75px", "data-column": "column7" },
@@ -139,11 +135,11 @@
                 "order": [[0, "asc"]],
                 "rowCallback": function (row, data) {
                     console.log(data);
-                    var r = '<td>' + data.username + '</td>'
-                        + '<td>' + data.type + '</td>'
-                        + '<td>' + data.name + '</td>'
+                    var r = '<td>' + data.first_name + '</td>'
+                        + '<td>' + data.datatype_name + '</td>'
+                        + '<td>' + data.data_name + '</td>'
                         + '<td>' + data.data_storage_date + '</td>'
-                        + '<td>' + data.sourcename + '</td>'
+                        + '<td>' + data.first_name + '</td>'
                         + '<td>' + data.data_creation_date + '</td>'
                         + '<td>' + data.data_description + '</td>'
                         + '<td>' + data.data_crs + '</td>'
@@ -156,11 +152,7 @@
                     }
                     r = r + '<td>' + data.data_resolution + '</td>';
                     r = r + '<td>';
-
-                    
-                        r = r + '<span class="btn btn-success btn-sm" onclick="ApproveRequest(' + data.id + ')">Approve</span>'
-                        r = r + '<span class="btn btn-danger btn-sm" onclick="RejectRequest(' + data.id + ')">Reject</span>'
-                    
+                       's'
                     r = r + '</td>';
                     $(row).html(r);
                 }

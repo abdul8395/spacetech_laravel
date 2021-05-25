@@ -40,7 +40,7 @@ Route::get('/searchdata/{data}', [AdminController::class, 'search_load_data']);
 Route::get('/download/{id}', [AdminController::class, 'download'])->name('downloadfile');
 
 
-Route::get('/reqbtnf/{data}', [AdminController::class, 'reqbtnf']);
+// Route::get('/reqbtnf/{data}', [AdminController::class, 'reqbtnf']);
 
 
 // Route::get('/Load_Users/{data}', [SuperAdminController::class, 'Load_Users']);
@@ -64,7 +64,7 @@ Route::match(['get','post'], '/superadmin/Load_ext', [SuperAdminController::clas
 Route::match(['get','post'], '/superadmin/chkext/{data}', [SuperAdminController::class, 'chkext'])->name('superadmin')->middleware('superadmin');
 Route::match(['get','post'], '/superadmin/store_ext/{data}', [SuperAdminController::class, 'store_ext'])->name('superadmin')->middleware('superadmin');
 Route::match(['get','post'], '/superadmin/pending_req', [SuperAdminController::class, 'pending_req'])->name('superadmin')->middleware('superadmin');
-Route::match(['get','post'], '/superadmin/load_pending_req{data}', [SuperAdminController::class, 'load_pending_req'])->name('superadmin')->middleware('superadmin');
+Route::match(['get','post'], '/superadmin/sload_pending_req{data}', [SuperAdminController::class, 'load_pending_req'])->name('superadmin')->middleware('superadmin');
 Route::match(['get','post'], '/superadmin/approval', [SuperAdminController::class, 'approval'])->name('superadmin')->middleware('superadmin');
 Route::match(['get','post'], '/superadmin/load_approval/{data}', [SuperAdminController::class, 'load_approval'])->name('superadmin')->middleware('superadmin');
 Route::match(['get','post'], '/superadmin/req_log', [SuperAdminController::class, 'req_log'])->name('superadmin')->middleware('superadmin');
@@ -87,7 +87,7 @@ Route::match(['get','post'], '/viewdes/{id}', [AdminController::class, 'viewdes'
 Route::match(['get','post'], '/pending_req', [AdminController::class, 'pending_req'])->middleware('admin');
 Route::match(['get','post'], '/load_pending_req/{data}', [AdminController::class, 'load_pending_req'])->middleware('admin');
 Route::match(['get','post'], '/req_log', [AdminController::class, 'req_log'])->middleware('admin');
-// Route::match(['get','post'], '/reqbtnf{id}', [AdminController::class, 'reqbtnf'])->middleware('admin');
+Route::match(['get','post'], '/reqbtnf{id}', [AdminController::class, 'reqbtnf'])->middleware('admin');
 Route::match(['get','post'], '/change_pass', [AdminController::class, 'changepass'])->middleware('admin');
 Route::match(['get','post'], '/store_pass', [AdminController::class, 'storepass'])->name('store_pass')->middleware('admin');
 Route::match(['get','post'], '/user', [UserController::class, 'index'])->name('user')->middleware('user')->middleware('admin');
