@@ -37,7 +37,10 @@ Route::get('/tehsil/{id}', [AdminController::class, 'getteh']);
 Route::get('/loaddata', [AdminController::class, 'Load_DataPage']);
 Route::get('/deatilbtn/{data}', [AdminController::class, 'detailbtn']);
 Route::get('/searchdata/{data}', [AdminController::class, 'search_load_data']);
+Route::get('/download/{id}', [AdminController::class, 'download'])->name('downloadfile');
 
+
+Route::get('/reqbtnf/{data}', [AdminController::class, 'reqbtnf']);
 
 
 // Route::get('/Load_Users/{data}', [SuperAdminController::class, 'Load_Users']);
@@ -78,10 +81,12 @@ Route::match(['get','post'], '/add_data', [AdminController::class, 'add_data'])-
 Route::match(['get','post'], '/getfiletype/{id}', [AdminController::class, 'getfiletype'])->middleware('admin');
 Route::match(['get','post'], '/add_data_store', [AdminController::class, 'add_data_store'])->middleware('admin');
 Route::match(['get','post'], '/approval_logs', [AdminController::class, 'approval_logs'])->middleware('admin');
-Route::match(['get','post'], '//approval_loaddata/{data}', [AdminController::class, 'load_approval_data'])->middleware('admin');
+Route::match(['get','post'], '/approval_loaddata/{data}', [AdminController::class, 'load_approval_data'])->middleware('admin');
 Route::match(['get','post'], '/viewdes/{id}', [AdminController::class, 'viewdes'])->middleware('admin');
 Route::match(['get','post'], '/pending_req', [AdminController::class, 'pending_req'])->middleware('admin');
+Route::match(['get','post'], '/load_pending_req/{data}', [AdminController::class, 'load_pending_req'])->middleware('admin');
 Route::match(['get','post'], '/req_log', [AdminController::class, 'req_log'])->middleware('admin');
+// Route::match(['get','post'], '/reqbtnf{id}', [AdminController::class, 'reqbtnf'])->middleware('admin');
 Route::match(['get','post'], '/change_pass', [AdminController::class, 'changepass'])->middleware('admin');
 Route::match(['get','post'], '/store_pass', [AdminController::class, 'storepass'])->name('store_pass')->middleware('admin');
 Route::match(['get','post'], '/user', [UserController::class, 'index'])->name('user')->middleware('user')->middleware('admin');

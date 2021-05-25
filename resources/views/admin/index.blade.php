@@ -258,6 +258,44 @@
                     }
                 });
             }
+            function Requestbtn(id){
+                var loaderId = showLoader("Requesting Data..", "warning");
+                $.ajax({
+                    type : "GET", 
+                    url : 'reqbtnf/'+id,
+                    dataType : "json",
+                    success:function(res){
+                        var r=JSON.parse(res)
+                        if (r == true) {
+                        hideLoader(loaderId);
+                        autoLoader("Your Request is Sent  and Please Wait For Approval", "success", "Request Sent!");
+                        // console.log(res)
+                        // Reset();
+                        }
+                        else
+                        {
+                            autoLoader('Request can not be Sent", "error", "Error !"');
+                        }
+                        
+                        
+                    }
+                });
+            }
+
+                // function downloadbtn(id){
+                //     var loaderId = showLoader("Preparing for Download..", "warning");
+                //     $.ajax({
+                //         type : "GET", 
+                //         url : 'download/'+id,
+                        
+                //         success:function(res){
+                        
+                //             hideLoader(loaderId);
+                //             autoLoader("Downloaded Successfully...", "success");
+                            
+                //         }
+                //     });
+                // }
 
             function Reset() {
                 $('#deps').val(null);
@@ -289,29 +327,29 @@
                     $this.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
                 }
             })
-            function RequestData(id) {
-                var accessLevel = $('#ddlPrivacyUpdate').val();
-                $.ajax({
-                    type: "GET",
-                    url: "/Admin/RequestData",
-                    data: {
-                        id: id
-                    },
-                    success: function (res) {
-                        if (res == "true") {
-                            autoLoader("Your Request is Sent  and Please Wait For Approval", "success", "Request Sent!");
-                            // LoadDataPage();
-                            $('#hidDataId').val(null);
-                        }
-                        else {
-                            autoLoader("Request can not be Sent", "error", "Error !");
-                        }
-                    },
-                    error: function (err) {
-                        autoLoader(err.statusText, "error", "Error !");
-                    }
-                });
-            }
+            // function RequestData(id) {
+            //     var accessLevel = $('#ddlPrivacyUpdate').val();
+            //     $.ajax({
+            //         type: "GET",
+            //         url: "/Admin/RequestData",
+            //         data: {
+            //             id: id
+            //         },
+            //         success: function (res) {
+            //             if (res == "true") {
+            //                 autoLoader("Your Request is Sent  and Please Wait For Approval", "success", "Request Sent!");
+            //                 // LoadDataPage();
+            //                 $('#hidDataId').val(null);
+            //             }
+            //             else {
+            //                 autoLoader("Request can not be Sent", "error", "Error !");
+            //             }
+            //         },
+            //         error: function (err) {
+            //             autoLoader(err.statusText, "error", "Error !");
+            //         }
+            //     });
+            // }
             function UpdateAccess() {
                 var id = $('#hidDataId').val();
                 var accessLevel = $('#ddlPrivacyUpdate').val();

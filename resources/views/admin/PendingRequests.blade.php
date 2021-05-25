@@ -70,7 +70,7 @@
 </div>
 <div class="tab-content col-md-10 col-md-offset-1">
     <div class="clearfix"></div><br /><br />
-    <div id="Data_Grid"></div>
+    <!-- <div id="Data_Grid"></div> -->
     <table class="table table-responsive" data-vertable="ver2" id="tblGrid"></table>
 </div>
 
@@ -80,20 +80,22 @@
 
     <script>
         $(document).ready(function () {
-            $("#tbl_Data").DataTable();
+            // $("#tbl_Data").DataTable();
             $('#txtSearchInsertionDate').val(null);
             $('#txtSearchCreationDate').val(null);
             // LoadData();
             getGrid();
 
         });
-        var $table;
+        // var $table;
         function getGrid() {
-            var InsertionDate = $('#txtSearchInsertionDate').val();
-            var CreationDate = $('#txtSearchCreationDate').val();
-            var Type = $('#ddlTypeSearch').val();
-            var Dpt = $('#ddlDptSearch').val();
-            //  var tmpl = _.template($('#tmpl_Grid').html());
+            
+            var reqdata={
+                StorageDate: $('#txtSearchInsertionDate').val(),
+                CreationDate: $('#txtSearchCreationDate').val(),
+                Type: $('#ddlTypeSearch').val(),
+                Srcdpt: $('#ddlsrcSearch').val(),
+                };
 
             $table = $('#tblGrid').DataTable({
                 "dom": "<'row'<'col-sm-6'l><'col-sm-6 text-right'i>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-5'><'col-sm-7'p>>", //'<"top"rl>it<"bottom"p><"clear">',
@@ -103,17 +105,12 @@
                 "ordering": true,
                 "search": true,
                 "processing": true,
-                "serverSide": true,
+                // "serverSide": true,
                 "destroy": true,
                 "ajax": {
-                    "url": "/Admin/Load_PendingRequestsDataTable",
-                    "type": "POST",
-                    "data": function myfunction(d) {
-                        d.InsertionDate = InsertionDate;
-                        d.CreationDate = CreationDate;
-                        d.Type = Type;
-                        d.Dpt = Dpt;
-                    },
+                    "url": "load_pending_req/"+JSON.stringify(reqdata),
+                    "type": "GET",
+                    "dataSrc": "",
                 },
                 createdRow: function (row, data, dataIndex, cells) {
                     $(row).addClass('row100');

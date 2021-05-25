@@ -614,14 +614,14 @@
             type : "GET",
             dataType : "json",
             success: function (res) {
-                console.log(res)
+                var r=JSON.parse(res)
                 // console.log(res[0].datatype_extension)
-                if (res != 'false') {
+                if (r == true) {
                     document.getElementById("Data_Atachment").accept = res[0].datatype_extension;
                 }
                 else
                 {
-                    autoLoader(res, "error");
+                    autoLoader(r, "error");
                 }
             }
         });

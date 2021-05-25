@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 // use ZanySoft\Zip\Zip;
 // use ZipArchive;
+use Illuminate\Support\Facades\Storage;
+use Response;
 
 
 header('Content-Type: application/json');
@@ -43,17 +45,24 @@ class AdminController extends Controller
     } 
     public function Load_DataPage(){
         // $dt=DataUpload::all();
-        $dt=DB::select("SELECT data_id, data_name, data_storage_date, data_creation_date, data_description, data_crs, data_usage_purpose, data_isvector,isapproved
-                FROM space_tech.tbl_data_upload
-                INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  space_tech.tbl_data_upload.datatype_id
-                where space_tech.tbl_data_upload.isapproved=true;");
+        $dt=DB::select("SELECT
+        dt.datatype_name, data_id, data_name, data_storage_date, u.first_name,data_creation_date,
+        data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved, privacy_level    
+        FROM space_tech.tbl_data_upload
+        INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  space_tech.tbl_data_upload.datatype_id
+        INNER JOIN space_tech.tbl_users u ON u.source_id =  space_tech.tbl_data_upload.source_id
+               ;");
         return view('admin.loadData',['tbl_duplod' => $dt]);
     } 
     public function detailbtn($data){
         $d_id=$data;
-        $dtup = DB::select("SELECT data_id, dt.datatype_name, data_name, data_storage_date, data_creation_date, data_description, data_crs, data_usage_purpose, data_isvector, privacy_level
+        $u_id=auth()->user()->id;
+        $dtup = DB::select("SELECT
+        dt.datatype_name, data_id, data_name, data_storage_date, u.first_name,data_creation_date,
+        data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved, privacy_level     
         FROM space_tech.tbl_data_upload
         INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  space_tech.tbl_data_upload.datatype_id
+        INNER JOIN space_tech.tbl_users u ON u.source_id =  space_tech.tbl_data_upload.source_id
         where space_tech.tbl_data_upload.data_id=$d_id;");
 
         $divinames = DB::select("SELECT division_name
@@ -71,9 +80,45 @@ class AdminController extends Controller
         $depname = DB::select("SELECT department_name
         FROM space_tech.tbl_data_upload_departments
         where data_id=$d_id;");
-        return view('admin.loadData1', ['dtup' => $dtup, 'divinames' => $divinames, 'distnames' => $distnames, 'tehnames' => $tehnames, 'depname' => $depname]);
+
+        $a=DB::select('SELECT permission_id, data_id, user_id, access_granted
+        FROM space_tech.tbl_permissions
+        where data_id='.$d_id.' and user_id='.$u_id.';');
+        $reqchk='0';
+        if(count($a)>0){
+            $reqchk='1';
+        };
+        return view('admin.loadData1', ['dtup' => $dtup, 'divinames' => $divinames, 'distnames' => $distnames, 'tehnames' => $tehnames, 'depname' => $depname , 'reqchk' => $reqchk]);
 
     }
+    public  function download($id){
+        // $fid=DataUpload::find($id);
+        $fid=DB::select("SELECT * FROM space_tech.tbl_data_upload where data_id=$id;");
+        // echo $fid[0]['file_url'];
+        foreach ($fid as $f) {
+            $a=$f->file_url;
+            $fn=basename($a);
+            $tempImage = tempnam(sys_get_temp_dir(), $fn);
+            copy($a, $tempImage);
+            return response::download($tempImage, $fn);
+            exit();
+        // return Storage::download('public/uploads/'.$b);
+        // return Storage::download(storage_path("public/uploads/{$b}"));
+        // return Storage::disk('public')->download($f->file_url);
+        }
+    } 
+
+    public function reqbtnf($id){
+        $q = DB::select("select max(permission_id) from space_tech.tbl_permissions;");
+        $arr = json_decode(json_encode($q), true);
+        $pid=implode("",$arr[0])+1;
+        $u_id=auth()->user()->id;
+
+        DB::insert('INSERT INTO space_tech.tbl_permissions
+                    (permission_id, data_id, user_id)
+                        VALUES ( '.$pid.','.$id.','.$u_id.');');
+            return json_encode(true);
+    } 
     public  function getdist($id){
         $a=json_decode($id);
         $dist = DB::select("SELECT district_id, district_name
@@ -366,6 +411,7 @@ class AdminController extends Controller
         $src=$a->Srcdpt;
         }
         if($a->StorageDate == '' && $a->CreationDate == '' && $a->Type == '' && $a->Srcdpt == ''){
+           
             $q = DB::select("SELECT
             dt.datatype_name, data_id, data_name, data_storage_date, u.first_name,data_creation_date,
             data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved     
@@ -373,6 +419,7 @@ class AdminController extends Controller
             INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  space_tech.tbl_data_upload.datatype_id
             INNER JOIN space_tech.tbl_users u ON u.source_id =  space_tech.tbl_data_upload.source_id;");
             return json_encode($q);
+            
         }
         else{
             $q = DB::select("SELECT
@@ -406,6 +453,60 @@ class AdminController extends Controller
         FROM space_tech.tbl_sources;");
         return view('admin.PendingRequests', ['dtype' => $dtype, 'dsrc' => $dsrc]);    
     } 
+    public  function load_pending_req($data){
+        $a=json_decode($data);
+        $u_id=auth()->user()->id;
+
+        if($a->StorageDate==''){
+            $stdate='null';
+        }else{
+        $stdate=date('Ymd', strtotime($a->StorageDate));
+        }
+        if($a->CreationDate==''){
+            $crdate='null';
+        }else{
+        $crdate=date('Ymd', strtotime($a->CreationDate));
+        }
+        if($a->Type==''){
+            $type='null';
+        }else{
+        $type=$a->Type;
+        }
+        if($a->Srcdpt==''){
+            $src='null';
+        }else{
+        $src=$a->Srcdpt;
+        }
+        if($a->StorageDate == '' && $a->CreationDate == '' && $a->Type == '' && $a->Srcdpt == ''){
+            $a=DB::select('SELECT data_id
+            FROM space_tech.tbl_permissions
+             where user_id='.$u_id.' and access_granted is null;');
+            if(count($a)>0){
+                $darr = json_decode(json_encode($a), true);
+                $dt_id= implode(", ", array_map(function($obj) { foreach ($obj as $p => $v) { return $v;} }, $darr));
+
+                $q = DB::select("SELECT
+                dt.datatype_name, data_id, data_name, data_storage_date, u.first_name,data_creation_date,
+                data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved     
+                FROM space_tech.tbl_data_upload
+                INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  space_tech.tbl_data_upload.datatype_id
+                INNER JOIN space_tech.tbl_users u ON u.source_id =  space_tech.tbl_data_upload.source_id
+                where data_id in ($dt_id);");
+                return json_encode($q);
+             }
+        }
+        else{
+            $q = DB::select("SELECT
+            dt.datatype_name, data_id, data_name, data_storage_date, u.first_name,data_creation_date,
+            data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved     
+            FROM space_tech.tbl_data_upload
+            INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  space_tech.tbl_data_upload.datatype_id
+            INNER JOIN space_tech.tbl_users u ON u.source_id =  space_tech.tbl_data_upload.source_id
+            where space_tech.tbl_data_upload.data_storage_date='$stdate' or space_tech.tbl_data_upload.data_creation_date='$crdate' or space_tech.tbl_data_upload.datatype_id=$type or space_tech.tbl_data_upload.source_id=$src
+            and data_id in (".$a.");");
+            return json_encode($q);
+        }
+    }
     public  function req_log(){
         $dtype = DB::select("SELECT DISTINCT datatype_id, datatype_name
         FROM space_tech.tbl_data_types;");
@@ -414,6 +515,25 @@ class AdminController extends Controller
         return view('admin.RequestsLog', ['dtype' => $dtype, 'dsrc' => $dsrc]);
         
     } 
+    public  function load_req_log($data){
+        
+    }
+
+    public function reqbtn($id){
+       $a= DB::insert('INSERT INTO space_tech.tbl_data_upload(
+            data_id, datatype_id, user_id, data_name, file_url, data_storage_date, data_creation_date, data_description, 
+            data_crs, data_usage_purpose, data_isvector, data_level, privacy_level, data_resolution, image_type, image_description)
+            VALUES ('.$data_id.',' .$dtid.',' .$u_id.',' ."'$dname'".',' ."'$furl'".',' ."'$dstdate'".',' ."'$dcdate'".',' ."'$ddes'".',' ."'$dcrs'".',' ."'$dup'".',' .$disvector.',' ."'$dlvl'".',' ."'$dplvl'".',' ."'$data_resolution'".',' ."'$image_type'".',' ."'$image_description'".');');
+        if($a)
+        { 
+          return back()->with('success', 'Password Changed Successfully.');
+        }
+        else
+        {          
+          return back()->with('error', 'Please enter correct password');
+        }  
+        
+    }
 
     public function changepass() {
         return view('auth.change_password');

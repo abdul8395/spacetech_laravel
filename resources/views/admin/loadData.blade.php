@@ -5,10 +5,15 @@
                 <div class="col-xs-6 ">
                     <span style="color: #007CE0;">{{$p->data_name}} </span>
                     <br />
-                    <span style="font-family: 'Source Sans Pro', sans-serif; font-weight: 600; font-size: 13.25px; color: #888888; margin-top:3px;"><b>Source: </b>{{$p->data_crs}}</span>
+                    <span style="font-family: 'Source Sans Pro', sans-serif; font-weight: 600; font-size: 13.25px; color: #888888; margin-top:3px;"><b>Source: </b>{{$p->first_name}}</span>
                     <br />
 
-                        <small style="color: #888888;"><b>IsVector: </b>{{$p->data_isvector}} </small>
+                        <!-- <small style="color: #888888;"><b>IsVector: </b>{{$p->data_isvector}} </small> -->
+                    @if($p->data_isvector == true)
+                    <input type="checkbox" checked></td>
+                    @else
+                    <input type="checkbox"></td>
+                    @endif
 
                         <!-- <small style="color: #888887;"><b>IsVector: </b><input type="checkbox" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Resolution:</b> xy</small> -->
                     <br />
