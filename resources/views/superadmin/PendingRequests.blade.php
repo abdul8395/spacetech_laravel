@@ -71,7 +71,7 @@
 </div>
 <div class="tab-content col-md-10 col-md-offset-1">
     <div class="clearfix"></div><br /><br />
-   <div id="Data_Grid"></div>
+   <!-- <div id="Data_Grid"></div> -->
     <table class="table table-responsive" data-vertable="ver2" id="tblGrid"></table>
 </div>
 
@@ -79,9 +79,9 @@
 
     <script>
         $(document).ready(function () {
-            $("#tbl_Data").DataTable();
-            $('#txtSearchInsertionDate').val(null);
-            $('#txtSearchCreationDate').val(null);
+            // $("#tbl_Data").DataTable();
+            // $('#txtSearchInsertionDate').val(null);
+            // $('#txtSearchCreationDate').val(null);
             // LoadData();
             getGrid();
 
@@ -157,10 +157,10 @@
                     r = r + '<td>' + data.data_resolution + '</td>';
                     r = r + '<td>';
 
-                    if (data.user_role == "SuperAdmin") {
+                    
                         r = r + '<span class="btn btn-success btn-sm" onclick="ApproveRequest(' + data.id + ')">Approve</span>'
                         r = r + '<span class="btn btn-danger btn-sm" onclick="RejectRequest(' + data.id + ')">Reject</span>'
-                    }
+                    
                     r = r + '</td>';
                     $(row).html(r);
                 }

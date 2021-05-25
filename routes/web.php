@@ -64,6 +64,7 @@ Route::match(['get','post'], '/superadmin/Load_ext', [SuperAdminController::clas
 Route::match(['get','post'], '/superadmin/chkext/{data}', [SuperAdminController::class, 'chkext'])->name('superadmin')->middleware('superadmin');
 Route::match(['get','post'], '/superadmin/store_ext/{data}', [SuperAdminController::class, 'store_ext'])->name('superadmin')->middleware('superadmin');
 Route::match(['get','post'], '/superadmin/pending_req', [SuperAdminController::class, 'pending_req'])->name('superadmin')->middleware('superadmin');
+Route::match(['get','post'], '/superadmin/load_pending_req{data}', [SuperAdminController::class, 'load_pending_req'])->name('superadmin')->middleware('superadmin');
 Route::match(['get','post'], '/superadmin/approval', [SuperAdminController::class, 'approval'])->name('superadmin')->middleware('superadmin');
 Route::match(['get','post'], '/superadmin/load_approval/{data}', [SuperAdminController::class, 'load_approval'])->name('superadmin')->middleware('superadmin');
 Route::match(['get','post'], '/superadmin/req_log', [SuperAdminController::class, 'req_log'])->name('superadmin')->middleware('superadmin');

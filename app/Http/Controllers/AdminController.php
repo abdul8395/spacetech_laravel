@@ -56,40 +56,67 @@ class AdminController extends Controller
     } 
     public function detailbtn($data){
         $d_id=$data;
-        $u_id=auth()->user()->id;
-        $dtup = DB::select("SELECT
-        dt.datatype_name, data_id, data_name, data_storage_date, u.first_name,data_creation_date,
-        data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved, privacy_level     
-        FROM space_tech.tbl_data_upload
-        INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  space_tech.tbl_data_upload.datatype_id
-        INNER JOIN space_tech.tbl_users u ON u.source_id =  space_tech.tbl_data_upload.source_id
-        where space_tech.tbl_data_upload.data_id=$d_id;");
-
-        $divinames = DB::select("SELECT division_name
-        FROM space_tech.tbl_data_upload_divisions
-        where data_id=$d_id;");
-
-        $distnames = DB::select("SELECT district_name
-        FROM space_tech.tbl_data_upload_districts
-        where data_id=$d_id;");
-
-        $tehnames = DB::select("SELECT tehsil_name
-        FROM space_tech.tbl_data_upload_tehsils
-        where data_id=$d_id;");
-
-        $depname = DB::select("SELECT department_name
-        FROM space_tech.tbl_data_upload_departments
-        where data_id=$d_id;");
-
-        $a=DB::select('SELECT permission_id, data_id, user_id, access_granted
-        FROM space_tech.tbl_permissions
-        where data_id='.$d_id.' and user_id='.$u_id.';');
-        $reqchk='0';
-        if(count($a)>0){
-            $reqchk='1';
-        };
-        return view('admin.loadData1', ['dtup' => $dtup, 'divinames' => $divinames, 'distnames' => $distnames, 'tehnames' => $tehnames, 'depname' => $depname , 'reqchk' => $reqchk]);
-
+        if (Auth::user()) {       
+            $u_id=auth()->user()->id;
+            $dtup = DB::select("SELECT
+            dt.datatype_name, data_id, data_name, data_storage_date, u.first_name,data_creation_date,
+            data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved, privacy_level     
+            FROM space_tech.tbl_data_upload
+            INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  space_tech.tbl_data_upload.datatype_id
+            INNER JOIN space_tech.tbl_users u ON u.source_id =  space_tech.tbl_data_upload.source_id
+            where space_tech.tbl_data_upload.data_id=$d_id;");
+    
+            $divinames = DB::select("SELECT division_name
+            FROM space_tech.tbl_data_upload_divisions
+            where data_id=$d_id;");
+    
+            $distnames = DB::select("SELECT district_name
+            FROM space_tech.tbl_data_upload_districts
+            where data_id=$d_id;");
+    
+            $tehnames = DB::select("SELECT tehsil_name
+            FROM space_tech.tbl_data_upload_tehsils
+            where data_id=$d_id;");
+    
+            $depname = DB::select("SELECT department_name
+            FROM space_tech.tbl_data_upload_departments
+            where data_id=$d_id;");
+    
+            $a=DB::select('SELECT permission_id, data_id, user_id, access_granted
+            FROM space_tech.tbl_permissions
+            where data_id='.$d_id.' and user_id='.$u_id.';');
+            $reqchk='0';
+            if(count($a)>0){
+                $reqchk='1';
+            };
+            return view('admin.loadData1', ['dtup' => $dtup, 'divinames' => $divinames, 'distnames' => $distnames, 'tehnames' => $tehnames, 'depname' => $depname , 'reqchk' => $reqchk]);
+        } else {
+            $dtup = DB::select("SELECT
+            dt.datatype_name, data_id, data_name, data_storage_date, u.first_name,data_creation_date,
+            data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved, privacy_level     
+            FROM space_tech.tbl_data_upload
+            INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  space_tech.tbl_data_upload.datatype_id
+            INNER JOIN space_tech.tbl_users u ON u.source_id =  space_tech.tbl_data_upload.source_id
+            where space_tech.tbl_data_upload.data_id=$d_id;");
+    
+            $divinames = DB::select("SELECT division_name
+            FROM space_tech.tbl_data_upload_divisions
+            where data_id=$d_id;");
+    
+            $distnames = DB::select("SELECT district_name
+            FROM space_tech.tbl_data_upload_districts
+            where data_id=$d_id;");
+    
+            $tehnames = DB::select("SELECT tehsil_name
+            FROM space_tech.tbl_data_upload_tehsils
+            where data_id=$d_id;");
+    
+            $depname = DB::select("SELECT department_name
+            FROM space_tech.tbl_data_upload_departments
+            where data_id=$d_id;");
+            return view('admin.loadData2', ['dtup' => $dtup, 'divinames' => $divinames, 'distnames' => $distnames, 'tehnames' => $tehnames, 'depname' => $depname]);
+        }
+        
     }
     public  function download($id){
         // $fid=DataUpload::find($id);
