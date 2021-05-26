@@ -64,7 +64,7 @@
                 </td>
 
                 <td>
-                {{$p->first_name}}
+                {{$p->name}}
                 </td>
 
                 <td>
@@ -98,9 +98,9 @@
                 {{$p->data_resolution}}
                 </td>
                 <td>
-                    <input type="button" class="btn btn-warning" value="Download" onclick="showAddFileModal('{{$p->data_id}}')" />
-                    <input type="button" class="btn btn-danger" value="Reject" onclick="Reject('{{$p->data_id}}')" />
-                    <input type="button" class="btn btn-success" value="Approve" onclick="ShowApproveModal('{{$p->data_id}}')" />    
+                    <input type="button" class="btn btn-warning" value="Download" onclick="downloadbtn('{{$p->data_id}}')" />
+                    <input type="button" class="btn btn-danger" value="Reject" onclick="Rejectbtn('{{$p->data_id}}')" />
+                    <input type="button" class="btn btn-success" value="Approve" onclick="Approvebtn('{{$p->data_id}}')" />    
                 </td>
             </tr>
             @endforeach

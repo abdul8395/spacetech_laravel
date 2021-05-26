@@ -118,11 +118,11 @@
 
                 },
                 "columns": [
-                    { "data": "first_name", "title": "User", "className": "column100 column1", "orderable": false, "searchable": false, "width": "20px", "data-column": "column1" },
+                    { "data": "username", "title": "User", "className": "column100 column1", "orderable": false, "searchable": false, "width": "20px", "data-column": "column1" },
                     { "data": "datatype_name", "title": "Type", "className": "column100 column1", "orderable": false, "searchable": false, "width": "20px", "data-column": "column1" },
-                    { "data": "name", "title": "Name", "className": "column100 column2", "orderable": false, "searchable": false, "width": "30px", "data-column": "column2" },
+                    { "data": "data_name", "title": "Name", "className": "column100 column2", "orderable": false, "searchable": false, "width": "30px", "data-column": "column2" },
                     { "data": "data_storage_date", "title": "Storage Date", "className": "column100 column3", "orderable": false, "searchable": false, "width": "30px", "data-column": "column3" },
-                    { "data": "first_name", "title": "Source", "className": "column100 column4", "orderable": false, "searchable": false, "width": "70px", "data-column": "column4" },
+                    { "data": "name", "title": "Source", "className": "column100 column4", "orderable": false, "searchable": false, "width": "70px", "data-column": "column4" },
                     { "data": "data_creation_date", "title": "Creation Date", "className": "column100 column5", "orderable": false, "searchable": false, "width": "190px", "data-column": "column5" },
                     { "data": "data_description", "title": "Desp.", "className": "column100 column6", "orderable": false, "searchable": false, "width": "30px", "data-column": "column6" },
                     { "data": "data_crs", "title": "CRS", "className": "column100 column7", "orderable": false, "searchable": false, "width": "75px", "data-column": "column7" },
@@ -135,11 +135,11 @@
                 "order": [[0, "asc"]],
                 "rowCallback": function (row, data) {
                     console.log(data);
-                    var r = '<td>' + data.first_name + '</td>'
+                    var r = '<td>' + data.username + '</td>'
                         + '<td>' + data.datatype_name + '</td>'
                         + '<td>' + data.data_name + '</td>'
                         + '<td>' + data.data_storage_date + '</td>'
-                        + '<td>' + data.first_name + '</td>'
+                        + '<td>' + data.name + '</td>'
                         + '<td>' + data.data_creation_date + '</td>'
                         + '<td>' + data.data_description + '</td>'
                         + '<td>' + data.data_crs + '</td>'
@@ -151,57 +151,47 @@
                         r = r + '<td><input type="checkbox"></td>';
                     }
                     r = r + '<td>' + data.data_resolution + '</td>';
+
                     r = r + '<td>';
-                       's'
+                        r = r + '<span class="btn btn-success btn-sm" onclick="ApproveRequest(' + data.permission_id + ')">Approve</span>'
+                        r = r + '<span class="btn btn-danger btn-sm" onclick="RejectRequest(' + data.permission_id + ')">Reject</span>'
                     r = r + '</td>';
                     $(row).html(r);
                 }
             });
         }
 
-        function ApproveRequest(Id) {
+        function ApproveRequest(id) {
             $.ajax({
-                type: "GET",
-                url: "/SuperAdmin/ApproveRequest",
-                data: {
-                    Id: Id
-                },
+                type: "get",
+                url: "dapprreq/" +JSON.stringify(id),
+                // dataType : "json",
                 success: function (res) {
-                    if (res != "false") {
+                    var r=JSON.parse(res)
+                    if(r == true){
                         autoLoader("Request Approved", "success", "Approved !");
-                        PendingRequestCount();
-                        getGrid();
                     }
                     else {
-                        autoLoader("Request can not be Approved", "error", "Error !");
+                        autoLoader("File can not be Approved", "error", "Error !");
                     }
-                },
-                error: function (err) {
-                    autoLoader(err.statusText, "error", "Error !");
                 }
-            });
+            });   
         }
-        function RejectRequest(Id) {
+        function RejectRequest(id) {
             $.ajax({
-                type: "GET",
-                url: "/SuperAdmin/RejectRequest",
-                data: {
-                    Id: Id
-                },
+                type: "get",
+                url: "drejectreq/" +JSON.stringify(id),
+                // dataType : "json",
                 success: function (res) {
-                    if (res != "false") {
-                        autoLoader("Request Rejected", "error", "Success !");
-                        PendingRequestCount();
-                        getGrid();
+                    var r=JSON.parse(res)
+                    if(r == true){
+                        autoLoader("Request Recjected", "error", "Rejected !");
                     }
                     else {
-                        autoLoader("Request can not be Rejected", "error", "Error !");
+                        autoLoader("File can not be Recjected", "error", "Error !");
                     }
-                },
-                error: function (err) {
-                    autoLoader(err.statusText, "error", "Error !");
                 }
-            });
+            });   
         }
     </script>
 

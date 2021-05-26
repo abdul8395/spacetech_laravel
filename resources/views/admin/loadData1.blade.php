@@ -6,7 +6,7 @@
                 @foreach($dtup as $p)
                     <span style="color: #007CE0;">{{$p->data_name}} </span>
                     <br />
-                    <span style="font-family: 'Source Sans Pro', sans-serif; font-weight: 600; font-size: 13.25px; color: #888888; margin-top:3px;"><b>Source: </b>{{$p->first_name}}</span>
+                    <span style="font-family: 'Source Sans Pro', sans-serif; font-weight: 600; font-size: 13.25px; color: #888888; margin-top:3px;"><b>Source: </b>{{$p->name}}</span>
                     <br />
 
                         <!-- <small style="color: #888888;"><b>IsVector: </b>{{$p->data_isvector}} </small> -->

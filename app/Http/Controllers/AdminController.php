@@ -46,12 +46,12 @@ class AdminController extends Controller
     public function Load_DataPage(){
         // $dt=DataUpload::all();
         $dt=DB::select("SELECT
-        dt.datatype_name, data_id, data_name, data_storage_date, u.first_name,data_creation_date,
+        dt.datatype_name, data_id, data_name, data_storage_date, u.name,data_creation_date,
         data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved, privacy_level    
         FROM space_tech.tbl_data_upload
         INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  space_tech.tbl_data_upload.datatype_id
-        INNER JOIN space_tech.tbl_users u ON u.source_id =  space_tech.tbl_data_upload.source_id
-               ;");
+        INNER JOIN space_tech.users u ON u.source_id =  space_tech.tbl_data_upload.source_id
+        where isapproved=true;");
         return view('admin.loadData',['tbl_duplod' => $dt]);
     } 
     public function detailbtn($data){
@@ -59,11 +59,11 @@ class AdminController extends Controller
         if (Auth::user()) {       
             $u_id=auth()->user()->id;
             $dtup = DB::select("SELECT
-            dt.datatype_name, data_id, data_name, data_storage_date, u.first_name,data_creation_date,
+            dt.datatype_name, data_id, data_name, data_storage_date, u.name,data_creation_date,
             data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved, privacy_level     
             FROM space_tech.tbl_data_upload
             INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  space_tech.tbl_data_upload.datatype_id
-            INNER JOIN space_tech.tbl_users u ON u.source_id =  space_tech.tbl_data_upload.source_id
+            INNER JOIN space_tech.users u ON u.source_id =  space_tech.tbl_data_upload.source_id
             where space_tech.tbl_data_upload.data_id=$d_id;");
     
             $divinames = DB::select("SELECT division_name
@@ -92,11 +92,11 @@ class AdminController extends Controller
             return view('admin.loadData1', ['dtup' => $dtup, 'divinames' => $divinames, 'distnames' => $distnames, 'tehnames' => $tehnames, 'depname' => $depname , 'reqchk' => $reqchk]);
         } else {
             $dtup = DB::select("SELECT
-            dt.datatype_name, data_id, data_name, data_storage_date, u.first_name,data_creation_date,
+            dt.datatype_name, data_id, data_name, data_storage_date, u.name, data_creation_date,
             data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved, privacy_level     
             FROM space_tech.tbl_data_upload
             INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  space_tech.tbl_data_upload.datatype_id
-            INNER JOIN space_tech.tbl_users u ON u.source_id =  space_tech.tbl_data_upload.source_id
+            INNER JOIN space_tech.users u ON u.source_id =  space_tech.tbl_data_upload.source_id
             where space_tech.tbl_data_upload.data_id=$d_id;");
     
             $divinames = DB::select("SELECT division_name
@@ -135,17 +135,20 @@ class AdminController extends Controller
         }
     } 
 
-    public function reqbtnf($id){
+    public function reqbtnf($data){
+        // echo "req f";
+        // exit();
+        $id=json_decode($data);
         $q = DB::select("select max(permission_id) from space_tech.tbl_permissions;");
         $arr = json_decode(json_encode($q), true);
         $pid=implode("",$arr[0])+1;
         $u_id=auth()->user()->id;
-
         DB::insert('INSERT INTO space_tech.tbl_permissions
                     (permission_id, data_id, user_id)
                         VALUES ( '.$pid.','.$id.','.$u_id.');');
             return json_encode(true);
     } 
+
     public  function getdist($id){
         $a=json_decode($id);
         $dist = DB::select("SELECT district_id, district_name
@@ -248,8 +251,14 @@ class AdminController extends Controller
         $q = DB::select("select max(data_id) from space_tech.tbl_data_upload;");
         $arr = json_decode(json_encode($q), true);
         $data_id=implode("",$arr[0])+1;
+
         $dtid=$request->DataType_Id;
         $u_id=auth()->user()->id;
+        $q1 = DB::select("SELECT source_id
+        FROM space_tech.users
+        where id=$u_id;");
+        $arr1 = json_decode(json_encode($q1), true);
+        $source_id=implode("",$arr1[0]);
         $dname=$request->Data_Name;
         // file name & path 
         $fileName = time().'_'.$request->Data_URL->getClientOriginalName();  
@@ -270,8 +279,8 @@ class AdminController extends Controller
         if($dtid==5 || $dtid==1){
             DB::insert('INSERT INTO space_tech.tbl_data_upload(
             data_id, datatype_id, user_id, data_name, file_url, data_storage_date, data_creation_date, data_description, 
-            data_crs, data_usage_purpose, data_isvector, data_level, privacy_level)
-            VALUES ('.$data_id.',' .$dtid.',' .$u_id.',' ."'$dname'".',' ."'$furl'".',' ."'$dstdate'".',' ."'$dcdate'".',' ."'$ddes'".',' ."'$dcrs'".',' ."'$dup'".',' .$disvector.',' ."'$dlvl'".',' ."'$dplvl'".');');
+            data_crs, data_usage_purpose, data_isvector, data_level, privacy_level, source_id)
+            VALUES ('.$data_id.',' .$dtid.',' .$u_id.',' ."'$dname'".',' ."'$furl'".',' ."'$dstdate'".',' ."'$dcdate'".',' ."'$ddes'".',' ."'$dcrs'".',' ."'$dup'".',' .$disvector.',' ."'$dlvl'".',' ."'$dplvl'".',' .$source_id.');');
         }
 
         if($dtid==4){
@@ -280,16 +289,16 @@ class AdminController extends Controller
         // $tbl_dataupload->image_access_path = '/storage/' . $filePath;
         DB::insert('INSERT INTO space_tech.tbl_data_upload(
             data_id, datatype_id, user_id, data_name, file_url, data_storage_date, data_creation_date, data_description, 
-            data_crs, data_usage_purpose, data_isvector, data_level, privacy_level, data_resolution, image_type, image_description)
-            VALUES ('.$data_id.',' .$dtid.',' .$u_id.',' ."'$dname'".',' ."'$furl'".',' ."'$dstdate'".',' ."'$dcdate'".',' ."'$ddes'".',' ."'$dcrs'".',' ."'$dup'".',' .$disvector.',' ."'$dlvl'".',' ."'$dplvl'".',' ."'$data_resolution'".',' ."'$image_type'".',' ."'$image_description'".');');
+            data_crs, data_usage_purpose, data_isvector, data_level, privacy_level, data_resolution, image_type, image_description, source_id)
+            VALUES ('.$data_id.',' .$dtid.',' .$u_id.',' ."'$dname'".',' ."'$furl'".',' ."'$dstdate'".',' ."'$dcdate'".',' ."'$ddes'".',' ."'$dcrs'".',' ."'$dup'".',' .$disvector.',' ."'$dlvl'".',' ."'$dplvl'".',' ."'$data_resolution'".',' ."'$image_type'".',' ."'$image_description'".',' .$source_id.');');
         }
         
         if($dtid==6){
         $map_page_no_for_pdf = $request->map_page_no_for_pdf;
         DB::insert('INSERT INTO space_tech.tbl_data_upload(
             data_id, datatype_id, user_id, data_name, file_url, data_storage_date, data_creation_date, data_description, 
-            data_crs, data_usage_purpose, data_isvector, data_level, privacy_level, data_resolution, map_page_no_for_pdf)
-            VALUES ('.$data_id.',' .$dtid.',' .$u_id.',' ."'$dname'".',' ."'$furl'".',' ."'$dstdate'".',' ."'$dcdate'".',' ."'$ddes'".',' ."'$dcrs'".',' ."'$dup'".',' .$disvector.',' ."'$dlvl'".',' ."'$dplvl'".',' ."'$data_resolution'".',' ."'$map_page_no_for_pdf'".');');
+            data_crs, data_usage_purpose, data_isvector, data_level, privacy_level, data_resolution, map_page_no_for_pdf, source_id)
+            VALUES ('.$data_id.',' .$dtid.',' .$u_id.',' ."'$dname'".',' ."'$furl'".',' ."'$dstdate'".',' ."'$dcdate'".',' ."'$ddes'".',' ."'$dcrs'".',' ."'$dup'".',' .$disvector.',' ."'$dlvl'".',' ."'$dplvl'".',' ."'$data_resolution'".',' ."'$map_page_no_for_pdf'".',' .$source_id.');');
         }
 
         // if($disvector==false){
@@ -440,21 +449,21 @@ class AdminController extends Controller
         if($a->StorageDate == '' && $a->CreationDate == '' && $a->Type == '' && $a->Srcdpt == ''){
            
             $q = DB::select("SELECT
-            dt.datatype_name, data_id, data_name, data_storage_date, u.first_name,data_creation_date,
+            dt.datatype_name, data_id, data_name, data_storage_date, u.name, data_creation_date,
             data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved     
             FROM space_tech.tbl_data_upload
             INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  space_tech.tbl_data_upload.datatype_id
-            INNER JOIN space_tech.tbl_users u ON u.source_id =  space_tech.tbl_data_upload.source_id;");
+            INNER JOIN space_tech.users u ON u.source_id =  space_tech.tbl_data_upload.source_id;");
             return json_encode($q);
             
         }
         else{
             $q = DB::select("SELECT
-            dt.datatype_name, data_id, data_name, data_storage_date, u.first_name,data_creation_date,
+            dt.datatype_name, data_id, data_name, data_storage_date, u.name,data_creation_date,
             data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved     
             FROM space_tech.tbl_data_upload
             INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  space_tech.tbl_data_upload.datatype_id
-            INNER JOIN space_tech.tbl_users u ON u.source_id =  space_tech.tbl_data_upload.source_id
+            INNER JOIN space_tech.users u ON u.source_id =  space_tech.tbl_data_upload.source_id
             where space_tech.tbl_data_upload.data_storage_date='$stdate' or space_tech.tbl_data_upload.data_creation_date='$crdate' or space_tech.tbl_data_upload.datatype_id=$type or space_tech.tbl_data_upload.source_id=$src;");
             return json_encode($q);
         }
@@ -513,22 +522,22 @@ class AdminController extends Controller
                 $dt_id= implode(", ", array_map(function($obj) { foreach ($obj as $p => $v) { return $v;} }, $darr));
 
                 $q = DB::select("SELECT
-                dt.datatype_name, data_id, data_name, data_storage_date, u.first_name,data_creation_date,
+                dt.datatype_name, data_id, data_name, data_storage_date, u.name,data_creation_date,
                 data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved     
                 FROM space_tech.tbl_data_upload
                 INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  space_tech.tbl_data_upload.datatype_id
-                INNER JOIN space_tech.tbl_users u ON u.source_id =  space_tech.tbl_data_upload.source_id
+                INNER JOIN space_tech.users u ON u.source_id =  space_tech.tbl_data_upload.source_id
                 where data_id in ($dt_id);");
                 return json_encode($q);
              }
         }
         else{
             $q = DB::select("SELECT
-            dt.datatype_name, data_id, data_name, data_storage_date, u.first_name,data_creation_date,
+            dt.datatype_name, data_id, data_name, data_storage_date, u.name,data_creation_date,
             data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved     
             FROM space_tech.tbl_data_upload
             INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  space_tech.tbl_data_upload.datatype_id
-            INNER JOIN space_tech.tbl_users u ON u.source_id =  space_tech.tbl_data_upload.source_id
+            INNER JOIN space_tech.users u ON u.source_id =  space_tech.tbl_data_upload.source_id
             where space_tech.tbl_data_upload.data_storage_date='$stdate' or space_tech.tbl_data_upload.data_creation_date='$crdate' or space_tech.tbl_data_upload.datatype_id=$type or space_tech.tbl_data_upload.source_id=$src
             and data_id in (".$a.");");
             return json_encode($q);

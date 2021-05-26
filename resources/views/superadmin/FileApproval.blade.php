@@ -162,6 +162,40 @@
 
 
     <script>
+
+
+        function Approvebtn(id) {
+            $.ajax({
+                type: "get",
+                url: "apprfile/" +JSON.stringify(id),
+                // dataType : "json",
+                success: function (res) {
+                    var r=JSON.parse(res)
+                    if(r == true){
+                        autoLoader("File Approved", "success", "Approved !");
+                    }
+                    else {
+                        autoLoader("File can not be Approved", "error", "Error !");
+                    }
+                }
+            });   
+        }
+        function Rejectbtn(id) {
+            $.ajax({
+                type: "get",
+                url: "rejectfile/" +JSON.stringify(id),
+                // dataType : "json",
+                success: function (res) {
+                    var r=JSON.parse(res)
+                    if(r == true){
+                        autoLoader("File Recjected", "success", "Rejected !");
+                    }
+                    else {
+                        autoLoader("File can not be Recjected", "error", "Error !");
+                    }
+                }
+            });   
+        }
         function showAddFileModal(id) {
             Reset();
             $('#hidDataId').val(id);

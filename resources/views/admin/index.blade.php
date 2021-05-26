@@ -262,7 +262,7 @@
                 var loaderId = showLoader("Requesting Data..", "warning");
                 $.ajax({
                     type : "GET", 
-                    url : 'reqbtnf/'+id,
+                    url : 'reqbtnf/'+JSON.stringify(id),
                     dataType : "json",
                     success:function(res){
                         var r=JSON.parse(res)

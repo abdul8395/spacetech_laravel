@@ -123,7 +123,7 @@
                     { "data": "datatype_name", "title": "Type", "className": "column100 column1", "orderable": false, "searchable": false, "width": "20px", "data-column": "column1" },
                     { "data": "data_name", "title": "Name", "className": "column100 column2", "orderable": false, "searchable": false, "width": "30px", "data-column": "column2" },
                     { "data": "data_storage_date", "title": "Storage Date", "className": "column100 column3", "orderable": false, "searchable": false, "width": "30px", "data-column": "column3" },
-                    { "data": "first_name", "title": "Source", "className": "column100 column4", "orderable": false, "searchable": false, "width": "70px", "data-column": "column4" },
+                    { "data": "name", "title": "Source", "className": "column100 column4", "orderable": false, "searchable": false, "width": "70px", "data-column": "column4" },
                     { "data": "data_creation_date", "title": "Creation Date", "className": "column100 column5", "orderable": false, "searchable": false, "width": "190px", "data-column": "column5" },
                     { "data": "data_description", "title": "Desp.", "className": "column100 column6", "orderable": false, "searchable": false, "width": "30px", "data-column": "column6" },
                     { "data": "data_crs", "title": "CRS", "className": "column100 column7", "orderable": false, "searchable": false, "width": "75px", "data-column": "column7" },
@@ -139,7 +139,7 @@
                     var r = '<td>' + data.datatype_name + '</td>'
                         + '<td>' + data.data_name + '</td>'
                         + '<td>' + data.data_storage_date + '</td>'
-                        + '<td>' + data.first_name + '</td>'
+                        + '<td>' + data.name + '</td>'
                         + '<td>' + data.data_creation_date + '</td>'
                         + '<td>' + data.data_description + '</td>'
                         + '<td>' + data.data_crs + '</td>'
