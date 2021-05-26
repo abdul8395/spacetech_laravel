@@ -56,7 +56,7 @@
                                         @enderror
                                     </div>
                                     @if (Route::has('password.request'))
-                                    <a href="{{ route('password.request') }}" class="btn-forget" >Forget Password?</a>
+                                    
                                     @endif
                                     <button type="submit" class="btn-submit"><span>Login</span></button>
                                 </div>
