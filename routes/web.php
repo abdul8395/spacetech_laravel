@@ -73,6 +73,7 @@ Route::match(['get','post'], '/superadmin/rejectfile/{data}', [SuperAdminControl
 Route::match(['get','post'], '/superadmin/dapprreq/{data}', [SuperAdminController::class, 'dapprreq'])->middleware('superadmin');
 Route::match(['get','post'], '/superadmin/drejectreq/{data}', [SuperAdminController::class, 'drejectreq'])->middleware('superadmin');
 Route::match(['get','post'], '/superadmin/req_log', [SuperAdminController::class, 'req_log'])->name('superadmin')->middleware('superadmin');
+Route::match(['get','post'], '/superadmin/sreq_logdata/{data}', [SuperAdminController::class, 'sreq_logdata'])->middleware('superadmin');
 Route::match(['get','post'], '/superadmin/change_pass', [SuperAdminController::class, 'changepass'])->name('superadmin')->middleware('superadmin');
 Route::match(['get','post'], '/superadmin/store_pass', [SuperAdminController::class, 'storepass'])->name('superadmin')->middleware('superadmin');
 Route::match(['get','post'], '/superadmin/admins', [SuperAdminController::class, 'admins'])->name('superadmin')->middleware('superadmin');
@@ -92,6 +93,7 @@ Route::match(['get','post'], '/viewdes/{id}', [AdminController::class, 'viewdes'
 Route::match(['get','post'], '/pending_req', [AdminController::class, 'pending_req'])->middleware('admin');
 Route::match(['get','post'], '/load_pending_req/{data}', [AdminController::class, 'load_pending_req'])->middleware('admin');
 Route::match(['get','post'], '/req_log', [AdminController::class, 'req_log'])->middleware('admin');
+Route::match(['get','post'], '/req_logdata/{data}', [AdminController::class, 'req_logdata'])->middleware('admin');
 Route::match(['get','post'], '/reqbtnf/{id}', [AdminController::class, 'reqbtnf'])->middleware('admin');
 Route::match(['get','post'], '/change_pass', [AdminController::class, 'changepass'])->middleware('admin');
 Route::match(['get','post'], '/store_pass', [AdminController::class, 'storepass'])->name('store_pass')->middleware('admin');

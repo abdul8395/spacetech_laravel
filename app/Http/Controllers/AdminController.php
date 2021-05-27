@@ -424,7 +424,7 @@ class AdminController extends Controller
         return view('admin.ApprovalHistory', ['dtype' => $dtype, 'dsrc' => $dsrc]);
     } 
     public  function load_approval_data($data){
-        
+        $u_id=auth()->user()->id;
         $a=json_decode($data);
         if($a->StorageDate==''){
             $stdate='null';
@@ -449,22 +449,57 @@ class AdminController extends Controller
         if($a->StorageDate == '' && $a->CreationDate == '' && $a->Type == '' && $a->Srcdpt == ''){
            
             $q = DB::select("SELECT
-            dt.datatype_name, data_id, data_name, data_storage_date, u.name, data_creation_date,
-            data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved     
-            FROM space_tech.tbl_data_upload
-            INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  space_tech.tbl_data_upload.datatype_id
-            INNER JOIN space_tech.users u ON u.source_id =  space_tech.tbl_data_upload.source_id;");
+                            dt.datatype_name, data_id, data_name, data_storage_date, u.name,data_creation_date,
+                            data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved     
+                            FROM space_tech.tbl_data_upload  as du
+                            INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  du.datatype_id
+                            INNER JOIN space_tech.users u ON u.source_id =  du.source_id
+                            where user_id=$u_id;");
             return json_encode($q);
             
+        }
+        elseif($type == 'null' && $src == 'null'){
+            $q = DB::select("SELECT
+            dt.datatype_name, data_id, data_name, data_storage_date, u.name,data_creation_date,
+            data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved     
+            FROM space_tech.tbl_data_upload  as du
+            INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  du.datatype_id
+            INNER JOIN space_tech.users u ON u.source_id =  du.source_id
+            where user_id=$u_id
+            and du.data_storage_date='$stdate' and du.data_creation_date='$crdate';");
+            return json_encode($q);
+        }
+        elseif($type == 'null'){
+            $q = DB::select("SELECT
+            dt.datatype_name, data_id, data_name, data_storage_date, u.name,data_creation_date,
+            data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved     
+            FROM space_tech.tbl_data_upload  as du
+            INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  du.datatype_id
+            INNER JOIN space_tech.users u ON u.source_id =  du.source_id
+            where user_id=$u_id
+            and du.data_storage_date='$stdate' and du.data_creation_date='$crdate' and du.source_id=$src;");
+            return json_encode($q);
+        }
+        elseif($src == 'null'){
+            $q = DB::select("SELECT
+            dt.datatype_name, data_id, data_name, data_storage_date, u.name,data_creation_date,
+            data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved     
+            FROM space_tech.tbl_data_upload  as du
+            INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  du.datatype_id
+            INNER JOIN space_tech.users u ON u.source_id =  du.source_id
+            where user_id=$u_id
+            and du.data_storage_date='$stdate' and du.data_creation_date='$crdate' and du.datatype_id=$type;");
+            return json_encode($q);
         }
         else{
             $q = DB::select("SELECT
             dt.datatype_name, data_id, data_name, data_storage_date, u.name,data_creation_date,
             data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved     
-            FROM space_tech.tbl_data_upload
-            INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  space_tech.tbl_data_upload.datatype_id
-            INNER JOIN space_tech.users u ON u.source_id =  space_tech.tbl_data_upload.source_id
-            where space_tech.tbl_data_upload.data_storage_date='$stdate' or space_tech.tbl_data_upload.data_creation_date='$crdate' or space_tech.tbl_data_upload.datatype_id=$type or space_tech.tbl_data_upload.source_id=$src;");
+            FROM space_tech.tbl_data_upload  as du
+            INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  du.datatype_id
+            INNER JOIN space_tech.users u ON u.source_id =  du.source_id
+            where user_id=$u_id
+            and du.data_storage_date='$stdate' and du.data_creation_date='$crdate' and du.datatype_id=$type and du.source_id=$src;;");
             return json_encode($q);
         }
         // print_r($a);
@@ -476,8 +511,12 @@ class AdminController extends Controller
     } 
     public  function viewdes($id){
         $a=json_decode($id);
-        $des = DB::select("SELECT space_tech.tbl_approval_log.description
+        $q = DB::select("SELECT description
         FROM space_tech.tbl_approval_log where data_id=$a;");
+        $des;
+        foreach ($q as $f) {
+            $des="$f->description";
+        }
         return json_encode($des);
     } 
 
@@ -551,8 +590,85 @@ class AdminController extends Controller
         return view('admin.RequestsLog', ['dtype' => $dtype, 'dsrc' => $dsrc]);
         
     } 
-    public  function load_req_log($data){
-        
+    public  function req_logdata($data){
+        $u_id=auth()->user()->id;
+        $a=json_decode($data);
+        if($a->StorageDate==''){
+            $stdate='null';
+        }else{
+        $stdate=date('Ymd', strtotime($a->StorageDate));
+        }
+        if($a->CreationDate==''){
+            $crdate='null';
+        }else{
+        $crdate=date('Ymd', strtotime($a->CreationDate));
+        }
+        if($a->Type==''){
+            $type='null';
+        }else{
+        $type=$a->Type;
+        }
+        if($a->Srcdpt==''){
+            $src='null';
+        }else{
+        $src=$a->Srcdpt;
+        }
+        if($a->StorageDate == '' && $a->CreationDate == '' && $a->Type == '' && $a->Srcdpt == ''){
+           
+            $q = DB::select("SELECT
+                            dt.datatype_name, data_id, data_name, data_storage_date, u.name,data_creation_date,
+                            data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved     
+                            FROM space_tech.tbl_data_upload  as du
+                            INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  du.datatype_id
+                            INNER JOIN space_tech.users u ON u.source_id =  du.source_id
+                            where user_id=$u_id and du.isapproved IS not NULL;");
+            return json_encode($q);
+            
+        }
+        elseif($type == 'null' && $src == 'null'){
+            $q = DB::select("SELECT
+            dt.datatype_name, data_id, data_name, data_storage_date, u.name,data_creation_date,
+            data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved     
+            FROM space_tech.tbl_data_upload  as du
+            INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  du.datatype_id
+            INNER JOIN space_tech.users u ON u.source_id =  du.source_id
+            where user_id=$u_id and du.isapproved IS not NULL
+            and du.data_storage_date='$stdate' and du.data_creation_date='$crdate';");
+            return json_encode($q);
+        }
+        elseif($type == 'null'){
+            $q = DB::select("SELECT
+            dt.datatype_name, data_id, data_name, data_storage_date, u.name,data_creation_date,
+            data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved     
+            FROM space_tech.tbl_data_upload  as du
+            INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  du.datatype_id
+            INNER JOIN space_tech.users u ON u.source_id =  du.source_id
+            where user_id=$u_id and du.isapproved IS not NULL
+            and du.data_storage_date='$stdate' and du.data_creation_date='$crdate' and du.source_id=$src;");
+            return json_encode($q);
+        }
+        elseif($src == 'null'){
+            $q = DB::select("SELECT
+            dt.datatype_name, data_id, data_name, data_storage_date, u.name,data_creation_date,
+            data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved     
+            FROM space_tech.tbl_data_upload  as du
+            INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  du.datatype_id
+            INNER JOIN space_tech.users u ON u.source_id =  du.source_id
+            where user_id=$u_id and du.isapproved IS not NULL
+            and du.data_storage_date='$stdate' and du.data_creation_date='$crdate' and du.datatype_id=$type;");
+            return json_encode($q);
+        }
+        else{
+            $q = DB::select("SELECT
+            dt.datatype_name, data_id, data_name, data_storage_date, u.name,data_creation_date,
+            data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved     
+            FROM space_tech.tbl_data_upload  as du
+            INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  du.datatype_id
+            INNER JOIN space_tech.users u ON u.source_id =  du.source_id
+            where user_id=$u_id and du.isapproved IS not NULL
+            and du.data_storage_date='$stdate' and du.data_creation_date='$crdate' and du.datatype_id=$type and du.source_id=$src;;");
+            return json_encode($q);
+        }
     }
 
     public function reqbtn($id){

@@ -98,8 +98,9 @@
                 {{$p->data_resolution}}
                 </td>
                 <td>
+                    <input type="hidden" id="hidDataId" />
                     <input type="button" class="btn btn-warning" value="Download" onclick="downloadbtn('{{$p->data_id}}')" />
-                    <input type="button" class="btn btn-danger" value="Reject" onclick="Rejectbtn('{{$p->data_id}}')" />
+                    <input type="button" class="btn btn-danger" value="Reject" onclick="Rejectfilemodal('{{$p->data_id}}')" />
                     <input type="button" class="btn btn-success" value="Approve" onclick="Approvebtn('{{$p->data_id}}')" />    
                 </td>
             </tr>

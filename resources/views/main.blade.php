@@ -184,8 +184,8 @@
                                 <li><a href="{{ url('/req_log') }}">Requests Log</a></li>
                             @endif
                             @if(Auth::user()->role==1)
-                                <li><a href="{{ url('/superadmin/spending_req') }}">Pending Requests</a></li>
                                 <li><a href="{{ url('/superadmin/approval') }}">Approval </a></li>
+                                <li><a href="{{ url('/superadmin/spending_req') }}">Pending Requests</a></li>
                                 <li><a href="{{ url('/superadmin/req_log') }}">Requests Log </a></li>
                                 <li><a href="{{ url('/superadmin/change_pass') }}">Change Password</a></li>
                             @endif

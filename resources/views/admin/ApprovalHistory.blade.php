@@ -193,7 +193,7 @@
                     //else {
                     //    r = r + '<td>' + data.desc + '</td>';
                     //}
-                    console.log(data.isapproved);
+                    // console.log(data.isapproved);
                     if (data.isapproved == null) {
                         r = r + '<td><span class="badge badge-primary" style="background-color:blue;">Pending</span></td>';
                     }
@@ -219,13 +219,9 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (res) {
                     // console.log(res[0]["description"]) 
-                    if (res != "false") {
                         $("#modalDescription").modal("show");
-                        $('#txtDescription').val(res[0]["description"]);
-                     }
-                },
-                error: function (err) {
-                    autoLoader(err.statusText, "error", "Error !");
+                        $('#txtDescription').val(res);
+                     
                 }
             });
         }

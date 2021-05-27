@@ -94,7 +94,7 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class=" btn btn-danger" onclick="Reject()" id="btnSave" style="color:white;">Reject</button>
+                    <button type="button" class=" btn btn-danger" onclick="Rejectbtn()" id="btnSave" style="color:white;">Reject</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -180,28 +180,41 @@
                 }
             });   
         }
-        function Rejectbtn(id) {
-            $.ajax({
-                type: "get",
-                url: "rejectfile/" +JSON.stringify(id),
-                // dataType : "json",
-                success: function (res) {
-                    var r=JSON.parse(res)
-                    if(r == true){
-                        autoLoader("File Recjected", "success", "Rejected !");
-                    }
-                    else {
-                        autoLoader("File can not be Recjected", "error", "Error !");
-                    }
-                }
-            });   
-        }
-        function showAddFileModal(id) {
+
+        function Rejectfilemodal(id) {
             Reset();
             $('#hidDataId').val(id);
             $("#rejectionModel").modal("show");
 
         }
+        function Rejectbtn() {
+            var description = $('#txtDescription').val();
+            if (description == '') {
+                autoLoader("Please Add Description", "error", "Error !");
+                return false;
+            }
+                var reqdata={
+                description:$('#txtDescription').val(),
+                data_id:$('#hidDataId').val()
+                };
+                $.ajax({
+                    type: "get",
+                    url: "rejectfile/" +JSON.stringify(reqdata),
+                    // dataType : "json",
+                    success: function (res) {
+                        var r=JSON.parse(res)
+                        if(r == true){
+                            autoLoader("File Recjected", "success", "Rejected !");
+                            $('#rejectionModel').modal('hide');
+                        }
+                        else {
+                            autoLoader("File can not be Recjected", "error", "Error !");
+                            $('#rejectionModel').modal('hide');
+                        }
+                    }
+                });   
+        }
+       
         function ShowApproveModal(id) {
             Reset();
             var loaderId = showLoader("Loading Data..", "warning");
@@ -380,36 +393,36 @@
                 }
             });
         }
-        function Reject() {
-            var id = $('#hidDataId').val();
-            var description = $('#txtDescription').val();
-            if (description == '') {
-                autoLoader("Please Add Description", "error", "Error !");
-                return false;
-            }
-            $.ajax({
-                type: "GET",
-                url: "/SuperAdmin/RejectData",
-                data: {
-                    id: id,
-                    description: description
-                },
-                success: function (res) {
-                    if (res != "false") {
-                        autoLoader("Data Rejected...", "error");
-                        document.getElementById('approvCount').innerHTML = '(' + res + ')';
-                        LoadData();
-                        $('#rejectionModel').modal('hide');
-                    }
-                    else {
-                        autoLoader("Data can not be Approved", "error", "Error !");
-                    }
-                },
-                error: function (err) {
-                    autoLoader(err.statusText, "error", "Error !");
-                }
-            });
-        }
+        // function Reject() {
+        //     var id = $('#hidDataId').val();
+        //     var description = $('#txtDescription').val();
+        //     if (description == '') {
+        //         autoLoader("Please Add Description", "error", "Error !");
+        //         return false;
+        //     }
+        //     $.ajax({
+        //         type: "GET",
+        //         url: "/SuperAdmin/RejectData",
+        //         data: {
+        //             id: id,
+        //             description: description
+        //         },
+        //         success: function (res) {
+        //             if (res != "false") {
+        //                 autoLoader("Data Rejected...", "error");
+        //                 document.getElementById('approvCount').innerHTML = '(' + res + ')';
+        //                 LoadData();
+        //                 $('#rejectionModel').modal('hide');
+        //             }
+        //             else {
+        //                 autoLoader("Data can not be Approved", "error", "Error !");
+        //             }
+        //         },
+        //         error: function (err) {
+        //             autoLoader(err.statusText, "error", "Error !");
+        //         }
+        //     });
+        // }
 
     </script>
 
