@@ -38,7 +38,7 @@
 
                     
                 <div class="pull-right" style="margin:5px;">
-                    <span class="btn btn-success btn-sm" onclick="detailbtn({{$p->data_id}})" style="height:25px; font-size:13px;"><span>Detail</span></span>
+                    <span class="btn btn-success btn-sm" onclick="detailbtn({{$p->data_id}})" style="height:28px; text-align: center; font-size:15px;"><span>Detail</span></span>
                 </div>
 
 

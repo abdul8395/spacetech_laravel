@@ -94,6 +94,7 @@ Route::match(['get','post'], '/pending_req', [AdminController::class, 'pending_r
 Route::match(['get','post'], '/load_pending_req/{data}', [AdminController::class, 'load_pending_req'])->middleware('admin');
 Route::match(['get','post'], '/req_log', [AdminController::class, 'req_log'])->middleware('admin');
 Route::match(['get','post'], '/req_logdata/{data}', [AdminController::class, 'req_logdata'])->middleware('admin');
+Route::match(['get','post'], '/updateaccesslevel/{data}', [AdminController::class, 'updateaccesslevel'])->middleware('admin');
 Route::match(['get','post'], '/reqbtnf/{id}', [AdminController::class, 'reqbtnf'])->middleware('admin');
 Route::match(['get','post'], '/change_pass', [AdminController::class, 'changepass'])->middleware('admin');
 Route::match(['get','post'], '/store_pass', [AdminController::class, 'storepass'])->name('store_pass')->middleware('admin');

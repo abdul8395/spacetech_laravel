@@ -185,7 +185,6 @@
             Reset();
             $('#hidDataId').val(id);
             $("#rejectionModel").modal("show");
-
         }
         function Rejectbtn() {
             var description = $('#txtDescription').val();

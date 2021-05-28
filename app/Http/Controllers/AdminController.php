@@ -55,11 +55,12 @@ class AdminController extends Controller
         return view('admin.loadData',['tbl_duplod' => $dt]);
     } 
     public function detailbtn($data){
+
         $d_id=$data;
         if (Auth::user()) {       
             $u_id=auth()->user()->id;
             $dtup = DB::select("SELECT
-            dt.datatype_name, data_id, data_name, data_storage_date, u.name,data_creation_date,
+            dt.datatype_name, data_id, space_tech.tbl_data_upload.user_id, data_name, data_storage_date, u.name,data_creation_date,
             data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved, privacy_level     
             FROM space_tech.tbl_data_upload
             INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  space_tech.tbl_data_upload.datatype_id
@@ -89,10 +90,11 @@ class AdminController extends Controller
             if(count($a)>0){
                 $reqchk='1';
             };
-            return view('admin.loadData1', ['dtup' => $dtup, 'divinames' => $divinames, 'distnames' => $distnames, 'tehnames' => $tehnames, 'depname' => $depname , 'reqchk' => $reqchk]);
+
+            return view('admin.loadData1', ['dtup' => $dtup, 'divinames' => $divinames, 'distnames' => $distnames, 'tehnames' => $tehnames, 'depname' => $depname , 'logusrid' => $u_id]);
         } else {
             $dtup = DB::select("SELECT
-            dt.datatype_name, data_id, data_name, data_storage_date, u.name, data_creation_date,
+            dt.datatype_name, data_id, user_id, data_name, data_storage_date, u.name, data_creation_date,
             data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved, privacy_level     
             FROM space_tech.tbl_data_upload
             INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  space_tech.tbl_data_upload.datatype_id
@@ -231,7 +233,15 @@ class AdminController extends Controller
     } 
 
 
+    public  function updateaccesslevel($data){
+        $d=json_decode($data);
+        $level=$d->level;
+        $d_id=$d->data_id;
 
+        DB::update("UPDATE space_tech.tbl_data_upload
+        SET privacy_level='$level' WHERE data_id=$d_id;");
+        return json_encode(true);
+    }
    
     public  function add_data(){
         $dep = DB::table("space_tech.tbl_department")->pluck("department_name", "department_id");

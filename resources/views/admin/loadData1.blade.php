@@ -65,8 +65,8 @@
                             <br />
                         @foreach($dtup as $p)
                             @if($p->privacy_level == 'Public')
-                                <div href="{{ route('downloadfile', $p->data_id) }}" class="pull-right" style="margin:5px;">
-                                    <a  class="btn btn-warning btn-sm " style="color: white;
+                                <div  class="pull-right" style="margin:5px;">
+                                    <a href="{{ route('downloadfile', $p->data_id) }}" class="btn btn-warning btn-sm " style="color: white;
                                         height: 25px;
                                         font-size: 13px;
                                         ">Download</a>
@@ -81,10 +81,17 @@
                                     ">Request</span>
                                 @endif
                             @endif
+                            <!-- @if(Auth::check())
+                                @if(Auth::user()->role==2 && $logusrid==$p->user_id  && $p->privacy_level == 'Private')
+                                    <input type="hidden" id="hidDataId" />
+                                    <span class="btn btn-warning btn-sm pull-right" onclick="updateaccesslevel({{$p->data_id}})" style="height:25px; font-size:13px; margin-top:5px;"
+                                    >Update Access Level</span>
+                                @endif
+                            @endif -->
                         @endforeach
                             
                 <div class="pull-right" style="margin:5px;">
-                    <span class="btn btn-success btn-sm" onclick="LoadDataPage()" style="height:25px; font-size:13px;"><span>Back</span></span>
+                    <span class="btn btn-success btn-sm" onclick="LoadDataPage()" style="height:25px; font-size:14px;"><span>Back</span></span>
                 </div>
 
 

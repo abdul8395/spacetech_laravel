@@ -102,7 +102,6 @@
 
     <div id="UpdateAccessModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog" style="width:60%;">
-
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
@@ -114,23 +113,20 @@
                         <tr>
                             <td><strong>Privacy Level</strong></td>
                             <td>
-                                @Html.DropDownList("ddlPrivacyUpdate", new List<SelectListItem>
-                                    {
-                                        new SelectListItem{ Text="Public", Value = "Public" },
-                                        new SelectListItem{ Text="Protected", Value = "Protected" },
-                                        new SelectListItem{ Text="Private", Value = "Private" },
-                                    }
-                        , "-- Select Privact Level --", new { @Id = "ddlPrivacyUpdate", @class = "form-control ", @style = "width:100%;" })
+                                <select id="ddlPrivacyUpdate" class="form-control" name="privacy_level">
+                                    <option selected disabled>--Select Privacy Level--</option>
+                                    <option value="Public">Public</option>
+                                    <option value="Protected">Protected</option>
+                                    <option value="Private">Private</option>
+                                </select>
                             </td>
                         </tr>
-
-
                     </table>
                 </div>
                 <div class="modal-footer">
 
 
-                    <button type="button" class=" btn btn-success" style="color:white;" onclick="UpdateAccess()" id="btnUpdateAccess">Save</button>
+                    <button type="button" class=" btn btn-success" style="color:white;" onclick="savebtn()" id="btnUpdateAccess">Save</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -236,7 +232,7 @@
                 var loaderId = showLoader("Loading Data..", "warning");
                 $.ajax({
                     type : "GET", 
-                    url : 'loaddata/',
+                    url : '/loaddata/',
                     success:function(data){
                         // console.log(data);
                         hideLoader(loaderId);
@@ -308,12 +304,40 @@
                 $('#tehs').trigger('change');
             }
 
-        function fetch_select(v){}
-            function showUpdateAccessModal(id, pp) {
-                $('#ddlPrivacyUpdate').val(pp);
+            function fetch_select(v){}
+
+            
+            function showUpdateAccessModal(id) {
                 $('#hidDataId').val(id);
                 $("#UpdateAccessModal").modal("show");
             }
+
+            function savebtn() {
+                var level = $('#ddlPrivacyUpdate').val();
+                var data_id=$('#hidDataId').val()
+                var reqdata={
+                        level:$('#txtDescription').val(),
+                        data_id:$('#hidDataId').val()
+                };
+
+                $.ajax({
+                    type: "get",
+                    url: "updateaccesslevel/" +JSON.stringify(reqdata),
+                    // dataType : "json",
+                    success: function (res) {
+                        var r=JSON.parse(res)
+                        if(r == true){
+                            autoLoader("Privacy Access level Updated Successfully ", "success", "Rejected !");
+                            $('#rejectionModel').modal('hide');
+                        }
+                        else {
+                            autoLoader("can't Update", "error", "Error !");
+                            $('#rejectionModel').modal('hide');
+                        }
+                    }
+                });   
+        }
+          
            
             $(document).on('click', '.panel-heading span.clickable', function (e) {
                 var $this = $(this);

@@ -64,8 +64,8 @@
                             <br />
                         @foreach($dtup as $p)
                         @if($p->privacy_level == "Public")
-                        <div onclick="downloadbtn({{$p->data_id}})" class="pull-right" style="margin:5px;">
-                            <a  class="btn btn-warning btn-sm " style="color: white;
+                        <div  class="pull-right" style="margin:5px;">
+                            <a href="{{ route('downloadfile', $p->data_id) }}" class="btn btn-warning btn-sm " style="color: white;
                                 height: 25px;
                                 font-size: 13px;
                                 ">Download</a>
