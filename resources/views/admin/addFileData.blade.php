@@ -612,17 +612,10 @@
         $.ajax({
             url : 'getfiletype/' +JSON.stringify(id),
             type : "GET",
-            dataType : "json",
             success: function (res) {
                 var r=JSON.parse(res)
-                // console.log(res[0].datatype_extension)
-                if (r == true) {
-                    document.getElementById("Data_Atachment").accept = res[0].datatype_extension;
-                }
-                else
-                {
-                    autoLoader(r, "error");
-                }
+                // console.log(r[0].datatype_extension)
+                    document.getElementById("Data_Atachment").accept = r[0].datatype_extension;
             }
         });
 

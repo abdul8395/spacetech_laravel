@@ -125,9 +125,9 @@ class AdminController extends Controller
         foreach ($fid as $f) {
             $a=$f->file_url;
             $fn=basename($a);
-            $tempImage = tempnam(sys_get_temp_dir(), $fn);
-            copy($a, $tempImage);
-            return response::download($tempImage, $fn);
+            $tempname = tempnam(sys_get_temp_dir(), $fn);
+            copy($a, $tempname);
+            return response::download($tempname, $fn);
             exit();
         // return Storage::download('public/uploads/'.$b);
         // return Storage::download(storage_path("public/uploads/{$b}"));
