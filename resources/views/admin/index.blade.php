@@ -232,7 +232,7 @@
                 var loaderId = showLoader("Loading Data..", "warning");
                 $.ajax({
                     type : "GET", 
-                    url : '/loaddata/',
+                    url : 'loaddata/',
                     success:function(data){
                         // console.log(data);
                         hideLoader(loaderId);
