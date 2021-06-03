@@ -97,7 +97,7 @@ Route::match(['get','post'], '/req_logdata/{data}', [AdminController::class, 're
 Route::match(['get','post'], '/updateaccesslevel/{data}', [AdminController::class, 'updateaccesslevel'])->middleware('admin');
 Route::match(['get','post'], '/reqbtnf/{id}', [AdminController::class, 'reqbtnf'])->middleware('admin');
 Route::match(['get','post'], '/change_pass', [AdminController::class, 'changepass'])->middleware('admin');
-Route::match(['get','post'], '/store_pass', [AdminController::class, 'storepass'])->name('store_pass')->middleware('admin');
+Route::match(['get','post'], '/store_pass', [AdminController::class, 'storepass'])->name('store_pass');
 Route::match(['get','post'], '/user', [UserController::class, 'index'])->name('user')->middleware('user')->middleware('admin');
 
 

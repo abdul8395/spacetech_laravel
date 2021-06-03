@@ -431,24 +431,22 @@ class SuperAdminController extends Controller
     public function storepass(Request $request){
         // echo "storepass";
         // exit();
-               $request->validate([
-            'current_password' => ['required'],
-            'new_password' => ['required'],
-            'new_confirm_password' => ['same:new_password'],
-        ]);
-        $current_password = \Auth::User()->password;           
-        if(\Hash::check($request->input('current_password'), $current_password))
-        {          
-          $user_id = \Auth::User()->id;                       
-          $obj_user = User::find($user_id);
-          $obj_user->password = \Hash::make($request->input('new_password'));
-          $obj_user->save(); 
-          return back()->with('success', 'Password Changed Successfully.');
-        }
-        else
-        {          
-          return back()->with('error', 'Please enter correct password');
-        }  
+        $request->validate([
+            'current_password' => 'required',
+            'password' => 'required|string|min:3|confirmed',
+            'password_confirmation' => 'required',
+          ]);
+  
+          $user = Auth::user();
+  
+          if (!Hash::check($request->current_password, $user->password)) {
+              return back()->with('error', 'Current password does not match!');
+          }
+  
+          $user->password = Hash::make($request->password);
+          $user->save();
+  
+          return back()->with('success', 'Password successfully changed!'); 
         
     }
 }
