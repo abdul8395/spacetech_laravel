@@ -155,7 +155,7 @@
             $('select[name="divi"]').on('change',function(e){
                 e.preventDefault();
                 var divids= $(this).val();
-                console.log(divids);
+                // console.log(divids);
                 if(divids)
                 {
                     $.ajax({
@@ -163,7 +163,7 @@
                         type : "GET",
                         dataType : "json",
                         success:function(data){
-                            // console.log(data);
+                            console.log(data);
                             $('select[name="dist"]').empty();
                             for(var i=0;i<data.length;i++){
                                 $('select[name="dist"]').append('<option value="'+ data[i].district_id +'">'+ data[i].district_name +'</option>');
@@ -212,6 +212,7 @@
                         Districts: $('#dists').val(),
                         Tehsils: $('#tehs').val(),
                         };
+                        console.log(alldata)
                 $.ajax({
                     url : 'searchdata/' +JSON.stringify(alldata),
                     type : "GET",

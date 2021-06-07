@@ -203,17 +203,18 @@ class AdminController extends Controller
  
         $sql="select data_id from space_tech.tbl_data_upload 
         where data_id in(
-        (select distinct data_id from space_tech.tbl_data_upload_departments where department_id in ($dp_id)LIMIT 1),
+        (select distinct data_id from space_tech.tbl_data_upload_departments where department_id in ($dp_id) LIMIT 1),
          
-        (select distinct data_id from space_tech.tbl_data_upload_divisions where id in($div_id) LIMIT 1),
+        (select distinct data_id from space_tech.tbl_data_upload_divisions where division_id in($div_id) LIMIT 1),
             
-        (select distinct data_id from space_tech.tbl_data_upload_districts where id in($dist_id) LIMIT 1),
+        (select distinct data_id from space_tech.tbl_data_upload_districts where district_id in($dist_id) LIMIT 1),
         
-        (select distinct data_id from space_tech.tbl_data_upload_tehsils where id in($teh_id) LIMIT 1)
+        (select distinct data_id from space_tech.tbl_data_upload_tehsils where tehsil_id in($teh_id) LIMIT 1)
         );";
     
 
-
+        print_r($sql);
+        exit();
          $dt=DB::select($sql);
         //  $global_array.push($rs);
         // //print_r($rs);
