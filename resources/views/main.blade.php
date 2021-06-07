@@ -179,14 +179,14 @@
                                     <a href="http://172.20.82.84:88/spacetech_map/?user_id=70EFDF2EC9B086079795C442636B55FB" target="_blank">View Datasets</a>
                                 </li>
                                 <li><a href="{{ url('/add_data') }}">Add Data</a></li>
-                                <li><a href="{{ url('/approval_logs') }}">Approval Logs</a></li>
-                                <li><a href="{{ url('/pending_req') }}">Pending Requests</a></li>
-                                <li><a href="{{ url('/req_log') }}">Requests Log</a></li>
+                                <li><a href="{{ url('/approval_logs') }}">Approval Logs &nbsp;<span style="color:red;" id="idapprovalCount"></span></a></li>
+                                <li><a href="{{ url('/pending_req') }}">Pending Requests &nbsp;<span style="color:red;" id="idpendCount"></span></a></li>
+                                <li><a href="{{ url('/req_log') }}">Requests Log &nbsp;<span style="color:red;" id="idreqloglCount"></span></a></li>
                             @endif
                             @if(Auth::user()->role==1)
-                                <li><a href="{{ url('/superadmin/approval') }}">Approval </a></li>
-                                <li><a href="{{ url('/superadmin/spending_req') }}">Pending Requests</a></li>
-                                <li><a href="{{ url('/superadmin/req_log') }}">Requests Log </a></li>
+                                <li><a href="{{ url('/superadmin/approval') }}">Approval &nbsp;<span style="color:red;" id="idapprovalCount"></span></a></li>
+                                <li><a href="{{ url('/superadmin/spending_req') }}">Pending Requests &nbsp;<span style="color:red;" id="idpendCount"></span></a></li>
+                                <li><a href="{{ url('/superadmin/req_log') }}">Requests Log &nbsp;<span style="color:red;" id="idreqloglCount"></span></a></li>
                                 <li><a href="{{ url('/superadmin/change_pass') }}">Change Password</a></li>
                             @endif
                             @if(Auth::user()->role==2)
@@ -237,7 +237,15 @@
        
 
     document.onreadystatechange = function () {
-       
+        @if(Auth::check())
+            @if(Auth::user()->role==1)
+                scounts();
+            @endif
+            @if(Auth::user()->role==2)
+                counts();
+            @endif
+        @endif
+           
         var state = document.readyState
         if (state == 'interactive') {
             // document.getElementById('contents').style.visibility = "hidden";
@@ -249,6 +257,44 @@
             }, 1000);
         }
     }
+
+        function counts() {
+            $.ajax({
+                type : "GET", 
+                url : 'counts/',
+                success:function(data){
+                    if(data){
+                        // console.log(data);
+                        resetcounts()
+                        document.getElementById('idapprovalCount').innerHTML = '(' + data.approvalcount + ')';
+                        document.getElementById('idpendCount').innerHTML = '(' + data.pendreqcount + ')';
+                        document.getElementById('idreqloglCount').innerHTML = '(' + data.reqlogcount + ')';
+                    }
+                }
+            });
+        }
+        function scounts() {
+            $.ajax({
+                type : "GET", 
+                url : 'scounts/',
+                success:function(data){
+                    if(data){
+                        // console.log(data);
+                        resetcounts()
+                        document.getElementById('idapprovalCount').innerHTML = '(' + data.approvalcount + ')';
+                        document.getElementById('idpendCount').innerHTML = '(' + data.pendreqcount + ')';
+                        document.getElementById('idreqloglCount').innerHTML = '(' + data.reqlogcount + ')';
+                    }
+                }
+            });
+        }
+        function resetcounts() {
+
+            document.getElementById('idapprovalCount').innerHTML = '';
+            document.getElementById('idpendCount').innerHTML = '';
+            document.getElementById('idreqloglCount').innerHTML = '';
+
+        }
 
         function UnApprovedCount() {
         $.ajax({

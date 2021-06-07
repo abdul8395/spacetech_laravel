@@ -819,28 +819,57 @@ class AdminController extends Controller
    
     
 
+    public function counts() {
+        if (Auth::user()) {       
+            $u_id=auth()->user()->id;
+            $approval = DB::select("SELECT
+                    dt.datatype_name, data_id, data_name, data_storage_date, u.name,data_creation_date,
+                    data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved     
+                    FROM space_tech.tbl_data_upload  as du
+                    INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  du.datatype_id
+                    INNER JOIN space_tech.users u ON u.source_id =  du.source_id
+                    where user_id=$u_id;");
+            $approvalcount=count($approval);
+    
+            $pendreq=DB::select('SELECT data_id
+                    FROM space_tech.tbl_permissions
+                    where user_id='.$u_id.' and access_granted is null;');
+            $pendreqcount=count($pendreq);
+    
+            $reqlog = DB::select("SELECT
+                    dt.datatype_name, data_id, data_name, data_storage_date, u.name,data_creation_date,
+                    data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved     
+                    FROM space_tech.tbl_data_upload  as du
+                    INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  du.datatype_id
+                    INNER JOIN space_tech.users u ON u.source_id =  du.source_id
+                    where user_id=$u_id and du.isapproved IS not NULL;");
+            $reqlogcount=count($reqlog); 
+            return ['approvalcount' => $approvalcount,'pendreqcount' => $pendreqcount,'reqlogcount' => $reqlogcount];
+        }  
+
+    }
     public function testform(Request $request) {
         return view('admin.testform');
-      }
-
-      public function storetestform(Request $request) {
-
-        // Form validation
-        $request->validate([
-            'name' => 'required',
-            'message' => 'required'
-        ]);
-
-        // return $request->all();
-
-        //  Store data in database
-        $task = new Form();
-        $task->name = $request->name;
-        $task->message = $request->message;
-        $task->save();
-        // return redirect()->route('/');
-
-        return back()->with('success', 'Your form has been submitted.');
     }
+
+    public function storetestform(Request $request) {
+
+    // Form validation
+    $request->validate([
+        'name' => 'required',
+        'message' => 'required'
+    ]);
+
+    // return $request->all();
+
+    //  Store data in database
+    $task = new Form();
+    $task->name = $request->name;
+    $task->message = $request->message;
+    $task->save();
+    // return redirect()->route('/');
+
+    return back()->with('success', 'Your form has been submitted.');
+}
     
 }

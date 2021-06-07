@@ -447,6 +447,34 @@ class SuperAdminController extends Controller
           $user->save();
   
           return back()->with('success', 'Password successfully changed!'); 
-        
+    }
+
+    public function scounts() {
+        if (Auth::user()) {       
+            $approval = DB::select("SELECT
+                        dt.datatype_name, data_id, data_name, data_storage_date, u.name, data_creation_date,
+                        data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved     
+                        FROM space_tech.tbl_data_upload
+                        INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  space_tech.tbl_data_upload.datatype_id
+                        INNER JOIN space_tech.users u ON u.source_id =  space_tech.tbl_data_upload.source_id
+                        where space_tech.tbl_data_upload.isapproved IS NULL;");
+            $approvalcount=count($approval);
+    
+            $pendreq=DB::select('SELECT data_id
+                    FROM space_tech.tbl_permissions
+                    where access_granted is null;');
+            $pendreqcount=count($pendreq);
+    
+            $reqlog = DB::select("SELECT
+                    dt.datatype_name, data_id, data_name, data_storage_date, u.name,data_creation_date,
+                    data_description, data_crs, data_usage_purpose, data_isvector, data_resolution, isapproved     
+                    FROM space_tech.tbl_data_upload  as du
+                    INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  du.datatype_id
+                    INNER JOIN space_tech.users u ON u.source_id =  du.source_id
+                    where du.isapproved IS not NULL;");
+            $reqlogcount=count($reqlog); 
+            return ['approvalcount' => $approvalcount,'pendreqcount' => $pendreqcount,'reqlogcount' => $reqlogcount];
+        }  
+
     }
 }
