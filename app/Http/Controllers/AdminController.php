@@ -213,8 +213,6 @@ class AdminController extends Controller
         );";
     
 
-        print_r($sql);
-        exit();
          $dt=DB::select($sql);
         //  $global_array.push($rs);
         // //print_r($rs);
