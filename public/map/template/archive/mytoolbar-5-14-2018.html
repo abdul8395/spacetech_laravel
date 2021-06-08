@@ -1,0 +1,400 @@
+
+<div id="context" data-toggle="context" data-target="#context-menu" flex layout="row" class="border-class-padding">
+
+
+    <!--<div flex="10" style="padding-left: 30px;padding-top: 15px;border-right: 2px snow solid"></div>-->
+    <div flex="100"  layout="row" layout-wrap   ng-show="tb1">
+
+        <!--<div  style="border-right: 2px snow solid;">-->
+            <!--<button  type="button" ng-click="goToHome()" class="btn-subnav dropdown-toggle" data-toggle="dropdown">-->
+                <!--<span class="glyphicon glyphicon-home"></span>-->
+                <!--Home-->
+            <!--</button>-->
+        <!--</div>-->
+
+
+        <div  style="border-right: 2px snow solid;">
+            <button id="coordinates"  type="button" ng-click="showLatLng()" class="btn-subnav bg_style">
+            <span class=" glyphicon glyphicon-globe"></span>
+            Coordinates
+        </button>
+        </div>
+
+        <div id="measure" style="border-right: 2px snow solid;">
+        <button id="Measuretool" type="button" ng-click="showMeasureControl()" class="btn-subnav bg_style" >
+            <span class="glyphicon glyphicon-edit"></span>
+            Measure
+        </button>
+        </div>
+
+        <div id="graticule" style="border-right: 2px snow solid;">
+            <button id="graticules" type="button" ng-click="addGraticule()" class="btn-subnav bg_style" >
+                <span class="glyphicon glyphicon-th"></span>
+                Graticule
+            </button>
+        </div>
+
+
+
+        <div id="Routing" style="border-right: 2px snow solid;">
+            <button id="routings" type="button" onclick="routingApp()" class="btn-subnav dropdown-toggle bg_style" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-road"></span>
+                Routing
+            </button>
+        </div>
+
+
+
+        <div  style="padding-left:0px;border-right: 2px snow solid;">
+            <md-menu-bar>
+                <md-menu>
+                    <button id="cal_pop_tools" type="button" ng-click="$mdOpenMenu()" class="btn-subnav dropdown-toggle bg_style" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-search"></span>
+                        Population Calculator
+                    </button>
+
+                    <md-menu-content>
+                    <md-menu-item>
+                    <div id="Redlining" style="border-right: 2px snow solid;">
+                        <button id="drawPolygon" type="button"  class="btn-subnav dropdown-toggle bg_style" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-search"></span>
+                            Calculate Population
+                        </button>
+                    </div>
+                    </md-menu-item>
+
+                        <md-menu-item>
+                            <div id="Parcellining" style="border-right: 2px snow solid;">
+                                <button id="drawParcelPolygon" type="button"  class="btn-subnav dropdown-toggle bg_style" data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                    Parcel Calculater
+                                </button>
+                            </div>
+                        </md-menu-item>
+
+                    </md-menu-content>
+                </md-menu>
+            </md-menu-bar>
+        </div>
+
+        <!--<div id="locate" style="border-right: 2px snow solid;">-->
+            <!--<button  type="button" ng-click="geoLocate()" class="btn-subnav dropdown-toggle" data-toggle="dropdown">-->
+                <!--<span class=" glyphicon glyphicon-pushpin"></span>-->
+                <!--GeoLocate-->
+            <!--</button>-->
+        <!--</div>-->
+
+
+
+
+
+        <!--<div  style="border-right: 2px snow solid;">-->
+            <!--<input type="file" id="csv" class="fileclass" class="ng-hide" style="display:none" accept=".csv"/>-->
+            <!--<button  type="button" ng-click="uploadFile('csv')" class="btn-subnav dropdown-toggle" data-toggle="dropdown">-->
+                <!--<span class=" glyphicon glyphicon-pushpin"></span>-->
+                <!--CSV-->
+            <!--</button>-->
+            <!--&lt;!&ndash;<span class=" glyphicon glyphicon-pushpin"></span>&ndash;&gt;-->
+            <!--&lt;!&ndash;<input type="file" id="shp" class="fileclass" style="display:none" accept=".zip"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;SHP&ndash;&gt;-->
+        <!--</div>-->
+
+        <div  style="padding-left:0px;border-right: 2px snow solid;">
+        <md-menu-bar>
+            <md-menu>
+                <!--<button class="md-button md-raised md-default" ng-click="$mdOpenMenu()">-->
+
+
+                <!--<div id="serviceArea" style="border-right: 2px snow solid;">-->
+                    <!--<button  type="button" ng-click="driveTimeInputDialig()" class="btn-subnav dropdown-toggle" data-toggle="dropdown">-->
+                        <!--<span class="glyphicon glyphicon-map-marker"></span>-->
+                        <!--Calculate Service Area-->
+                    <!--</button>-->
+                <!--</div>-->
+
+                        <button id="srv_area_tools" type="button" ng-click="$mdOpenMenu()" class="btn-subnav dropdown-toggle bg_style" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-asterisk"></span>
+                            Service Area
+                        </button>
+
+
+                <md-menu-content>
+                    <md-menu-item>
+                        <div id="serviceArea" style="border-right: 2px snow solid;">
+                        <button  type="button" ng-click="driveTimeInputDialig()" class="btn-subnav dropdown-toggle bg_style" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-map-marker"></span>
+                        Service Area Map Click
+                        </button>
+                        </div>
+                    </md-menu-item>
+
+
+
+                    <md-menu-item>
+                            <div  style="border-right: 2px snow solid;">
+                                <button  type="button" ng-click="driveTimeSHPInputDialig()" class="btn-subnav dropdown-toggle bg_style" data-toggle="dropdown">
+                                    <span class=" glyphicon glyphicon-file"></span>
+                                    Service Area Shapefile
+                                </button>
+                            </div>
+                    </md-menu-item>
+
+                    <md-menu-item>
+
+                        <div  style="border-right: 2px snow solid;">
+
+                            <button  type="button" ng-click="driveTimeGeojsonInputDialig()" class="btn-subnav dropdown-toggle bg_style" data-toggle="dropdown">
+                                <span class=" glyphicon glyphicon-file"></span>
+                                Service Area GEOJSON
+                            </button>
+                        </div>
+
+                    </md-menu-item>
+
+
+                </md-menu-content>
+            </md-menu>
+        </md-menu-bar>
+        </div>
+
+
+
+        <div  style="padding-left:0px;border-right: 2px snow solid;">
+            <md-menu-bar>
+                <md-menu>
+
+                    <button  type="button" ng-click="$mdOpenMenu()" class="btn-subnav dropdown-toggle bg_style " data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-wrench"></span>
+                        Geospatial Tools
+                    </button>
+
+
+                    <md-menu-content>
+                        <md-menu-item>
+                            <div  style="border-right: 2px snow solid;">
+                                <button  type="button" ng-click="createBufferFromSelectedLayerDialig()" class=" bg_style btn-subnav dropdown-toggle" data-toggle="dropdown">
+                                    <span class=" glyphicon glyphicon-file"></span>
+                                    Buffer
+                                </button>
+                            </div>
+                        </md-menu-item>
+
+                        <!--<md-menu-item>-->
+                            <!--<div  style="border-right: 2px snow solid;">-->
+                                <!--<button  type="button" ng-click="pointBufferSHPInputDialig()" class="btn-subnav dropdown-toggle" data-toggle="dropdown">-->
+                                    <!--<span class=" glyphicon glyphicon-file"></span>-->
+                                    <!--Buffer on Point SHP-->
+                                <!--</button>-->
+                            <!--</div>-->
+                        <!--</md-menu-item>-->
+
+
+                        <md-menu-item>
+                            <div  style="border-right: 2px snow solid;">
+                                <button  type="button" ng-click="pointBufferPointInputDialig()" class="btn-subnav dropdown-toggle bg_style" data-toggle="dropdown">
+                                    <span class=" glyphicon glyphicon-file"></span>
+                                    Buffer on Draw Point
+                                </button>
+                            </div>
+                        </md-menu-item>
+
+                        <md-menu-item>
+                            <div  style="border-right: 2px snow solid;">
+                                <button  type="button" onclick="drawVoronoiOnLayer()" class="btn-subnav dropdown-toggle" data-toggle="dropdown">
+                                    <span class=" glyphicon glyphicon-file"></span>
+                                    Voronoi
+                                </button>
+                            </div>
+                        </md-menu-item>
+
+                    </md-menu-content>
+                </md-menu>
+            </md-menu-bar>
+        </div>
+
+        <div  style="padding-left:0px;border-right: 2px snow solid;">
+            <md-menu-bar>
+                <md-menu>
+                    <!--<button class="md-button md-raised md-default" ng-click="$mdOpenMenu()">-->
+
+                    <button  type="button" ng-click="$mdOpenMenu()" class="btn-subnav dropdown-toggle bg_style" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        Add Data
+                    </button>
+
+
+                    <md-menu-content>
+                        <md-menu-item>
+                            <div  style="border-right: 2px snow solid;">
+                                <input type="file" id="shp" class="fileclass" class="ng-hide" style="display:none" accept=".zip"/>
+                                <button  type="button" ng-click="uploadFile('shp')" class="btn-subnav dropdown-toggle bg_style" data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-file"></span>
+                                    SHP
+                                </button>
+                            </div>
+                        </md-menu-item>
+                        <md-menu-item>
+
+                            <div  style="border-right: 2px snow solid;">
+                                <input type="file" id="geojson" class="fileclass" class="ng-hide" style="display:none" accept=".geojson"/>
+                                <button  type="button" ng-click="uploadFile('geojson')" class="btn-subnav dropdown-toggle bg_style" data-toggle="dropdown">
+                                    <span class=" glyphicon glyphicon-file"></span>
+                                    GEOJSON
+                                </button>
+                            </div>
+
+                        </md-menu-item>
+
+
+
+                        <md-menu-item>
+                            <div  style="border-right: 2px snow solid;">
+                                <input type="file" id="kml" class="fileclass" class="ng-hide" style="display:none" accept=".kml"/>
+                                <button  type="button" ng-click="uploadFile('kml')" class="btn-subnav dropdown-toggle bg_style" data-toggle="dropdown">
+                                    <span class=" glyphicon glyphicon-file"></span>
+                                    KML
+                                </button>
+                            </div>
+                        </md-menu-item>
+
+
+                        <md-menu-item>
+                            <div  style="border-right: 2px snow solid;">
+                                <input type="file" id="geotiff" class="fileclass" class="ng-hide" style="display:none" accept=".tif"/>
+                                <button  type="button" ng-click="uploadFile('geotiff')" class="btn-subnav dropdown-toggle bg_style" data-toggle="dropdown">
+                                    <span class=" glyphicon glyphicon-file"></span>
+                                    GEOTIFF
+                                </button>
+                            </div>
+                        </md-menu-item>
+
+                    </md-menu-content>
+                </md-menu>
+            </md-menu-bar>
+        </div>
+
+
+        <div  style="border-right: 2px snow solid;">
+            <button id="print"  type="button" onclick="manualPrint()" class="btn-subnav bg_style">
+                <span class=" glyphicon glyphicon-print"></span>
+                print map
+            </button>
+        </div>
+
+        <div  style="border-right: 2px snow solid;">
+            <button id="sc"  type="button" onclick="createScoreCard()" class="btn-subnav bg_style">
+                <span class=" glyphicon glyphicon-pencil"></span>
+                Road Score Card
+            </button>
+        </div>
+
+        <!--<div ng-show="savejobs" style="border-right: 2px snow solid;">-->
+            <!--<button  type="button" ng-click="saveJob()" class="btn-subnav dropdown-toggle" data-toggle="dropdown">-->
+                <!--<span class="glyphicon glyphicon-floppy-disk"></span>-->
+                <!--Save-->
+            <!--</button>-->
+        <!--</div>-->
+
+        <!--<div  style="border-right: 2px snow solid;">-->
+            <!--<button id="paint"  type="button" ng-click="paint()" class="btn-subnav bg_style">-->
+                <!--<span class=" glyphicon glyphicon-leaf"></span>-->
+                <!--Map Paint-->
+            <!--</button>-->
+        <!--</div>-->
+
+
+        <!--<div id="kml" style="border-right: 2px snow solid;">-->
+            <!--<button  type="button" ng-click="geoLocate()" class="btn-subnav dropdown-toggle" data-toggle="dropdown">-->
+                <!--<span class=" glyphicon glyphicon-pushpin"></span>-->
+                <!--KML-->
+            <!--</button>-->
+        <!--</div>-->
+
+
+
+        <!--<div id="csv" style="border-right: 2px snow solid;">-->
+            <!--<button  type="button" ng-click="geoLocate()" class="btn-subnav dropdown-toggle" data-toggle="dropdown">-->
+                <!--<span class=" glyphicon glyphicon-pushpin"></span>-->
+                <!--CSV-->
+            <!--</button>-->
+        <!--</div>-->
+
+
+        <!--<div id="geojson" style="border-right: 2px snow solid;">-->
+            <!--<button  type="button" ng-click="geoLocate()" class="btn-subnav dropdown-toggle" data-toggle="dropdown">-->
+                <!--<span class=" glyphicon glyphicon-pushpin"></span>-->
+                <!--GEOJSON-->
+            <!--</button>-->
+        <!--</div>-->
+
+
+
+
+
+        <!--<div  style="border-right: 2px snow solid">-->
+        <!--<button  type="button" ng-click="showPolyLineMeasureControl()" class="btn-subnav dropdown-toggle" data-toggle="dropdown">-->
+            <!--<span class="glyphicon glyphicon-pencil"></span>-->
+            <!--Measue Polyline-->
+        <!--</button>-->
+        <!--</div>-->
+            <!--<div flex="30">-->
+                <!--<button class="btn-subnav" style="min-width: 40px;" ng-click="showLatLng()">-->
+                <!--<md-tooltip>view Lat-Lon</md-tooltip>-->
+                <!--<md-icon md-svg-src="images/location.svg" class="s24" aria-label="Cake">-->
+                <!--</md-icon>-->
+                 <!--Coordinates-->
+            <!--</button>-->
+            <!--</div>-->
+            <!--<md-button>Bookmark</md-button>-->
+
+            <!--<div flex="30"><md-button   style="min-width: 40px;" ng-click="showMeasureControl()">-->
+                    <!--<md-tooltip>Measure distance with Ruler</md-tooltip>-->
+                    <!--<img class="png-icon" src="images/rulers_me.png" class="s24">-->
+                <!--</md-button>-->
+            <!--</div>-->
+
+            <!--<div flex="30" ><md-button   style="min-width: 40px;" ng-click="showPolyLineMeasureControl()">-->
+                <!--<md-tooltip>Measure distance with Polyline</md-tooltip>-->
+                <!--<img class="png-icon" src="images/ruler.png" class="s24">-->
+            <!--</md-button>-->
+            <!--</div>-->
+            <!--<md-button hide-sm>Editor</md-button>-->
+
+
+    </div>
+
+
+    <!--<div style="float:right" flex>-->
+    <!--<md-input-container>-->
+        <!--<label>Toolbars</label>-->
+        <!--<md-select ng-model="my_toolbars">-->
+            <!--<md-optgroup  class="move-up" label="Toolbars">-->
+                <!--<md-option ng-repeat="tollbar in toolCtrl.toolbars" ng-value="{{tollbar.id}}" ng-click="toolCtrl.toolbarSelect(tollbar.tool)">{{ tollbar.tool }}</md-option>-->
+            <!--</md-optgroup>-->
+        <!--</md-select>-->
+    <!--</md-input-container>-->
+    <!--</div>-->
+
+
+
+</div>
+
+<!--<div class="move-up" id="context-menu">-->
+    <!--<ul class="dropdown-menu" role="menu">-->
+        <!--<li><md-checkbox ng-model="tool"  ng-change='layerHandler(tool)' aria-label="tool">-->
+            <!--Tools-->
+        <!--</md-checkbox>-->
+        <!--</li>-->
+        <!--<li><md-checkbox ng-model="editing"  ng-change='layerHandler(editing)' aria-label="editing">-->
+            <!--Editing Tools-->
+        <!--</md-checkbox>-->
+        <!--</li>-->
+        <!--<li><a tabindex="-1">Something else here</a></li>-->
+        <!--<li class="divider"></li>-->
+        <!--<li><a tabindex="-1">Separated link</a></li>-->
+    <!--</ul>-->
+<!--</div>-->
+
+
+
+

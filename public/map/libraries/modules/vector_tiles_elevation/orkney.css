@@ -1,0 +1,128 @@
+@font-face {
+    font-family: 'OrkneyBold';
+        src: url('/assets/fonts/orkney/99f93483b92aaa9f10d3780aba2997e7/612619cf6e6b9c4af3ccb3f78270d181/OrkneyBold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+      }
+
+@font-face {
+    font-family: 'OrkneyBoldItalic';
+        src: url('/assets/fonts/orkney/99f93483b92aaa9f10d3780aba2997e7/a9240a0bb10b10c93cba18dba79c9bd6/OrkneyBoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+      }
+
+@font-face {
+    font-family: 'OrkneyItalic';
+        src: url('/assets/fonts/orkney/99f93483b92aaa9f10d3780aba2997e7/2cd6e2c0e9c4ccedbb61e43a55fbcba2/OrkneyItalic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+      }
+
+@font-face {
+    font-family: 'OrkneyLight';
+        src: url('/assets/fonts/orkney/99f93483b92aaa9f10d3780aba2997e7/4b5d1686d4bfbfc2142d626a2be6fa80/OrkneyLight.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+      }
+
+@font-face {
+    font-family: 'OrkneyLightItalic';
+        src: url('/assets/fonts/orkney/99f93483b92aaa9f10d3780aba2997e7/4049809de8ce9f4c0afa7b1ad84b6afd/OrkneyLightItalic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+      }
+
+@font-face {
+    font-family: 'OrkneyMedium';
+        src: url('/assets/fonts/orkney/99f93483b92aaa9f10d3780aba2997e7/bf48e92f7c7ec4a35e90370868fe1199/OrkneyMedium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+      }
+
+@font-face {
+    font-family: 'OrkneyMediumItalic';
+        src: url('/assets/fonts/orkney/99f93483b92aaa9f10d3780aba2997e7/582a84d7079eb11bff44e7b44d66cad4/OrkneyMediumItalic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+      }
+
+@font-face {
+    font-family: 'OrkneyRegular';
+        src: url('/assets/fonts/orkney/99f93483b92aaa9f10d3780aba2997e7/01d60c513ac0edd3c290699f36af8ec1/OrkneyRegular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+      }
+
+ /* The following rules are deprecated. */ 
+
+@font-face {
+    font-family: 'Orkney';
+        src: url('/assets/fonts/orkney/99f93483b92aaa9f10d3780aba2997e7/612619cf6e6b9c4af3ccb3f78270d181/OrkneyBold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+      }
+
+
+
+@font-face {
+    font-family: 'Orkney';
+        src: url('/assets/fonts/orkney/99f93483b92aaa9f10d3780aba2997e7/a9240a0bb10b10c93cba18dba79c9bd6/OrkneyBoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+      }
+
+
+
+@font-face {
+    font-family: 'Orkney';
+        src: url('/assets/fonts/orkney/99f93483b92aaa9f10d3780aba2997e7/2cd6e2c0e9c4ccedbb61e43a55fbcba2/OrkneyItalic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+      }
+
+
+
+@font-face {
+    font-family: 'Orkney';
+        src: url('/assets/fonts/orkney/99f93483b92aaa9f10d3780aba2997e7/4b5d1686d4bfbfc2142d626a2be6fa80/OrkneyLight.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+      }
+
+
+
+@font-face {
+    font-family: 'Orkney';
+        src: url('/assets/fonts/orkney/99f93483b92aaa9f10d3780aba2997e7/4049809de8ce9f4c0afa7b1ad84b6afd/OrkneyLightItalic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+      }
+
+
+
+@font-face {
+    font-family: 'Orkney';
+        src: url('/assets/fonts/orkney/99f93483b92aaa9f10d3780aba2997e7/bf48e92f7c7ec4a35e90370868fe1199/OrkneyMedium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+      }
+
+
+
+@font-face {
+    font-family: 'Orkney';
+        src: url('/assets/fonts/orkney/99f93483b92aaa9f10d3780aba2997e7/582a84d7079eb11bff44e7b44d66cad4/OrkneyMediumItalic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+      }
+
+
+
+@font-face {
+    font-family: 'Orkney';
+        src: url('/assets/fonts/orkney/99f93483b92aaa9f10d3780aba2997e7/01d60c513ac0edd3c290699f36af8ec1/OrkneyRegular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+      }
+

@@ -170,13 +170,15 @@
                            
                             
                                 <li id="linkDataSets">
-                                    <a href="http://172.20.82.84:88/spacetech_map/?user_id={{ Auth::user()->id }}" target="_blank">View Datasets</a>
+                                    <!-- <a href="http://172.20.82.84:88/spacetech_map/?user_id={{ Auth::user()->id }}" target="_blank">View Datasets</a> -->
+                                    <a href="{{ url('/mapindex') }}" target="_blank">View Datasets</a>
                                 </li>
                                 <li><a href="{{ url('/superadmin/filetypes') }}">File Types</a></li>
                             @endif
                             @if(Auth::user()->role==2)
                                 <li id="linkDataSets">
-                                    <a href="http://172.20.82.84:88/spacetech_map/?user_id=70EFDF2EC9B086079795C442636B55FB" target="_blank">View Datasets</a>
+                                    <!-- <a href="http://172.20.82.84:88/spacetech_map/?user_id=70EFDF2EC9B086079795C442636B55FB" target="_blank">View Datasets</a> -->
+                                    <a href="{{ url('/mapindex') }}" target="_blank">View Datasets</a>
                                 </li>
                                 <li><a href="{{ url('/add_data') }}">Add Data</a></li>
                                 <li><a href="{{ url('/approval_logs') }}">Approval Logs &nbsp;<span style="color:red;" id="idapprovalCount"></span></a></li>

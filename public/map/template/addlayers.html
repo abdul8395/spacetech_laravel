@@ -1,0 +1,64 @@
+<style>
+    .editColor svg
+    {
+        fill : #828282;
+    }
+    .list-group {
+        border-radius: 0;
+    }
+    ul.list-group, ol {
+        padding: 0;
+        margin: 10px !important;
+    }
+    #myInput{
+        margin: 15px 10px 10px 10px;
+        border-radius: 0;
+        width: 265px;
+        height: 35px;
+    }
+</style>
+<md-dialog  aria-label="my data">
+    <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>My Data</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="images/ic_clear_black_24px.svg" class="editColor" aria-label="Close dialog">
+                    </md-icon>
+
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div layout="row" style="height: 400px;">
+
+             <div flex="25" style=" padding-left: 0px;padding-top: 10px;padding-right:20px ;width:1000px;height:400px;overflow:scroll;">
+                 <input style="" type="text" id="myInput" onkeyup="myTreeSearchFunction()" placeholder="Search for names.." title="Type in a name">
+                 <div  id="treeview1">
+
+                 </div>
+             </div>
+
+
+            <div flex="50" id="map_catalog"  style="border-left:#0000dd 2px solid;z-index: 50;border-right:#0000dd 2px solid;" class="col-md-8">
+                <md-button style="z-index: 1000;float:right;" class="md-raised md-primary" ng-click="addCatalogLayerToMao()">
+                    Add To Map
+                </md-button>
+            </div>
+
+                <div flex="25" style="padding-left: 0px;padding-top: 10px;padding-right:20px ;width:1000px;" >
+
+
+                </div>
+
+                <!--<div id="info" class="leaflet-bar"></div>-->
+
+            </div>
+
+        </md-dialog-content>
+
+
+    </form>
+</md-dialog>

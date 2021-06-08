@@ -1,0 +1,470 @@
+body,
+html {
+    height: 100%;
+}
+.hamburger {
+    padding: 8px 5px;
+    display: inline-block;
+    cursor: pointer;
+    transition-property: opacity, filter;
+    transition-duration: 0.15s;
+    transition-timing-function: linear;
+    font: inherit;
+    color: inherit;
+    text-transform: none;
+    background-color: transparent;
+    border: 0;
+    margin: 0;
+    overflow: visible;
+}
+
+.hamburger:hover {
+    /*opacity: 0.7;*/
+}
+
+.hamburger-box {
+    width: 30px;
+    height: 24px;
+    display: inline-block;
+}
+
+.hamburger-inner {
+    display: block;
+    top: 50%;
+    margin-top: -2px;
+    background-color: #0000ff;
+}
+
+.hamburger-inner,
+.hamburger-inner::before,
+.hamburger-inner::after {
+    width: 30px;
+    height: 4px;
+    background-color: #fff;
+    border-radius: 4px;
+    position: absolute;
+    transition-property: transform;
+    transition-duration: 0.15s;
+    transition-timing-function: ease;
+}
+
+.hamburger-inner::before, .hamburger-inner::after {
+    content: "";
+    display: block;
+}
+
+.hamburger-inner::before {
+    top: -10px;
+}
+
+.hamburger-inner::after {
+    bottom: -10px;
+}
+
+.hamburger--stand .hamburger-inner {
+    transition: transform 0.075s 0.15s cubic-bezier(0.55, 0.055, 0.675, 0.19), background-color 0s 0.075s linear;
+}
+
+.hamburger--stand .hamburger-inner::before {
+    transition: top 0.075s 0.075s ease-in, transform 0.075s 0s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+.hamburger--stand .hamburger-inner::after {
+    transition: bottom 0.075s 0.075s ease-in, transform 0.075s 0s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+.hamburger--stand.is-active .hamburger-inner {
+    transform: rotate(90deg);
+    background-color: transparent;
+    transition: transform 0.075s 0s cubic-bezier(0.215, 0.61, 0.355, 1), background-color 0s 0.15s linear;
+}
+
+.hamburger--stand.is-active .hamburger-inner::before {
+    top: 0;
+    transform: rotate(-45deg);
+    transition: top 0.075s 0.1s ease-out, transform 0.075s 0.15s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.hamburger--stand.is-active .hamburger-inner::after {
+    bottom: 0;
+    transform: rotate(45deg);
+    transition: bottom 0.075s 0.1s ease-out, transform 0.075s 0.15s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.hamburger--stand:focus{
+    outline: none;
+}
+
+
+.left .menu-icon,
+.right .menu-icon {
+    position: absolute;
+    left: 370px;
+    top: 10px;
+    width: 55px;
+    height: 45px;
+    text-align: center;
+    z-index: 2900;
+    display: inline-block;
+    overflow: visible;
+    padding: 5px;
+}
+
+.right .menu-icon {
+    position: absolute;
+    right: 300px;
+    left: auto;
+}
+
+#mobile-menu-container ul {
+    padding-left: 0;
+    width: 100%;
+    margin: 0;
+    display: block;
+}
+
+#mobile-menu-container.left,
+#mobile-menu-container.right {
+    min-height: 100%;
+    width: 300px;
+    color: white;
+    position: fixed;
+    background: transparent;
+    height: 100%;
+    left: -350px;
+    z-index: 3001;
+    max-width: 100%;
+    top: 0;
+}
+
+#mobile-menu-container.right {
+    right: -300px;
+    left: auto;
+}
+
+.menu-item.active:before {
+    content: '';
+    height: 20px;
+    width: 20px;
+    background: white;
+    display: block;
+    position: absolute;
+    left: -10px;
+    top: 20px;
+    bottom: 0;
+    margin: auto;
+    transform: rotate(45deg);
+}
+
+.right .menu-item.active:before {
+    left: auto;
+    right: -10px;
+}
+
+.menu {
+    width: 350px;
+    /*height: 100%;*/
+    /*overflow-x: hidden;*/
+    /*position: absolute;*/
+    /*z-index: 3001;*/
+    /*padding-top: 0;*/
+}
+
+.menu, .menu-icon {
+    background: #242730;
+    color: white;
+}
+
+#mobile-menu-container ul li {
+    position: relative;
+    width: 100%;
+}
+
+.menu::-webkit-scrollbar {
+    width: 10px; // manage scrollbar width here
+}
+.menu::-webkit-scrollbar {
+    background: transparent; // manage scrollbar background color here
+}
+.menu::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.2) !important; // manage scrollbar thumb background color here
+}
+
+/*#shadow-glass {*/
+/*    position: fixed;*/
+/*    z-index: 2900;*/
+/*    background-color: rgba(0, 0, 0, 0.6);*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    display: none;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*}*/
+md-sidenav{
+    overflow: visible;
+}
+.uniqueButton{
+    padding-top: 5px;
+    height: 45px;
+    background: #242730;
+    color: white;
+    border-radius: 3px;
+    box-sizing: border-box;
+    color: currentColor;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: relative;
+    outline: none;
+    border: 0;
+    display: inline-block;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    /* padding: 0 6px; */
+    margin: 10px 50px;
+    line-height: 25px;
+    min-height: 28px;
+    background: transparent;
+    white-space: nowrap;
+    min-width: 55px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 11px;
+    font-style: inherit;
+    font-variant: inherit;
+    font-family: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    overflow: hidden;
+    transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+
+/*-----------------------------------------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------------------*/
+
+
+.md-whiteframe-4dp, .md-whiteframe-z2 {
+        background-color: #242730;
+
+}
+/*-----Sidbar button------*/
+/* Horizontal line */
+.collapsible-link::before {
+    content: '';
+    width: 14px;
+    height: 2px;
+    background: #333;
+    position: absolute;
+    top: calc(50% - 1px);
+    right: 1rem;
+    display: block;
+    transition: all 0.3s;
+}
+
+/* Vertical line */
+.collapsible-link::after {
+    content: '';
+    width: 2px;
+    height: 14px;
+    background: #333;
+    position: absolute;
+    top: calc(50% - 7px);
+    right: calc(1rem + 6px);
+    display: block;
+    transition: all 0.3s;
+}
+
+.collapsible-link[aria-expanded='true']::after {
+    transform: rotate(90deg) translateX(-1px);
+}
+
+.collapsible-link[aria-expanded='true']::before {
+    transform: rotate(180deg);
+}
+
+/*custom style*/
+.accordion>.card:not(:first-of-type) {
+    border-radius: 0;
+}
+.accordion>.card:not(:last-of-type) {
+    border-radius: 0;
+}
+.card-header {
+    background-color: #29323C;
+}
+.card {
+    border: 0;
+    border-radius: 0;
+}
+.collapsible-link::before,.collapsible-link::after {
+    background: #828282;
+}
+.accordion>.card {
+    margin-bottom: 5px;
+}
+.card-body {
+    background-color: #29323C;
+    color: #b6b6b6;
+}
+/*---------------------------------*/
+
+.btn{
+    border-radius: 0;
+}
+a:hover {
+    text-decoration: none;
+}
+
+/*---Radio button style---*/
+.custom-control-label::before {
+    background-color: #9e9fa5;
+}
+
+.custom-control-input:checked ~ .custom-control-label::before {
+    color: #fff;
+    border-color: #007BFF;
+    background-color: #007BFF;
+}
+/*----------------------*/
+
+.modal.fade .modal-dialog.modal-dialog-zoom {-webkit-transform: translate(0,0)scale(.5);transform: translate(0,0)scale(.5);}
+.modal.show .modal-dialog.modal-dialog-zoom {-webkit-transform: translate(0,0)scale(1);transform: translate(0,0)scale(1);}
+.btn:focus {
+    box-shadow: none;
+}
+
+/*---Modal window---*/
+.modal-header {
+    background: #29323C;
+    color: #fff;
+    border-bottom: none;
+    border-radius: 0;
+
+}
+.modal-body,.modal-footer{
+    background-color: #4c4c4c;: ;
+}
+
+.modal-footer{
+    border-top: none;
+    border-radius: 0;
+}
+
+.close {
+    color: #fff;
+}
+.close:hover {
+    color: #fff;
+}
+/*-------------------*/
+
+/*---Sidebar controls---*/
+.form-control {
+    border-radius: 0 !important;
+}
+.form-control:focus {
+    border-color: #e0e0e3;
+    background-color: #e0e0e3;
+    box-shadow: none;
+}
+
+.btn:focus {
+    box-shadow: none;
+}
+/*------------------*/
+/*---header title---*/
+.web-title{
+    color: #828282;
+    border-bottom: 1px solid #828282;
+}
+.web-title p{
+    font-size: 1rem;
+    color: #007BFF;
+}
+.web-title h4{
+    font-family: 'Pragati Narrow', sans-serif;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+/*------------------*/
+/*---no spacing---*/
+.no-padding {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/*----sub menu------*/
+nav {
+    position: relative;
+    margin: 0px;
+    /*width: 360px;*/
+}
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+nav ul li {
+    /* Sub Menu */
+}
+nav ul li a {
+    display: block;
+    background: #828282;
+    padding: 10px 15px;
+    color: #29323C;
+    text-decoration: none;
+    -webkit-transition: 0.2s linear;
+    -moz-transition: 0.2s linear;
+    -ms-transition: 0.2s linear;
+    -o-transition: 0.2s linear;
+    transition: 0.2s linear;
+}
+nav ul li a:hover {
+    background: #29323C;
+    color: #007BFF;
+}
+nav ul li a .fa {
+    width: 16px;
+    text-align: center;
+    margin-right: 5px;
+    float:right;
+}
+nav ul ul {
+    background-color:#ebebeb;
+}
+nav ul li ul li a {
+    color: #007BFF;
+    background: #29323C;
+    border-left: 4px solid transparent;
+    padding: 10px 20px;
+}
+nav ul li ul li a:hover {
+    background: #29323C;
+    border-left: 4px solid #007BFF;
+}
+/*----sub menu------*/
+
+
+md-sidenav {
+
+    width: 350px;
+    max-width: 350px;
+
+}
+
+.sidebar_content::-webkit-scrollbar {
+    width: 10px; // manage scrollbar width here
+}
+.sidebar_content::-webkit-scrollbar {
+    background: transparent; // manage scrollbar background color here
+}
+.sidebar_content::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.2) !important; // manage scrollbar thumb background color here
+}
+
+

@@ -86,32 +86,52 @@
                             <small class="badge badge-success" style="background-color:#dfb100;margin:0;font-size:12px;">{{$depname->department_name}}</small>
                         @endforeach
                             <br />
-                        @foreach($p['dtup'] as $dtup)
-                            @if($dtup->privacy_level == 'Public')
-                                <div  class="pull-right" style="margin:5px;">
-                                    <a href="{{ route('downloadfile', $dtup->data_id) }}" class="btn btn-warning btn-sm " style="color: white;
-                                        height: 25px;
-                                        font-size: 13px;
-                                        ">Download</a>
-                                </div>
-                            @endif
                             @if(Auth::check())
-                                @if(Auth::user()->role==2 && $dtup->privacy_level == 'Protected' && $reqchk =='0')
-                                    <span class="btn btn-primary btn-sm pull-right" onclick="Requestbtn({{$dtup->data_id}})" style="color: white;
+                                @php
+                                    $plvl;
+                                    $duaccid;
+                                @endphp
+                                    @foreach($p['dtup'] as $dtup) @php $plvl=$dtup->privacy_level @endphp  @endforeach
+                                    @foreach($p['download_access_user'] as $duid) @php $duaccid= $duid->user_id @endphp @endforeach
+                                @if($uid== $duaccid || $plvl == 'Public')
+                                    <div  class="pull-right" style="margin:5px;">
+                                        <a href="{{ route('downloadfile', $dtup->data_id) }}" class="btn btn-warning btn-sm " style="color: white;
                                             height: 25px;
                                             font-size: 13px;
-                                            margin-top:5px;"
-                                    >Request</span>
+                                            ">Download</a>
+                                    </div>
                                 @endif
+                            @else
+                                @foreach($p['dtup'] as $dtup)
+                                    @if($dtup->privacy_level == 'Public')
+                                        <div  class="pull-right" style="margin:5px;">
+                                            <a href="{{ route('downloadfile', $dtup->data_id) }}" class="btn btn-warning btn-sm " style="color: white;
+                                                height: 25px;
+                                                font-size: 13px;
+                                                ">Download</a>
+                                        </div>
+                                    @endif
+                                @endforeach
                             @endif
-                            <!-- @if(Auth::check())
-                                @if(Auth::user()->role==2 && $uid==$dtup->user_id  && $dtup->privacy_level == 'Private')
-                                    <input type="hidden" id="hidDataId" />
-                                    <span class="btn btn-warning btn-sm pull-right" onclick="updateaccesslevel({{$dtup->data_id}})" style="height:25px; font-size:13px; margin-top:5px;">
-                                    Update Access Level</span>
+                            @foreach($p['dtup'] as $dtup)
+                                @if(Auth::check())
+                                    @if(Auth::user()->role==2 && $dtup->privacy_level == 'Protected' && $reqchk =='0' && $uid!=$dtup->user_id)
+                                        <span class="btn btn-primary btn-sm pull-right" onclick="Requestbtn({{$dtup->data_id}})" style="color: white;
+                                                height: 25px;
+                                                font-size: 13px;
+                                                margin-top:5px;"
+                                        >Request</span>
+                                    @endif
                                 @endif
-                            @endif -->
-                        @endforeach
+                                @if(Auth::check())
+                                <!-- && $dtup->privacy_level == 'Private' -->
+                                    @if(Auth::user()->role==2 && $uid==$dtup->user_id)
+                                        <input type="hidden" id="hidDataId" />
+                                        <span class="btn btn-success btn-sm pull-right" onclick="showUpdateAccessModal({{$dtup->data_id}})" style="height:25px; font-size:13px; margin-top:5px;">
+                                        Update Access Level</span>
+                                    @endif
+                                @endif
+                            @endforeach
                             
                 <!-- <div class="pull-right" style="margin:5px;">
                     <span class="btn btn-success btn-sm" onclick="LoadDataPage()" style="height:25px; font-size:14px;"><span>Back</span></span>

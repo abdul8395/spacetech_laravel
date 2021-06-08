@@ -314,13 +314,10 @@
             }
 
             function savebtn() {
-                var level = $('#ddlPrivacyUpdate').val();
-                var data_id=$('#hidDataId').val()
                 var reqdata={
-                        level:$('#txtDescription').val(),
+                        level:$('#ddlPrivacyUpdate').val(),
                         data_id:$('#hidDataId').val()
-                };
-
+                    };
                 $.ajax({
                     type: "get",
                     url: "updateaccesslevel/" +JSON.stringify(reqdata),
@@ -328,16 +325,16 @@
                     success: function (res) {
                         var r=JSON.parse(res)
                         if(r == true){
-                            autoLoader("Privacy Access level Updated Successfully ", "success", "Rejected !");
-                            $('#rejectionModel').modal('hide');
+                            autoLoader("Privacy Access level Updated Successfully ", "success", "Success!");
+                            $('#UpdateAccessModal').modal('hide');
                         }
                         else {
                             autoLoader("can't Update", "error", "Error !");
-                            $('#rejectionModel').modal('hide');
+                            $('#UpdateAccessModal').modal('hide');
                         }
                     }
                 });   
-        }
+            }
           
            
             $(document).on('click', '.panel-heading span.clickable', function (e) {

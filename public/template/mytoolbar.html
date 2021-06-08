@@ -1,0 +1,190 @@
+<style>
+
+    .borderless td, .borderless th {
+        border: none;
+    }
+    .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .btn-primary.disabled, .btn-primary[disabled] {
+        color: #ffffff !important;
+        background-color: #006dcc !important;
+
+    }
+    .btn-primary:not(:disabled):not(.disabled):active:focus, .show>.btn-primary.dropdown-toggle:focus {
+         box-shadow: none;
+    }
+	
+    svg > g[class^="raphael-group-"] > text{
+        display: none;
+    }
+
+	md-dialog.md-default-theme, md-dialog {
+		 border-radius: 0;
+	}
+		
+	.editColor svg
+    {
+        fill : #828282;
+    }
+</style>
+<div >
+
+
+
+    <div >
+
+        <!-- Map Tools -->
+        <div >
+            <div class="card">
+                
+
+                <div  >
+                    <div class="card-body p-0">
+                        <div id="div_map_tool">
+                            <nav class='animated bounceInDown'>
+                                <ul>
+                                    <li class='sub-menu'>
+                                        <a href='#'><span class="fas fa-map"></span> Map Tool<div class='fa fa-caret-down right'></div></a>
+                                        <ul>
+                                            <li id="coordinates" ng-click="showLatLng()"><a href="#"><span class="fas fa-globe"></span> Coordinates</a></li>
+                                            <li id="graticules" ng-click="addGraticule()"><a href="#"><span class="fas fa-th"></span> Graticule</a></li>
+                                            <li  id="print" onclick="manualPrint()"><a href="#"><span class="fas fa-print"></span> Print Map</a></li>
+                                        </ul>
+                                    </li>
+                                    <li id="routings" onclick="routingApp()">
+                                        <a href='#'>
+                                            <span class="fas fa-road"></span> Routing
+                                        </a>
+                                    </li>
+                                    <li class="sub-menu">
+                                        <a href='#'><span class="fas fa-search"></span> Population Calculator<div class='fa fa-caret-down right'></div></a>
+                                        <ul>
+                                            <div id="Redlining" >
+                                            <li id="drawPolygon"><a href="#"><span class="fas fa-calculator"></span> Calculate Population</a></li>
+                                            </div>
+                                            <div id="buffer_pop">
+                                            <li id="drawBuffer" ng-click="calculatePopulationFromBufferDialig()"><a href="#"><span class="fas fa-calculator"></span> Calculate Buffer Population</a></li>
+                                            </div>
+                                            <div id="Parcellining" >
+                                            <li id="drawParcelPolygon"><a href="#"><span class="fas fa-calculator"></span> Parcel Calculator</a></li>
+                                            </div>
+                                        </ul>
+                                    </li>
+                                    <li class="sub-menu">
+                                        <a href='#'><span class="fas fa-asterisk"></span> Service Area<div class='fa fa-caret-down right'></div></a>
+                                        <ul>
+                                            <li ng-click="driveTimeInputDialig()"><a href="#"><span class="fas fa-map-marker"></span> Service Area Map Click</a></li>
+                                            <li  ng-click="driveTimeSHPInputDialig()"><a href="#"><span class="far fa-file-alt"></span> Service Area Shapfile</a></li>
+                                            <li ng-click="driveTimeGeojsonInputDialig()"><a href="#"><span class="far fa-file-alt"></span> Service Area GEOJSON</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="sub-menu">
+                                        <a href='#'><span class="fas fa-wrench"></span> Geospatial Tools<div class='fa fa-caret-down right'></div></a>
+                                        <ul>
+                                            <li ng-click="createBufferFromSelectedLayerDialig()"><a href="#"><span class="fas fa-file-alt"></span> Buffer</a></li>
+                                            <li ng-click="pointBufferPointInputDialig()"><a href="#"><span class="fas fa-file-alt"></span> Buffer Draw Point</a></li>
+                                            <li onclick="drawVoronoiOnLayer()"><a href="#"><span class="fas fa-file-alt"></span> Voronoi</a></li>
+                                            <li onclick="drawCenterOnLayer()"><a href="#"><span class="fas fa-file-alt"></span> Center</a></li>
+                                            <li onclick="drawEnvelopOnLayer()"><a href="#"><span class="fas fa-file-alt"></span> Envalop</a></li>
+                                            <li onclick="drawConvexOnLayer()"><a href="#"><span class="fas fa-file-alt"></span> Convex</a></li>
+                                            <li onclick="drawBBoxOnLayer()"><a href="#"><span class="fas fa-file-alt"></span> BBox</a></li>
+                                            <li onclick="drawBboxPolygonOnLayer()"><a href="#"><span class="fas fa-file-alt"></span> BBox Polygon</a></li>
+                                        </ul>
+                                    </li>
+                                    <li id="goToxy" ng-click="goToXY()">
+                                        <a href='#'>
+                                            <span class="fas fa-map-marker"></span> Go To XY
+                                        </a>
+                                    </li>
+                                    <div class="{{pss_class}}">
+                                    <li class="sub-menu">
+                                        
+                                        <a href='#'><span class="fas fa-plus-square"></span> Add Data<div class='fa fa-caret-down right'></div></a>
+                                        <ul>
+                                            <li style="background-color: #29323C;">
+                                            <input type="file" id="shp" class="fileclass" class="ng-hide" style="display:none" accept=".zip"/>
+                                                <button  type="button" ng-click="uploadFile('shp')" class="btn-subnav dropdown-toggle bg_style" data-toggle="dropdown">
+                                                    
+                                                    <a href="#"><span class="fas fa-file"></span> SHP</a>
+                                                    
+                                                </button>
+                                            </li>
+
+                                            <li style="background-color: #29323C;">
+                                                <input type="file" id="geojson" class="fileclass" class="ng-hide" style="display:none" accept=".geojson"/>
+                                                <button  type="button" ng-click="uploadFile('geojson')" class="btn-subnav dropdown-toggle bg_style" data-toggle="dropdown">
+                                                    <a href="#"><span class="fas fa-file"></span> GEOJSON</a>
+                                                </button>
+                                                </li>
+
+                                                <li style="background-color: #29323C;">
+                                                    <input type="file" id="kml" class="fileclass" class="ng-hide" style="display:none" accept=".kml"/>
+                                                    <button  type="button" ng-click="uploadFile('kml')" class="btn-subnav dropdown-toggle bg_style" data-toggle="dropdown">
+                                                        <a href="#"><span class="fas fa-file"></span> KML</a>
+                                                    </button>
+                                                    </li>
+
+                                                    <li style="background-color: #29323C; padding-bottom: 25px;">
+                                                        <input type="file" id="geotiff" class="fileclass" class="ng-hide" style="display:none" accept=".tif"/>
+                                                        <button  type="button" ng-click="uploadFile('geotiff')" class="btn-subnav dropdown-toggle bg_style" data-toggle="dropdown">
+                                                            <a href="#"><span class="fas fa-file"></span> GEOTIFF</a>
+                                                           
+                                                        </button>
+                                                        </li>
+                                           
+                                        </ul>
+                                        </div>
+                                        
+                                    </li>
+
+                                   
+                                    <li >
+                                        <div ng-show="road_score_card" class="{{pss_class}}">
+                                                <a href="#" id="sc" onclick="createScoreCard()"><span class="fas fa-road"></span> Road Score Card </a>
+                                        </div>
+                                    </li>   
+
+                                    <li >
+                                        <div id="scheme"  ng-show="scheme_align_with_pss" >
+                                            <a href="#" id="pc1_scheme" ng-click="addPcOne()">
+                                                <span class="fas fa-plus-square"></span>
+                                                Add Scheme
+                                            </a>
+                                        </div>
+                                    </li>
+									<li>
+                                        <water-template ng-show="water_scheme_align_with_pss"></water-template>
+                                        <connectivity-template ng-show="connectivity_scheme_align_with_pss"></connectivity-template>
+                                        <environment-template ng-show="environment_scheme_align_with_pss"></environment-template>
+                                        <education-template ng-show="education_scheme_align_with_pss"></education-template>
+                                        <agriculture-template ng-show="agriculture_scheme_align_with_pss"></agriculture-template>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        
+
+<!--        <div style="border-left: 2px snow solid;float: right;position: fixed;right: 10px; ">-->
+<!--            <a href="services/logout.php"> <button   type="button" class="btn-subnav bg_style">-->
+<!--                Logout-->
+<!--            </button></a>-->
+<!--        </div>-->
+
+           <script>
+                        
+    //Sub Menu
+    $('.sub-menu ul').hide();
+    $(".sub-menu a").click(function () {
+        $(this).parent(".sub-menu").children("ul").slideToggle("100");
+        $(this).find(".right").toggleClass("fa-caret-up fa-caret-down");
+    });
+                </script>
+
+                
+    </div>
+</div>
+
+
+                    

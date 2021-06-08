@@ -1,0 +1,626 @@
+<style>
+    .md-accordion .expandCollapse {
+        width:30px;
+        height:30px;
+        position:relative;
+        font-size:20px;
+        font-weight:bold;
+        cursor:pointer;
+        color:#7A7B7C;
+        display:block;
+        margin-top: -2px;
+        margin-left: -2px;
+        overflow:hidden;
+    }
+    .md-accordion .expandCollapse:active {
+        border:0px;
+    }
+    .md-accordion .expandCollapse:before, .md-accordion .expandCollapse:after {
+        width:30px;
+        height:30px;
+        display:block;
+        position:absolute;
+        top:0; left:0;
+        line-height:32px;
+        text-align:center;
+        -webkit-transition: .3s all ease-out;
+        transition: .3s all ease-out;
+    }
+    .md-accordion .expandCollapse:before {
+        opacity:1;
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+        content: "|";
+        margin-top:-3px;
+    }
+    .md-accordion .expandCollapse:after {
+        opacity:1;
+        -webkit-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+        content: "|";
+        margin-left:-3px;
+    }
+    .md-accordion .active:before {
+        opacity:1;
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+        margin-left:3px;
+        margin-top:0px;
+    }
+
+    .md-accordion .dataContent {
+        background: #29323C;
+        height:0px;
+        overflow:hidden;
+        -webkit-transition: .3s all ease-out;
+        transition: .3s all ease-out;
+        color: #7A7B7C;
+    }
+
+    .md-accordion .activeContent {
+        height:auto;
+        padding:20px;
+        display:block;
+    }
+
+    .md-accordion md-toolbar{
+        cursor:pointer;
+        border-bottom:none;
+        /*margin-left: 5px;*/
+        margin-bottom: 5px;
+
+    }
+
+    .md-toolbar-tools h4{
+        text-transform: uppercase;
+    }
+
+    /*-------------28 July changes -------*/
+    md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolbar) {
+        background-color: #29323C;
+        color: #7A7B7C;
+        border:none;
+    }
+
+    .md-toolbar-tools {
+        height: 55px;
+        max-height: 55px;
+        padding: 0 16px;
+        margin: 0;
+    }
+
+    .btnAddLayer {
+        border-radius: 0;
+        padding: 0;
+        margin: 0 0 10px 0;
+        line-height: 40px;
+        min-height: 40px;
+
+
+    }
+
+    md-select .md-select-value {
+        border-bottom-color: #007bff
+    }
+
+    .md-select-value .md-select-icon {
+       color: #007bff;
+    }
+
+    md-option {
+
+        /*background: #7A7B7C;*/
+        /*background: #29323C;*/
+        /*color: #7A7B7C;*/
+    }
+
+    md-select.md-default-theme .md-select-value.md-select-placeholder, md-select .md-select-value.md-select-placeholder {
+        /*color: #ff0000;*/
+        /*background: #ff0000;*/
+    }
+
+    .md-accordion .activeContent {
+        padding: 15px;
+    }
+
+    .md-select-value .md-text {
+        color: #7A7B7C;
+    }
+
+	input[type="checkbox"] {
+        margin: -3px 0 0;
+    }
+	
+	#indicator{
+        border-radius: 0;
+        height: 35px;
+        margin-bottom: 0;
+    }
+    .twitter-typeahead .tt-hint{
+        border-radius: 0;
+        height: 35px;
+    }
+
+    md-radio-button .md-off {
+        border-color: #007bff;
+    }
+	.editColor svg
+    {
+        fill : #828282;
+    }
+</style>
+<div id="toc" layout="column">
+
+    <md-button class="md-raised btnAddLayer" ng-click="userDataDialogue($event)" style="border-radius: 0; background-color: #29323C; color: #007bff; text-transform: none;">
+        <i class="fas fa-layer-group"></i> User Data
+    </md-button>
+
+    <!-- <md-button class="md-raised btnAddLayer" onclick="imageDistort('http://172.20.82.84:88/space_tech_images\/pakistan1822021153956882.jpg')" style="border-radius: 0; background-color: #29323C; color: #007bff; text-transform: none;">
+        <i class="fas fa-layer-group"></i> imagebtn
+    </md-button> -->
+
+    <md-button class="md-raised btnAddLayer" ng-click="showAdvanced($event)" style="border-radius: 0; background-color: #29323C; color: #007bff; text-transform: none;">
+        <i class="fas fa-layer-group"></i> All Data Layer
+    </md-button> 
+    
+    <ul style="padding-left: 0px;margin-left: 0px;" id="userLayers"></ul>
+
+        <!-- Data layer -->
+        <div class="md-accordion" ng-repeat="data in accordianDataLayers">
+            <md-toolbar ng-init="data.expanded = false" ng-click="data.expanded = !data.expanded">
+                <div class="md-toolbar-tools">
+                    <h4>
+                        <span>{{data.heading}}</span>
+                    </h4>
+                    <span flex=""></span>
+                    <span ng-class="{expandCollapse:true, active:data.expanded}"></span>
+                </div>
+            </md-toolbar>
+			
+            <div ng-class="{dataContent:true, activeContent:data.expanded}">
+                <div id="mainTocDiv">
+                    <div id="udatachk"></div>
+				<!-- <label for="udata" style="margin-left: 40px !important;">
+                        <input type="checkbox" class="chk" name="gjlayer" value="Bike" onclick="addRemoveLayer('udata')" id="udata" checked>
+                        User Data</label> -->
+                    <div ivh-treeview="bag"
+                         ivh-treeview-default-selected-state="false"
+                         ivh-treeview-expand-to-depth=""
+                         ivh-treeview-twistie-expanded-tpl="tocCtrl.tplFolderOpen"
+                         ivh-treeview-twistie-collapsed-tpl="tocCtrl.tplFolderClose"
+                         ivh-treeview-twistie-leaf-tpl="tocCtrl.tplLeaf"
+                         twistieLeafTpl="#FF8159"
+                         ivh-treeview-on-cb-change="tocCtrl.otherAwesomeCallback(ivhNode, ivhIsSelected, ivhTree)">
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+        <!-- Toolbar  -->
+        <div class="md-accordion" >
+            <md-toolbar ng-init="data.expanded = false" ng-click="data.expanded = !data.expanded">
+                <div class="md-toolbar-tools">
+                    <h4>
+                        <span>Map Tool</span>
+                    </h4>
+                    <span flex=""></span>
+                    <span ng-class="{expandCollapse:true, active:data.expanded}"></span>
+                </div>
+            </md-toolbar>
+            <div ng-class="{dataContent:true, activeContent:data.expanded}">
+                <mytoolbar-template></mytoolbar-template>
+            </div>
+        </div>
+
+        <!-- Navigation  -->
+        <div class="md-accordion" ng-repeat="data in accordianNavigation">
+            <md-toolbar ng-init="data.expanded = false" ng-click="data.expanded = !data.expanded">
+                <div class="md-toolbar-tools">
+                    <h4>
+                        <span>{{data.heading}}</span>
+                    </h4>
+                    <span flex=""></span>
+                    <span ng-class="{expandCollapse:true, active:data.expanded}"></span>
+                </div>
+            </md-toolbar>
+            <div ng-class="{dataContent:true, activeContent:data.expanded}">
+                <div layout="column">
+                    <md-input-container flex="33">
+                        <p>Division Boundary</p>
+                        <md-select ng-model="div" style="min-width: 200px;">
+                            <md-optgroup label="Select Division">
+                                <md-option value="{{div.division_name}}" ng-repeat="div in admin_division" ng-click="selectDivision(div.gid)">{{
+                                    div.division_name }}
+                                </md-option>
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
+
+                    <md-input-container flex="33">
+                        <p>District Boundary</p>
+                        <md-select ng-model="dist" style="min-width: 200px;">
+                            <md-optgroup label="Select District">
+                                <md-option value="{{dist.district_name}}" ng-repeat="dist in admin_district"
+                                           ng-click="selectDistrict(dist.district_name)">{{ dist.district_name }}
+                                </md-option>
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
+
+
+                    <md-input-container flex="33">
+                        <p>Tehsil Boundary</p>
+                        <md-select ng-model="tehsil" style="min-width: 200px;">
+                            <md-optgroup label="Select Tehsil">
+                                <md-option value="{{teh.tehsil_name}}" ng-repeat="teh in admin_teh"
+                                           ng-click="selectTehsil(teh.tehsil_name,teh.gid )">{{ teh.tehsil_name }}
+                                </md-option>
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
+
+                    <md-radio-group layout="row" ng-model="govt_hierarchy">
+                        <md-radio-button value="Revenu hierarchy" class="md-primary">Revenue hierarchy</md-radio-button>
+                        <md-radio-button value="Local Government" class="md-primary"> Local Government</md-radio-button>
+                    </md-radio-group>
+
+                    <div ng-show="govt_hierarchy=='Revenu hierarchy'">
+                        <div layout="column">
+                            <md-input-container flex="33">
+                                <p>Qanoogoi Boundary</p>
+                                <md-select ng-model="qg" style="min-width: 200px;">
+                                    <md-optgroup label="Select Qanoogoi">
+                                        <md-option value="{{ qg.qg }}" ng-repeat="qg in admin_qg" ng-click="selectQG(qg.gid  )">{{ qg.qg }}
+                                        </md-option>
+                                    </md-optgroup>
+                                </md-select>
+                            </md-input-container>
+                            <!--<md-input-container flex="33">-->
+                            <!--<label>PatwarCircle_Boundaaary</label>-->
+                            <!--<md-select ng-model="moza" style="min-width: 200px;padding-left: 30px;">-->
+                            <!--<md-optgroup label="PC">-->
+                            <!--<md-option ng-repeat="pc in admin_pc"  ng-click="selectPC(pc.patwarcircle_id  )">{{ pc.patwarcircle_name   }}</md-option>-->
+                            <!--</md-optgroup>-->
+                            <!--</md-select>-->
+                            <!--</md-input-container>-->
+                            <md-input-container flex="33">
+                                <p>Moza Boundary</p>
+                                <md-select ng-model="moza" style="min-width: 200px;">
+                                    <md-optgroup label="Select Moza">
+                                        <md-option value="{{mza.mauza }}" ng-repeat="mza in admin_mz" ng-click="selectMoza(mza.gid,mza.mauza  )">{{mza.mauza }}
+                                        </md-option>
+                                    </md-optgroup>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container flex="33">
+                                <p>Khasra Boundary</p>
+                                <md-select ng-model="khsra" style="min-width: 200px;">
+                                    <md-optgroup label="Select khsra">
+                                        <md-option value="{{kh.khasra_number }}" ng-repeat="kh in khsra" ng-click="selectKhsra(kh.gid  )">{{
+                                            kh.khasra_number }}
+                                        </md-option>
+                                    </md-optgroup>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                    </div>
+
+                    <div ng-show="govt_hierarchy=='Local Government'">
+                        <div layout="column">
+                            <md-input-container flex="33">
+                                <p>UC Boundary</p>
+                                <md-select ng-model="uc" style="min-width: 200px;">
+                                    <md-optgroup label="Select uc">
+                                        <md-option value="{{uc.uc_name}} -- {{uc.uc_no}}" ng-repeat="uc in admin_uc" ng-click="selectUC(uc.uc_name  )">{{uc.uc_name}} -- {{uc.uc_no}}
+                                        </md-option>
+                                    </md-optgroup>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container flex="33">
+                                <p>ward</p>
+                                <md-select ng-model="ward" style="min-width: 200px;">
+                                    <md-optgroup label="Select ward">
+                                        <md-option value="{{ ward.ward_no | number:0 }}" ng-repeat="ward in admin_ward"
+                                                   ng-click="selectWard(ward.ward_no,ward.uc_name)">{{ ward.ward_no | number:0 }}
+                                        </md-option>
+                                    </md-optgroup>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <!--<md-input-container flex="33">-->
+                    <!--<label>Moza_Boundry</label>-->
+                    <!--<md-select ng-model="moza" style="min-width: 200px;padding-left: 30px;">-->
+                    <!--<md-optgroup label="moza">-->
+                    <!--<md-option ng-repeat="mza in admin_moza"  ng-click="selectMoza(mza.mauza  )">{{ mza.mauza   }}</md-option>-->
+                    <!--</md-optgroup>-->
+                    <!--</md-select>-->
+                    <!--</md-input-container>-->
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Indicator  -->
+        <div class="md-accordion" ng-repeat="data in accordianIndicators">
+            <md-toolbar ng-init="data.expanded = false" ng-click="data.expanded = !data.expanded">
+                <div class="md-toolbar-tools">
+                    <h4>
+                        <span>{{data.heading}}</span>
+                    </h4>
+                    <span flex=""></span>
+                    <span ng-class="{expandCollapse:true, active:data.expanded}"></span>
+                </div>
+            </md-toolbar>
+            <div ng-class="{dataContent:true, activeContent:data.expanded}">
+
+                <!--&lt;!&ndash;<div layout="row">&ndash;&gt;-->
+                <!--<md-input-container    style="margin-top: 20px;" flex="70">-->
+                <!--<input type="text" name="indicator_name"  id="indicator" ng-model="indicator_model"   placeholder="indicator Search">-->
+                <!--</md-input-container>-->
+                <!---->
+                <!--</div>-->
+
+                <div layout="column">
+                    <div>
+                        <label for="indicator" style="color: #007bff">INDICATOR</label>
+                        <input type="text" ng-model="indicator" name="indicator_name" id="indicator" style="">
+                    </div>
+
+                    <md-input-container flex="33">
+                        <p>Level</p>
+                        <md-select ng-model="level" style="min-width: 200px;">
+                            <md-optgroup label="Select Level">
+                                <md-option value="{{levels.label }}" ng-repeat="levels in allGeoLevels" ng-click="selectLevels(levels.label)">{{levels.label }}
+                                </md-option>
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container flex="33">
+                        <p>Year</p>
+                        <md-select ng-model="years" style="min-width: 200px;">
+                            <md-optgroup label="Select Year">
+                                <md-option value="{{ y.YEAR }}" ng-repeat="y in allYears" ng-click="selectYears(y.YEAR)">{{ y.YEAR }}</md-option>
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container flex="33">
+                        <p>Source</p>
+                        <md-select ng-model="source" style="min-width: 200px;">
+                            <md-optgroup label="Select Source">
+                                <md-option value="{{source.Name }}" ng-repeat="source in allSource" ng-click="selectSource(source.Name)">{{source.Name }}
+                                </md-option>
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
+                    <md-button class="md-raised md-primary" ng-click="createCoropleth()">
+                        Create
+                    </md-button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Info -->
+        <!--<div class="md-accordion" ng-repeat="data in accordianInfo">
+            <md-toolbar ng-init="data.expanded = false" ng-click="data.expanded = !data.expanded">
+                <div class="md-toolbar-tools">
+                    <h4>
+                        <span>{{data.heading}}</span>
+                    </h4>
+                    <span flex=""></span>
+                    <span ng-class="{expandCollapse:true, active:data.expanded}"></span>
+                </div>
+            </md-toolbar>
+            <div ng-class="{dataContent:true, activeContent:data.expanded}">
+                
+            </div>
+        </div>-->
+		
+		
+		<div style="background-color: #e2e2e2;" layout="column" id="rightnav">
+            <right-template></right-template>
+        </div>
+
+<!--                        <md-tabs md-dynamic-height md-border-bottom>-->
+<!--                            <md-tab label="TOC">-->
+<!--                                <div id="mainTocDiv">-->
+
+<!--                                    <div ivh-treeview="bag"-->
+<!--                                         ivh-treeview-default-selected-state="false"-->
+<!--                                         ivh-treeview-expand-to-depth=""-->
+<!--                                         ivh-treeview-twistie-expanded-tpl="tocCtrl.tplFolderOpen"-->
+<!--                                         ivh-treeview-twistie-collapsed-tpl="tocCtrl.tplFolderClose"-->
+<!--                                         ivh-treeview-twistie-leaf-tpl="tocCtrl.tplLeaf"-->
+<!--                                         twistieLeafTpl="#FF8159"-->
+<!--                                         ivh-treeview-on-cb-change="tocCtrl.otherAwesomeCallback(ivhNode, ivhIsSelected, ivhTree)">-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </md-tab>-->
+<!--                            <md-tab label="Navigation">-->
+<!--                                <div layout="column">-->
+<!--                                    <md-input-container flex="33">-->
+<!--                                        <p>Division Boundary</p>-->
+<!--                                        <md-select ng-model="div" style="min-width: 200px;padding-left: 30px;">-->
+<!--                                            <md-optgroup label="Division">-->
+<!--                                                <md-option ng-repeat="div in admin_division" ng-click="selectDivision(div.gid)">{{-->
+<!--                                                    div.division_name }}-->
+<!--                                                </md-option>-->
+<!--                                            </md-optgroup>-->
+<!--                                        </md-select>-->
+<!--                                    </md-input-container>-->
+
+<!--                                    <md-input-container flex="33">-->
+<!--                                        <p>District Boundary</p>-->
+<!--                                        <md-select ng-model="dist" style="min-width: 200px;padding-left: 30px;">-->
+<!--                                            <md-optgroup label="District">-->
+<!--                                                <md-option ng-repeat="dist in admin_district"-->
+<!--                                                           ng-click="selectDistrict(dist.district_name)">{{ dist.district_name }}-->
+<!--                                                </md-option>-->
+<!--                                            </md-optgroup>-->
+<!--                                        </md-select>-->
+<!--                                    </md-input-container>-->
+
+<!--                                    <md-input-container flex="33">-->
+<!--                                        <p>Tehsil Boundary</p>-->
+<!--                                        <md-select ng-model="tehsil" style="min-width: 200px;padding-left: 30px;">-->
+<!--                                            <md-optgroup label="Tehsil">-->
+<!--                                                <md-option ng-repeat="teh in admin_teh"-->
+<!--                                                           ng-click="selectTehsil(teh.tehsil_name,teh.gid )">{{ teh.tehsil_name }}-->
+<!--                                                </md-option>-->
+<!--                                            </md-optgroup>-->
+<!--                                        </md-select>-->
+<!--                                    </md-input-container>-->
+
+<!--                                    <md-radio-group layout="row" ng-model="govt_hierarchy">-->
+
+<!--                                        <md-radio-button value="Revenu hierarchy" class="md-primary">Revenue hierarchy</md-radio-button>-->
+<!--                                        <md-radio-button value="Local Government" class="md-primary"> Local Government</md-radio-button>-->
+
+<!--                                    </md-radio-group>-->
+
+<!--                                    <div ng-show="govt_hierarchy=='Revenu hierarchy'">-->
+
+<!--                                        <md-input-container flex="33">-->
+<!--                                            <label>Qanoogoi_Boundary</label>-->
+<!--                                            <md-select ng-model="qg" style="min-width: 200px;padding-left: 30px;">-->
+<!--                                                <md-optgroup label="qg">-->
+<!--                                                    <md-option ng-repeat="qg in admin_qg" ng-click="selectQG(qg.gid  )">{{ qg.qg }}-->
+<!--                                                    </md-option>-->
+<!--                                                </md-optgroup>-->
+<!--                                            </md-select>-->
+<!--                                        </md-input-container>-->
+
+<!--                                        &lt;!&ndash;<md-input-container flex="33">&ndash;&gt;-->
+<!--                                        &lt;!&ndash;<label>PatwarCircle_Boundaaary</label>&ndash;&gt;-->
+<!--                                        &lt;!&ndash;<md-select ng-model="moza" style="min-width: 200px;padding-left: 30px;">&ndash;&gt;-->
+<!--                                        &lt;!&ndash;<md-optgroup label="PC">&ndash;&gt;-->
+<!--                                        &lt;!&ndash;<md-option ng-repeat="pc in admin_pc"  ng-click="selectPC(pc.patwarcircle_id  )">{{ pc.patwarcircle_name   }}</md-option>&ndash;&gt;-->
+<!--                                        &lt;!&ndash;</md-optgroup>&ndash;&gt;-->
+<!--                                        &lt;!&ndash;</md-select>&ndash;&gt;-->
+<!--                                        &lt;!&ndash;</md-input-container>&ndash;&gt;-->
+
+<!--                                        <md-input-container flex="33">-->
+<!--                                            <label>Moza_Boundary</label>-->
+<!--                                            <md-select ng-model="moza" style="min-width: 200px;padding-left: 30px;">-->
+<!--                                                <md-optgroup label="moza">-->
+<!--                                                    <md-option ng-repeat="mza in admin_mz" ng-click="selectMoza(mza.gid,mza.mauza  )">{{-->
+<!--                                                        mza.mauza }}-->
+<!--                                                    </md-option>-->
+<!--                                                </md-optgroup>-->
+<!--                                            </md-select>-->
+<!--                                        </md-input-container>-->
+
+<!--                                        <md-input-container flex="33">-->
+<!--                                            <label>Khasra_Boundary</label>-->
+<!--                                            <md-select ng-model="khsra" style="min-width: 200px;padding-left: 30px;">-->
+<!--                                                <md-optgroup label="khsra">-->
+<!--                                                    <md-option ng-repeat="kh in khsra" ng-click="selectKhsra(kh.gid  )">{{-->
+<!--                                                        kh.khasra_number }}-->
+<!--                                                    </md-option>-->
+<!--                                                </md-optgroup>-->
+<!--                                            </md-select>-->
+<!--                                        </md-input-container>-->
+<!--                                    </div>-->
+
+<!--                                    <div ng-show="govt_hierarchy=='Local Government'">-->
+
+<!--                                        <md-input-container flex="33">-->
+<!--                                            <label>UC_Boundary</label>-->
+<!--                                            <md-select ng-model="uc" style="min-width: 200px;padding-left: 30px;">-->
+<!--                                                <md-optgroup label="uc">-->
+<!--                                                    <md-option ng-repeat="uc in admin_uc" ng-click="selectUC(uc.uc_name  )">{{-->
+<!--                                                        uc.uc_name}}&#45;&#45; {{uc.uc_no}}-->
+<!--                                                    </md-option>-->
+<!--                                                </md-optgroup>-->
+<!--                                            </md-select>-->
+<!--                                        </md-input-container>-->
+
+<!--                                        <md-input-container flex="33">-->
+<!--                                            <label>ward</label>-->
+<!--                                            <md-select ng-model="ward" style="min-width: 200px;padding-left: 30px;">-->
+<!--                                                <md-optgroup label="ward">-->
+<!--                                                    <md-option ng-repeat="ward in admin_ward"-->
+<!--                                                               ng-click="selectWard(ward.ward_no,ward.uc_name)">{{ ward.ward_no |-->
+<!--                                                        number:0 }}-->
+<!--                                                    </md-option>-->
+<!--                                                </md-optgroup>-->
+<!--                                            </md-select>-->
+<!--                                        </md-input-container>-->
+
+<!--                                    </div>-->
+
+
+<!--                                    &lt;!&ndash;<md-input-container flex="33">&ndash;&gt;-->
+<!--                                    &lt;!&ndash;<label>Moza_Boundry</label>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;<md-select ng-model="moza" style="min-width: 200px;padding-left: 30px;">&ndash;&gt;-->
+<!--                                    &lt;!&ndash;<md-optgroup label="moza">&ndash;&gt;-->
+<!--                                    &lt;!&ndash;<md-option ng-repeat="mza in admin_moza"  ng-click="selectMoza(mza.mauza  )">{{ mza.mauza   }}</md-option>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;</md-optgroup>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;</md-select>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;</md-input-container>&ndash;&gt;-->
+
+<!--                                </div>-->
+<!--                            </md-tab>-->
+<!--                            <md-tab label="INDICATORS">-->
+
+<!--                                &lt;!&ndash;<div layout="row">&ndash;&gt;-->
+<!--                                &lt;!&ndash;<md-input-container    style="margin-top: 20px;" flex="70">&ndash;&gt;-->
+<!--                                &lt;!&ndash;<input type="text" name="indicator_name"  id="indicator" ng-model="indicator_model"   placeholder="indicator Search">&ndash;&gt;-->
+<!--                                &lt;!&ndash;</md-input-container>&ndash;&gt;-->
+<!--                                &lt;!&ndash;&ndash;&gt;-->
+<!--                                &lt;!&ndash;</div>&ndash;&gt;-->
+
+<!--                                <div style="width:80%;padding-left: 2px;padding-right: 2px;padding-top: 5px; ">-->
+<!--                                    <label for="indicator">INDICATOR:</label>-->
+<!--                                    <input type="text" ng-model="indicator" n name="indicator_name" id="indicator">-->
+<!--                                </div>-->
+
+
+<!--                                <md-input-container flex="33">-->
+<!--                                    <p>Select Level</p>-->
+<!--                                    <md-select ng-model="level" style="min-width: 200px;padding-left: 30px;">-->
+<!--                                        <md-optgroup label="Level">-->
+<!--                                            <md-option ng-repeat="levels in allGeoLevels" ng-click="selectLevels(levels.label)">{{-->
+<!--                                                levels.label }}-->
+<!--                                            </md-option>-->
+<!--                                        </md-optgroup>-->
+<!--                                    </md-select>-->
+<!--                                </md-input-container>-->
+
+<!--                                <md-input-container flex="33">-->
+<!--                                    <p>Select Year</p>-->
+<!--                                    <md-select ng-model="years" style="min-width: 200px;padding-left: 30px;">-->
+<!--                                        <md-optgroup label="Years">-->
+<!--                                            <md-option ng-repeat="y in allYears" ng-click="selectYears(y.YEAR)">{{ y.YEAR }}</md-option>-->
+<!--                                        </md-optgroup>-->
+<!--                                    </md-select>-->
+<!--                                </md-input-container>-->
+
+<!--                                <md-input-container flex="33">-->
+<!--                                    <p>Select Source</p>-->
+<!--                                    <md-select ng-model="source" style="min-width: 200px;padding-left: 30px;">-->
+<!--                                        <md-optgroup label="Source">-->
+<!--                                            <md-option ng-repeat="source in allSource" ng-click="selectSource(source.Name)">{{-->
+<!--                                                source.Name }}-->
+<!--                                            </md-option>-->
+<!--                                        </md-optgroup>-->
+<!--                                    </md-select>-->
+<!--                                </md-input-container>-->
+
+
+<!--                                <md-button class="md-raised md-primary" ng-click="createCoropleth()">-->
+<!--                                    Create-->
+<!--                                </md-button>-->
+
+<!--                            </md-tab>-->
+<!--                        </md-tabs>-->
+
+
+
+</div>
+
+
+
+
+

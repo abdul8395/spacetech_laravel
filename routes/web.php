@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MapController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,10 +37,12 @@ Route::get('/district/{id}', [AdminController::class, 'getdist']);
 Route::get('/tehsil/{id}', [AdminController::class, 'getteh']);
 Route::get('/loaddata', [AdminController::class, 'Load_DataPage']);
 Route::get('/counts', [AdminController::class, 'counts']);
-// Route::get('/scounts', [SuperAdminController::class, 'scounts']);
+Route::get('/scounts', [SuperAdminController::class, 'scounts']);
 Route::get('/deatilbtn/{data}', [AdminController::class, 'detailbtn']);
 Route::get('/searchdata/{data}', [AdminController::class, 'search_load_data']);
 Route::get('/download/{id}', [AdminController::class, 'download'])->name('downloadfile');
+
+Route::get('/mapindex', [MapController::class, 'index'])->name('map');
 
 
 
@@ -60,7 +63,7 @@ Auth::routes();
 
 //................SuperAdmin________Routes...................
 Route::match(['get','post'], '/superadmin', [AdminController::class, 'index'])->name('superadmin')->middleware('superadmin');
-Route::match(['get','post'], '/superadmin/scounts', [SuperAdminController::class, 'scounts'])->name('scounts')->middleware('superadmin');
+// Route::match(['get','post'], '/superadmin/scounts', [SuperAdminController::class, 'scounts'])->name('scounts')->middleware('superadmin');
 Route::match(['get','post'], '/superadmin/filetypes', [SuperAdminController::class, 'filetypes'])->name('superadmin')->middleware('superadmin');
 Route::match(['get','post'], '/superadmin/Load_ext', [SuperAdminController::class, 'Load_ext'])->name('superadmin')->middleware('superadmin');
 Route::match(['get','post'], '/superadmin/chkext/{data}', [SuperAdminController::class, 'chkext'])->name('superadmin')->middleware('superadmin');

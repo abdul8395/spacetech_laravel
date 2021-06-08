@@ -1,0 +1,335 @@
+#map {
+    max-height:100%;
+    max-width: 100%;
+
+}
+
+
+
+.industry{
+    /*border-right: 2px black solid;*/
+}
+
+.normal_admin{
+    /*border-right: 2px snow solid;*/
+}
+
+#sidenavi{
+    border: 2px solid white;
+    max-height:100%;
+    max-width: 100%;
+}
+
+#rightnav{
+    /*border: 2px solid white;*/
+    max-height:100%;
+    max-width: 100%;
+}
+
+#rightbox{
+    border: 2px solid white;
+}
+
+.move-up {
+    position: relative;
+    top: -60px;
+    z-index: 99;
+}
+
+md-toolbar{
+    min-height: 20px;
+}
+
+md-dialog{
+    z-index: 1000 !important;
+}
+
+button[type=button].btn-subnav {
+    display: inline-block;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-top: 0;
+    color: #0186cb;
+    font-size: 12px;
+    padding-top: 5px;
+    padding-left: 11px;
+    font-weight: 200;
+    text-align: left;
+    background: 0 0;
+    border-radius: 0;
+    position: relative;
+    height: 36px;
+    border: none;
+    box-shadow: none;
+}
+
+.fileclass{
+    display: inline-block;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-top: 0;
+    color: #0186cb;
+    font-size: 12px;
+    padding-top: 5px;
+    padding-left: 11px;
+    font-weight: 200;
+    text-align: left;
+    background: 0 0;
+    border-radius: 0;
+    position: relative;
+    height: 36px;
+    border: none;
+    box-shadow: none;
+}
+
+
+
+.mytoolbar{
+    border: 2px #FFC107 solid;
+    padding-left: 0px ;
+    background-color: #FFC107;
+    border-right: 2px snow solid;
+}
+
+.checkboxdemoSelectAll .demo-legend {
+    color: #3F51B5; }
+
+.checkboxdemoSelectAll .demo-fieldset {
+    border-style: solid;
+    border-width: 1px;
+    height: 100%; }
+
+.checkboxdemoSelectAll .demo-select-all-checkboxes {
+    padding-left: 30px; }
+
+.twistie.glyphicon {
+    margin-right: 3px;
+}
+.whiteframedemoBasicClassUsage {
+    /* For breakpoint `-xs` */
+    /* For breakpoint `-sm` */
+    /* For breakpoint `-md` */
+    /* For breakpoint `-gt-md` */ }
+.whiteframedemoBasicClassUsage md-whiteframe {
+    background: #fff;
+    margin: 30px;
+    height: 100px; }
+@media (max-width: 599px) {
+    .whiteframedemoBasicClassUsage md-whiteframe {
+        margin: 7px;
+        height: 50px;
+        background-color: #c8e4fa; }
+    .whiteframedemoBasicClassUsage md-whiteframe > span {
+        font-size: 0.4em; } }
+@media (min-width: 600px) and (max-width: 959px) {
+    .whiteframedemoBasicClassUsage md-whiteframe {
+        margin: 20px;
+        height: 75px; }
+    .whiteframedemoBasicClassUsage md-whiteframe > span {
+        font-size: 0.6em; } }
+@media (min-width: 960px) and (max-width: 1279px) {
+    .whiteframedemoBasicClassUsage md-whiteframe {
+        margin: 20px;
+        height: 90px;
+        background-color: #fcddde; }
+    .whiteframedemoBasicClassUsage md-whiteframe > span {
+        font-size: 0.9em; } }
+@media (min-width: 1280px) {
+    .whiteframedemoBasicClassUsage md-whiteframe {
+        margin: 25px;
+        height: 100px;
+        background-color: #F2FCE2; }
+    .whiteframedemoBasicClassUsage md-whiteframe > span {
+        font-size: 1.0em; } }
+.md-whiteframe-1dp
+.md-whiteframe-2dp
+.md-wh
+
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    margin-bottom: -1px;
+    background-color: #fff;
+    border: none;!important
+}
+
+
+.input_draw {
+    width: 100%;
+    padding: 5px;
+    margin: 0px;
+    /*box-sizing: border-box;*/
+}
+
+.table_draw  td:last-child {
+    padding: 0px 24px 0px 0px;
+    white-space: nowrap;
+}
+.tr_draw{
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+body.dragging, body.dragging * {
+    cursor: move !important;
+}
+
+.dragged {
+    position: absolute;
+    opacity: 0.5;
+    z-index: 2000;
+}
+
+ol.example li.placeholder {
+    position: relative;
+    /** More li styles **/
+}
+ol.example li.placeholder:before {
+    position: absolute;
+    /** Define arrowhead **/
+}
+
+
+
+.selected {
+    background-color: #0b93d5;
+    color: #000000;
+}
+
+.active {
+    color: #ffffff;
+    background-color: #29323C;
+    border-color: #494F57;
+    /*background-color: #2196F3;!important;*/
+}
+
+.loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid blue;
+    border-right: 16px solid green;
+    border-bottom: 16px solid red;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+.typeahead, .tt-query, .tt-hint {
+    border: 1px solid #CCCCCC;
+    border-radius: 0;
+    font-size: 12px;
+    height: 40px;
+    line-height: 40px;
+    outline: none;
+    padding: 8px 12px;
+    width: 290px;
+}
+.typeahead {
+    background-color: #FFFFFF;
+}
+.typeahead:focus {
+    border: 2px solid #007BFF;
+}
+
+.tt-hint {
+    color: #FFFFFF;
+}
+.tt-dropdown-menu {
+    background-color: #eaeaea;
+    color: #242730;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    margin-top: 0px;
+    /*padding: 8px 0;*/
+    width: 290px;
+}
+.tt-suggestion {
+    font-size: 14px;
+    line-height: 24px;
+    padding: 5px;
+}
+.tt-suggestion.tt-is-under-cursor {
+    background-color: #007BFF;
+    color: #FFFFFF;
+}
+.tt-suggestion p {
+    margin: 0;
+}
+#trafic_signals table tr td{
+    padding: 20px;
+
+}
+#trafic_signals table.table{
+    border: 0px;
+}
+
+
+
+
+
+
+/*----sub menu------*/
+nav {
+    position: relative;
+    margin: 0px;
+    /*width: 360px;*/
+}
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+nav ul li {
+    /* Sub Menu */
+}
+nav ul li a {
+    display: block;
+    background: #828282;
+    padding: 10px 15px;
+    color: #29323C;
+    text-decoration: none;
+    -webkit-transition: 0.2s linear;
+    -moz-transition: 0.2s linear;
+    -ms-transition: 0.2s linear;
+    -o-transition: 0.2s linear;
+    transition: 0.2s linear;
+}
+nav ul li a:hover {
+    background: #29323C;
+    color: #007BFF;
+}
+nav ul li a .fa {
+    width: 16px;
+    text-align: center;
+    margin-right: 5px;
+    float:right;
+}
+nav ul ul {
+    background-color:#ebebeb;
+}
+nav ul li ul li a {
+    color: #007BFF;
+    background: #29323C;
+    border-left: 4px solid transparent;
+    padding: 10px 20px;
+}
+nav ul li ul li a:hover {
+    background: #29323C;
+    border-left: 4px solid #007BFF;
+}
+/*----sub menu------*/

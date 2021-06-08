@@ -1,0 +1,11 @@
+<div id="rightpanel">
+<md-toolbar style="padding-top: 10px" md-scroll-shrink layout-align="center center"  >
+
+            <p>INFO</p>
+</md-toolbar>
+<table class="table table-striped table-bordered table-responsive" flex>
+    <tr ng-switch="key" ng-repeat="(key, value) in layerInfos" ng-if="key!='gid' && key!='geom'">
+        <td ng-switch-default>{{ key | capitalize | removeunderscore}}</td><td ng-switch-default>{{ value }}</td>
+    </tr>
+</table>
+</div>

@@ -85,8 +85,10 @@ class AdminController extends Controller
                 if(count($a)>0){
                     $reqchk='1';
                 };
+                $download_access_user = DB::select("SELECT user_id
+                FROM space_tech.tbl_permissions where access_granted=true;");
                 // $data[$i]="test";
-                $data[$i]=['dtup' => $dtup, 'divinames' => $divinames, 'distnames' => $distnames, 'tehnames' => $tehnames, 'depname' => $depname , 'logusrid' => $u_id, 'reqchk' => $reqchk];
+                $data[$i]=['dtup' => $dtup, 'divinames' => $divinames, 'distnames' => $distnames, 'tehnames' => $tehnames, 'depname' => $depname , 'logusrid' => $u_id, 'reqchk' => $reqchk, 'download_access_user' => $download_access_user];
                 // return view('admin.loadData',['dtup' => $dtup, 'divinames' => $divinames, 'distnames' => $distnames, 'tehnames' => $tehnames, 'depname' => $depname , 'logusrid' => $u_id]);
                 
             } else { 
