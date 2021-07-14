@@ -353,25 +353,26 @@
     }
        
 		
-        var uiden={{$user_id}};
-        // alert(uiden);
-        var app_user_id
-		$.ajax({ 
-            url: "services/uid_enc.php?encid=" +uiden,
-            type: "GET",
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            success: function callback(response) {
-				console.log(response)
-				for(var i=0;i<response.length;i++){
-					app_user_id = response[0].user_id;
-                    // alert(app_user_id);
-					console.log(app_user_id);
-				}
+        var app_user_id={{$user_id}};
+        // alert(app_user_id);
+
+        // var app_user_id
+		// $.ajax({ 
+        //     url: "/api/user_id/" +uiden,
+        //     type: "GET",
+        //     dataType: "json",
+        //     contentType: "application/json; charset=utf-8",
+        //     success: function callback(response) {
+		// 		console.log(response)
+		// 		// for(var i=0;i<response.length;i++){
+		// 		// 	app_user_id = response[0].user_id;
+        //         //     // alert(app_user_id);
+		// 		// 	console.log(app_user_id);
+		// 		// }
                 
-            }
-        });
-        console.log(app_user_id);
+        //     }
+        // });
+        // console.log(app_user_id);
 		// alert(app_user_id);
         // setTimeout(function(){ alert(app_user_id); }, 5000);
         // setTimeout(function(){ alert(app_user_id); }, 3000);

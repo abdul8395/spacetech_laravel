@@ -305,7 +305,8 @@ class SuperAdminController extends Controller
                             FROM space_tech.tbl_data_upload  as du
                             INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  du.datatype_id
                             INNER JOIN space_tech.users u ON u.source_id =  du.source_id
-                            where du.isapproved IS not NULL;");
+                            where du.isapproved IS not NULL or data_id in (SELECT data_id
+                            FROM space_tech.tbl_permissions where access_granted=true);");
             return json_encode($q);
             
         }
@@ -457,7 +458,8 @@ class SuperAdminController extends Controller
                         FROM space_tech.tbl_data_upload
                         INNER JOIN space_tech.tbl_data_types dt ON dt.datatype_id =  space_tech.tbl_data_upload.datatype_id
                         INNER JOIN space_tech.users u ON u.source_id =  space_tech.tbl_data_upload.source_id
-                        where space_tech.tbl_data_upload.isapproved IS NULL;");
+                        where space_tech.tbl_data_upload.isapproved IS NULL or data_id in (SELECT data_id
+                            FROM space_tech.tbl_permissions where access_granted=true);");
             $approvalcount=count($approval);
     
             $pendreq=DB::select('SELECT data_id

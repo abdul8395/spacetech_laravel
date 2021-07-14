@@ -123,7 +123,7 @@ selectionApp.directive('tocTemplate',function(){
         console.log(app_user_id);
         var str='';          
         $.ajax({
-            url: "services/uid_service.php?user_id="+app_user_id,
+            url: "/api/uid_service/" +app_user_id,
             // url: "localhost/spacetech_map/services/uid_service.php?user_id="+17,
             type: "GET",
             dataType: "json",
@@ -132,8 +132,8 @@ selectionApp.directive('tocTemplate',function(){
             success: function callback(response) {
                 console.log(response)
                 for(var i=0;i<response.length;i++){
-					var furl = encodeURI(response[i].url)
-					console.log(furl);
+					// var furl = encodeURI(response[i].url)
+					// console.log(furl);
                     str=str+'<tr>'+
                         '<td>'+response[i].data_name+'</td>'+
                         '<td>'+response[i].data_creation_date+'</td>'+
@@ -141,12 +141,12 @@ selectionApp.directive('tocTemplate',function(){
                         '<td>'+response[i].data_crs+'</td>'+
                         '<td>'+response[i].datatype_name+'</td>';
                         if(response[i].datatype_name == 'Image'){
-                            str +='<td><button class="success" onclick="imageDistort('+"'"+furl+"'"+','+"'"+response[i].data_name+"'"+','+response[i].data_id+')" style="background-color: #29323c; color: white;">View Image</button></td>';
+                            str +='<td><button class="success" onclick="imageDistort('+"'"+response[i].file_url+"'"+','+"'"+response[i].data_name+"'"+','+response[i].data_id+')" style="background-color: #29323c; color: white;">View Image</button></td>';
 
                         }
                         else  if(response[i].datatype_name == 'Shape'){
 
-                            str +='<td><button class="success" onclick="loadUsershp('+"'"+furl+"'"+','+"'"+response[i].data_name+"'"+','+response[i].data_id+')" style="background-color: #29323c; color: white;">View Shape</button></td>';
+                            str +='<td><button class="success" onclick="loadUsershp('+"'"+response[i].file_url+"'"+','+"'"+response[i].data_name+"'"+','+response[i].data_id+')" style="background-color: #29323c; color: white;">View Shape</button></td>';
 
                         }
 					
@@ -2762,9 +2762,9 @@ var lyr=[];
         // var newId = 'udata'+id;
         // alert(newId);
 		 $("#loader").show();
-		console.log(furl)
-		var f=decodeURI(furl)
-		console.log(f)
+		// console.log(furl)
+		// var f=decodeURI(furl)
+		// console.log(f)
 		var uri="services/shpgjson.php?shpurl="+f;
 		console.log(uri)
 		var res = encodeURI(uri); 

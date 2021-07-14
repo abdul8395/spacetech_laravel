@@ -77,6 +77,17 @@ return [
             'schema' => 'space_tech',
             'sslmode' => 'prefer',
         ],
+        # Our secondary database connection
+        'pssdb' => [
+            'driver'    => 'pgsql',
+            'host'      => '172.20.82.138',
+            'port'      => '5432',
+            'database'  => 'db_iris_portal',
+            'username'  => 'postgres',
+            'password'  => 'irisdiamondx',
+            'schema'    => 'public',
+            'prefix'    => '',
+        ],
 
         'sqlsrv' => [
             'driver' => 'sqlsrv',

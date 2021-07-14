@@ -45,8 +45,6 @@ Route::get('/download/{id}', [AdminController::class, 'download'])->name('downlo
 Route::get('/mapindex', [MapController::class, 'index'])->name('map');
 
 
-
-
 // Route::get('/Load_Users/{data}', [SuperAdminController::class, 'Load_Users']);
 // Route::get('/viewdes/{id}', [AdminController::class, 'viewdes']);
 
@@ -105,7 +103,6 @@ Route::match(['get','post'], '/reqbtnf/{id}', [AdminController::class, 'reqbtnf'
 Route::match(['get','post'], '/change_pass', [AdminController::class, 'changepass'])->middleware('admin');
 Route::match(['get','post'], '/store_pass', [AdminController::class, 'storepass'])->name('store_pass');
 Route::match(['get','post'], '/user', [UserController::class, 'index'])->name('user')->middleware('user')->middleware('admin');
-
 
 
 

@@ -10,12 +10,14 @@
     @php
         $uid;
         $reqchk;
+        $u_role;
         
     @endphp
     @foreach ($data as $d)
        @if(Auth::check())
             @php
                 $uid=$d['logusrid'];
+                $u_role=$d['u_role'];
                 $reqchk=$d['reqchk'];
             @endphp
         @endif
@@ -89,11 +91,23 @@
                             @if(Auth::check())
                                 @php
                                     $plvl;
+                                    $dataid;
                                     $duaccid;
+                                    $downldatadid;
                                 @endphp
-                                    @foreach($p['dtup'] as $dtup) @php $plvl=$dtup->privacy_level @endphp  @endforeach
-                                    @foreach($p['download_access_user'] as $duid) @php $duaccid= $duid->user_id @endphp @endforeach
-                                @if($uid== $duaccid || $plvl == 'Public')
+                                    @foreach($p['dtup'] as $dtup) 
+                                        @php 
+                                            $plvl=$dtup->privacy_level; 
+                                            $dataid=$dtup->data_id; 
+                                        @endphp  
+                                    @endforeach
+                                    @foreach($p['download_access_user'] as $duid) 
+                                        @php 
+                                            $downldatadid= $duid->data_id;
+                                            $duaccid= $duid->user_id;
+                                        @endphp 
+                                    @endforeach
+                                @if($plvl == 'Public' || ($uid== $duaccid && $dataid== $downldatadid) || $u_role == 1)
                                     <div  class="pull-right" style="margin:5px;">
                                         <a href="{{ route('downloadfile', $dtup->data_id) }}" class="btn btn-warning btn-sm " style="color: white;
                                             height: 25px;

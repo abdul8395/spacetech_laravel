@@ -217,8 +217,8 @@
                     url : 'searchdata/' +JSON.stringify(alldata),
                     type : "GET",
                     success:function(data){
-                        // console.log(data);
-                        $("#tblData").empty();
+                        console.log(data);
+                        // $("#tblData").empty();
                         hideLoader(loaderId);
                         $("#tblData").html(data);
                     }

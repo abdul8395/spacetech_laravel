@@ -87,9 +87,8 @@
             getGrid();
 
         });
-        // var $table;
+        var $table;
         function getGrid() {
-            
             var reqdata={
                 StorageDate: $('#txtSearchInsertionDate').val(),
                 CreationDate: $('#txtSearchCreationDate').val(),
@@ -111,6 +110,14 @@
                     "url": "load_pending_req/"+JSON.stringify(reqdata),
                     "type": "GET",
                     "dataSrc": "",
+                    // "headers": {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    // "data": function myfunction(d) {
+                    //     d._token : $('meta[name="csrf-token"]').attr('content'),
+                    //     d.InsertionDate = InsertionDate;
+                    //     d.CreationDate = CreationDate;
+                    //     d.Type = Type;
+                    //     d.Dpt = Dpt;
+                    // },
                 },
                 createdRow: function (row, data, dataIndex, cells) {
                     $(row).addClass('row100');
@@ -120,8 +127,8 @@
 
                 },
                 "columns": [
-                    { "data": "datatype_name", "title": "Type", "className": "column100 column1", "orderable": false, "searchable": false, "width": "20px", "data-column": "column1" },
-                    { "data": "data_name", "title": "Name", "className": "column100 column2", "orderable": false, "searchable": false, "width": "30px", "data-column": "column2" },
+                    { "data": "datatype_name", "title": "Type", "className": "column100 column1", "orderable": true, "searchable": false, "width": "20px", "data-column": "column1" },
+                    { "data": "data_name", "title": "Name", "className": "column100 column2", "orderable": true, "searchable": false, "width": "30px", "data-column": "column2" },
                     { "data": "data_storage_date", "title": "Storage Date", "className": "column100 column3", "orderable": false, "searchable": false, "width": "30px", "data-column": "column3" },
                     { "data": "name", "title": "Source", "className": "column100 column4", "orderable": false, "searchable": false, "width": "70px", "data-column": "column4" },
                     { "data": "data_creation_date", "title": "Creation Date", "className": "column100 column5", "orderable": false, "searchable": false, "width": "190px", "data-column": "column5" },
@@ -129,13 +136,13 @@
                     { "data": "data_crs", "title": "CRS", "className": "column100 column7", "orderable": false, "searchable": false, "width": "75px", "data-column": "column7" },
                     { "data": "data_usage_purpose", "title": "Purpose", "className": "column100 column8", "orderable": false, "searchable": false, "width": "75px", "data-column": "column8" },
                     { "data": "data_isvector", "title": "IsVector", "className": "column100 column9", "orderable": false, "searchable": false, "width": "40px", "data-column": "column9" },
-                    { "data": "data_resolution", "title": "Resolution", "className": "column100 column10", "orderable": false, "searchable": false, "width": "40px", "data-column": "column10" }//,
-                   // { "data": null, "title": "Action", "className": "column100 column10", "orderable": false, "searchable": false, "width": "40px", "data-column": "column10" }//,
-                    //    { "data": null, "title": "Status", "className": "column100 column11", "orderable": false, "searchable": false, "width": "40px", "data-column": "column11" }
+                    { "data": "data_resolution", "title": "Resolution", "className": "column100 column10", "orderable": false, "searchable": false, "width": "40px", "data-column": "column10" },
+                   // { "data": "desc", "title": "Status Desc", "className": "column100 column10", "orderable": false, "searchable": false, "width": "40px", "data-column": "column10" },
+                    // { "data": null, "title": "Status", "className": "column100 column11", "orderable": false, "searchable": false, "width": "40px", "data-column": "column11" }
                 ],
                 "order": [[0, "asc"]],
                 "rowCallback": function (row, data) {
-                    console.log(data);
+                    // console.log(data);
                     var r = '<td>' + data.datatype_name + '</td>'
                         + '<td>' + data.data_name + '</td>'
                         + '<td>' + data.data_storage_date + '</td>'
@@ -151,13 +158,7 @@
                         r = r + '<td><input type="checkbox"></td>';
                     }
                     r = r + '<td>' + data.data_resolution + '</td>';
-                    //r = r + '<td>';
-
-                    //if (data.user_role == "SuperAdmin") {
-                    //    r = r + '<span class="btn btn-success btn-sm" onclick="ApproveRequest(' + data.id + ')">Approve</span>'
-                    //    r = r + '<span class="btn btn-danger btn-sm" onclick="RejectRequest(' + data.id + ')">Reject</span>'
-                    //}
-                    //r = r + '</td>';
+                    
                     $(row).html(r);
                 }
             });

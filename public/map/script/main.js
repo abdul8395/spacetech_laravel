@@ -3071,7 +3071,7 @@ var strChkox='';
 var lyr=[];
 
 function imageDistort(url,name,id){
-let url1 = 'http://spacetech.urbanunit.gov.pk/'+ url;
+let url1 = url;
     console.log(url1)
 	lyr[id] = L.distortableImageOverlay(url1, {
         selected: true,
