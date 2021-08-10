@@ -18,7 +18,8 @@
 
     <div class="col-md-12">
         <div class="col-md-3">
-            <div class="rowPanel">
+
+            <!-- <div class="rowPanel">
                 <div class="col-md-12">
                     <div class="panel panel-info">
                         <div class="panel-heading">
@@ -88,8 +89,60 @@
                 <span id="srchbtn" class="btn btn-primary btn-block" >Search</span>
                 <br />
                 <span class="btn btn-block" style="background-color:black;color:white;" onclick="Reset();">Reset Filters</span>
+            </div> -->
+
+            <input type="hidden" id="selected_dep" value="">
+            <div id="inputdiv"><input type="hidden"  id="selected_divi" name="selected_divi" class="selected_divi"  value=""></div>
+            
+            <div id="slideOut">
+                <div class="modal-content">
+                    <div class="modal-header"> 
+                        <p class="modal-title">Search Data Basis On Following Filters</p>
+                    </div>
+                    <div class="modal-body">
+                        <div class="drawer-body">
+                            <button class="collapsible active">Select Departments</button>
+                                <div class="content">
+                                    @foreach($deps as $id => $n)
+                                        <input type="button" class="dep_input input_style" value="{{$n}}">
+                                    @endforeach
+                                </div>
+                        </div>
+                        <br>
+                        <div class="drawer-body">
+                            <button class="collapsible">Select Divisions</button>
+                                <div class="content">
+                                    @foreach($divs as $id => $n)
+                                        <input type="button" class="divi_input input_style" value="{{$n}}">
+                                    @endforeach
+                                </div>
+                        </div>
+                        <br>
+                        <div class="drawer-body">
+                            <button class="collapsible">Select Districts</button>
+                                <div class="content" id="d_content">
+                                    <p id="dum_p">First Select Division</p>
+                                </div>
+                        </div>
+                        <br>
+                        <div class="drawer-body">
+                            <button class="collapsible">Select Tehsils</button>
+                                <div class="content" id="t_content">
+                                    <p>First Select District</p>
+                                </div>
+                        </div>
+                        <br>
+                        <br>
+                        <button class="pull-right" type="button" onclick="remove_my_bread_crumbs()" style="border:1px solid #2FA085;padding:7px 20px;color:#121010;background:#cdb129; margin-left:5px !important;">Filter Data</button>
+                        <button class="pull-right" type="button" onclick="remove_my_bread_crumbs()" style="border:1px solid #2FA085;padding:7px 20px;color:#fff;background:#2FA085;">Reset Filter</button>
+                        
+                    </div>
+                    <!-- <div class="modal-footer"></div> -->
+                </div>
             </div>
         </div>
+
+
         <div class="col-md-9">
         <div id="tblData"></div>
         </div>
@@ -136,6 +189,12 @@
 
 
         <script>
+
+const collapsible = document.getElementsByClassName("collapsible");
+
+for (let i = 0; i < collapsible.length; i++) {
+  collapsible[i].addEventListener("click", e => e.currentTarget.classList.toggle("active"));
+}
           
          $(document).ready(function () {
             // $.ajaxSetup({
@@ -152,10 +211,15 @@
             //     // placeholder: 'Select Departments'
             // });
 
-            $('select[name="divi"]').on('change',function(e){
-                e.preventDefault();
+
+            // $("#selected_divi").on("change", function() {
+            // alert($(this).val()); 
+            // console.log('Text1 changed!')
+            // });
+
+            $("#selected_divi").on("change", function() {
                 var divids= $(this).val();
-                // console.log(divids);
+                console.log(divids);
                 if(divids)
                 {
                     $.ajax({
@@ -164,16 +228,19 @@
                         dataType : "json",
                         success:function(data){
                             console.log(data);
-                            $('select[name="dist"]').empty();
+                            $("#dum_p").hide();
+                            $("#d_content").empty();
                             for(var i=0;i<data.length;i++){
-                                $('select[name="dist"]').append('<option value="'+ data[i].district_id +'">'+ data[i].district_name +'</option>');
+                                
+                                 $("#d_content").append('<input type="button" class="dist_input input_style" value="'+ data[i].district_name +'">');
+                                // $('select[name="dist"]').append('<option value="'+ data[i].district_id +'">'+ data[i].district_name +'</option>');
                             }
                         }
                     });
                 }
                 else
                 {
-                    $('select[name="dist"]').empty();
+                    $("#dum_p").show();
                 }
             });
             $('select[name="dist"]').on('change',function(e){
@@ -480,6 +547,187 @@
                 $("#ddlTehsil").html(markup);
                 $('#ddlTehsil').multiselect('rebuild');
             }
+
+
+
+           
+
+
+            //remove seat from list
+function removeSeat(seatListElm, seatValue) {
+    var arr=seatListElm.value.split(',');
+     
+     var p=arr.indexOf(seatValue);
+     if(p!=-1){
+         arr.splice(p, 1);
+         seatListElm.value=arr.join(',');
+     }
+     $("#selected_divi").trigger( 'change' ); // Triggers the change event
+    
+}
+
+
+//add seat to list
+function addSeat(seatListElm, seatValue) {
+    var arr=seatListElm.value.split(',');
+    if(arr.join()==''){ arr=[]; }
+    
+    var p=arr.indexOf(seatValue);
+    if(p==-1){
+        arr.push(seatValue); //append
+        arr=arr.sort(); //sort list
+        seatListElm.value=arr.join(',');
+    } 
+
+    $("#selected_divi").trigger( 'change' ); // Triggers the change event
+   
+}
+
+//called everytime a seat is clicked
+function depClick(seat) {
+    seat = (this instanceof HTMLInputElement ) ? this : seat;
+    var firstSelected;
+    var selectedSeats = [];
+    var thisInputHasAlreadyBeenSeen = false;
+    var confirmedSeats = [];
+    if (seat.classList.contains('reserved')==false) {
+
+        if (seat.classList.toggle('selected')) {
+            addSeat(document.getElementById('selected_dep'), seat.value);
+            $(".dep_input").each(function() {
+                if(this != seat) {
+                if(firstSelected == null && this.classList.contains('selected')) {
+                    firstSelected = this;
+                    selectedSeats.push(firstSelected);
+                    confirmedSeats = selectedSeats.slice();
+                } else if (firstSelected) {
+                    if(this.classList.contains('selected')) {
+                        selectedSeats.push(this);
+                    confirmedSeats = selectedSeats.slice();
+                       }
+                    if(!this.classList.contains('reserved')) {
+                    selectedSeats.push(this);
+                     }
+                else{
+                    if(!thisInputHasAlreadyBeenSeen) {
+                    selectedSeats = [];
+                    firstSelected = null;
+                    } else {
+                        return false;
+                    }
+                }
+                }
+                } else {
+                    selectedSeats.push(this);
+                    confirmedSeats = selectedSeats.slice();
+                    if(firstSelected == null) {
+                        thisInputHasAlreadyBeenSeen = true;
+                        firstSelected = this;
+                    }
+                }
+            });
+            // if(confirmedSeats.length > 1) {
+            // selectAll(confirmedSeats);
+            // }
+        } else {
+            removeSeat(document.getElementById('selected_dep'), seat.value);
+        }
+      
+    } else {
+        alert("This seat is reserved!\nPlease select another seat");
+        removeSeat(document.getElementById('selected_dep'), seat.value);
+        return;
+    }
+}
+
+
+//adding event click to seats
+var elms=document.getElementsByClassName('dep_input');
+for(var i=0, l=elms.length ; i<l ; i++){
+    elms[i].onclick=depClick;
+}
+
+// function selectAll(seats) {
+//     seats.forEach(function(seat) {
+//         seat.className = seat.className + ' selected';
+//     });
+// }
+
+
+
+
+
+
+
+
+
+
+//called everytime a seat is clicked
+function divisionClick(seat) {
+    seat = (this instanceof HTMLInputElement ) ? this : seat;
+    var firstSelected;
+    var selectedSeats = [];
+    var thisInputHasAlreadyBeenSeen = false;
+    var confirmedSeats = [];
+    if (seat.classList.contains('reserved')==false) {
+
+        if (seat.classList.toggle('selected')) {
+            addSeat(document.getElementById('selected_divi'), seat.value);
+            $(".divi_input").each(function() {
+                if(this != seat) {
+                if(firstSelected == null && this.classList.contains('selected')) {
+                    firstSelected = this;
+                    selectedSeats.push(firstSelected);
+                    confirmedSeats = selectedSeats.slice();
+                } else if (firstSelected) {
+                    if(this.classList.contains('selected')) {
+                        selectedSeats.push(this);
+                    confirmedSeats = selectedSeats.slice();
+                       }
+                    if(!this.classList.contains('reserved')) {
+                    selectedSeats.push(this);
+                     }
+                else{
+                    if(!thisInputHasAlreadyBeenSeen) {
+                    selectedSeats = [];
+                    firstSelected = null;
+                    } else {
+                        return false;
+                    }
+                }
+                }
+                } else {
+                    selectedSeats.push(this);
+                    confirmedSeats = selectedSeats.slice();
+                    if(firstSelected == null) {
+                        thisInputHasAlreadyBeenSeen = true;
+                        firstSelected = this;
+                    }
+                }
+            });
+            // if(confirmedSeats.length > 1) {
+            // selectAll(confirmedSeats);
+            // }
+        } else {
+            removeSeat(document.getElementById('selected_divi'), seat.value);
+        }
+      
+    } else {
+        alert("This seat is reserved!\nPlease select another seat");
+        removeSeat(document.getElementById('selected_divi'), seat.value);
+        return;
+    }
+}
+
+
+//adding event click to seats
+var elms=document.getElementsByClassName('divi_input');
+for(var i=0, l=elms.length ; i<l ; i++){
+    elms[i].onclick=divisionClick;
+}
+
+
+
         </script>
 
 

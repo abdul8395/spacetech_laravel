@@ -164,9 +164,21 @@ class AdminController extends Controller
 
     public  function getdist($id){
         $a=json_decode($id);
-        $dist = DB::select("SELECT district_id, district_name
-        FROM space_tech.tbl_district where space_tech.tbl_district.division_id in (".implode(",",$a).");");
-        return json_encode($dist);
+        $divi_names_arr =explode(",",$id);
+        $dnames="'".implode ( "', '", $divi_names_arr )."'";
+        $str = str_replace('"', '', $dnames);
+        
+        $q="SELECT division_id
+        FROM space_tech.tbl_division where space_tech.tbl_division.division_name in ($str);";
+        $diviids=DB::select($q);
+        $dids = json_decode(json_encode($diviids), true);
+        // $d=implode(",",$dids);
+        echo json_encode($dids);
+        // $q2="SELECT district_id, district_name
+        // FROM space_tech.tbl_district where space_tech.tbl_district.division_id in (".implode(",",$dids).");";
+        // echo $q;
+        // $dist = DB::select();
+        // return json_encode($dist);
     } 
     public  function getteh($id){
         $a=json_decode($id);
