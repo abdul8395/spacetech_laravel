@@ -91,6 +91,8 @@
                 <span class="btn btn-block" style="background-color:black;color:white;" onclick="Reset();">Reset Filters</span>
             </div> -->
 
+
+            <!-- new search design-->
             <input type="hidden" id="selected_dep" value="">
             <div id="inputdiv"><input type="hidden"  id="selected_divi" name="selected_divi" class="selected_divi"  value=""></div>
             
